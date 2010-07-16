@@ -30,7 +30,7 @@ import javax.swing.SwingConstants;
  * @since JDK1.6
  */
 public class AboutDialog extends JDialog {
-
+	
 	private static final long serialVersionUID = -1928746320304732900L;
 	private JPanel pnlMain = new JPanel();
 	private JLabel lblLogo;
