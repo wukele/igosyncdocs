@@ -121,11 +121,11 @@ public class LoginFrame extends JFrame {
 
 	public boolean validateUsernameAndPassword() {
 		boolean result = false;
-		if (txtUsername.getText().equals("")) {
+		if (txtUsername.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(this,
 					"Please input your username for login.",
 					"iGoSyncDocs Error", JOptionPane.ERROR_MESSAGE);
-		}else if(new String(txtPassword.getPassword()).equals("")) {
+		}else if(new String(txtPassword.getPassword()).trim().equals("")) {
 			JOptionPane.showMessageDialog(this,
 					"Please input your password for login.",
 					"iGoSyncDocs Error", JOptionPane.ERROR_MESSAGE);			

@@ -42,6 +42,7 @@ import barrywei.igosyncdocs.action.RenameAction;
 import barrywei.igosyncdocs.action.ShowAboutDialogAction;
 import barrywei.igosyncdocs.action.ShowShareDocsDialogAction;
 import barrywei.igosyncdocs.action.StarAction;
+import barrywei.igosyncdocs.action.SystemTrayAction;
 import barrywei.igosyncdocs.action.TrashAction;
 import barrywei.igosyncdocs.action.UploadFileAction;
 import barrywei.igosyncdocs.action.ViewOnLineAction;
@@ -363,6 +364,8 @@ public class IGoSyncDocsMain extends JFrame {
 		
 		btnSearch.addActionListener(new BaseSearchAction(this));
 		
+		this.addWindowListener(new SystemTrayAction(this));
+		
 		
 	}//end of constructor
 
@@ -483,5 +486,4 @@ public class IGoSyncDocsMain extends JFrame {
 	public String getSearchText() {
 		return this.txtSearch.getText().trim();
 	}
-	
 }
