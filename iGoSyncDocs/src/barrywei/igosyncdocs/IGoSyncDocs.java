@@ -38,6 +38,7 @@ public class IGoSyncDocs {
 			UIManager.put("MenuItemUI", BasicMenuItemUI.class.getName());
 			UIManager.put("MenuUI", BasicMenuUI.class.getName());
 
+			//UIManager.setLookAndFeel(new com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel());
 			LoginFrame login = new LoginFrame();
 			FaceRunner.run(login, new Dimension(350, 280), IConstant.App_Name+" "+IConstant.App_Version, true);
 			login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -22,7 +22,7 @@ import java.util.Set;
 public class ServiceUrlBuilder {
 
 	public static String MainFrameTitle = "iGoSyncDocs";
-	public static String AppName = "BarryWei-iGoSyncDocs-v1.0";
+	public static String AppName = "BarryWei-iGoSyncDocs-Beta";
 
 	public static final String DEFAULT_AUTH_PROTOCOL = "https";
 	public static final String DEFAULT_AUTH_HOST = "docs.google.com";
