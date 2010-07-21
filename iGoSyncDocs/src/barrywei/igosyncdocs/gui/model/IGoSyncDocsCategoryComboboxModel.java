@@ -70,10 +70,6 @@ public class IGoSyncDocsCategoryComboboxModel extends DefaultComboBoxModel {
 		others.setText("Other Files");
 		others.setType(ICategory.OtherFiles);
 		
-//		draft.setIcon(IGoImageManager.getInstance().getIcon("listicon/doc.png"));
-//		draft.setText("Draft");
-//		draft.setType(ICategory.Drafted);
-		
 		addElement(all);
 		addElement(documents);
 		addElement(spreadsheet);
@@ -81,7 +77,6 @@ public class IGoSyncDocsCategoryComboboxModel extends DefaultComboBoxModel {
 		addElement(stared);
 		addElement(trashed);
 		addElement(hidden);
-		//addElement(draft);
 		addElement(others);
 		
 	}

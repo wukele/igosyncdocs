@@ -364,7 +364,7 @@ public class IGoSyncDocsMain extends JFrame {
 		
 		btnSearch.addActionListener(new BaseSearchAction(this));
 		
-		this.addWindowListener(new SystemTrayAction(this));
+		addWindowListener(new SystemTrayAction(this));
 		
 		
 	}//end of constructor

@@ -20,6 +20,7 @@ import javax.swing.table.AbstractTableModel;
 import com.google.gdata.data.docs.DocumentListEntry;
 
 import barrywei.igosyncdocs.bean.ICategory;
+import barrywei.igosyncdocs.bean.IConstant;
 import barrywei.igosyncdocs.bean.IGoImageManager;
 import barrywei.igosyncdocs.biz.IGoSyncDocsBiz;
 import barrywei.igosyncdocs.biz.impl.SyncDocsException;
@@ -252,12 +253,9 @@ public class IGoSyncDocsRemoteViewTableModel extends AbstractTableModel {
 			return IGoImageManager.getInstance().getIcon(
 					"listicon/presentation.png");
 		else {
-			//String title = entry.getTitle().getPlainText();
-			//System.out.println(entry.getType());
-			//String fileExtensiton = title.substring(title.lastIndexOf("."));
 			String fileExtensiton = entry.getType();
 			String userDir = System.getProperty("user.home");
-			File file = new File(userDir+"/iGoSyncDocs-Temp." + fileExtensiton);
+			File file = new File(userDir+"/"+IConstant.App_Name+"-"+IConstant.App_Version+"/iGoSyncDocs-Temp." + fileExtensiton);
 			if (!file.exists())
 				try {
 					file.createNewFile();
