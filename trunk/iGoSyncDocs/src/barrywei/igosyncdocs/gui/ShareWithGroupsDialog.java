@@ -76,7 +76,15 @@ public class ShareWithGroupsDialog extends JDialog {
 			this.frame = frame;
 			biz = AbstractFactory.createSyncDocsBizObject();
 			initComponents();
-			initNeededData();
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						initNeededData();
+					} catch (SyncDocsException e) {
+						JOptionPane.showMessageDialog(null, e.getMessage(),"IGoSyncDocs Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}).start();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(),"IGoSyncDocs Error", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
