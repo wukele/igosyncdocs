@@ -15,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 
 import barrywei.igosyncdocs.action.DialogCloseAction;
+import barrywei.igosyncdocs.bean.IGoImageManager;
 import barrywei.igosyncdocs.bean.JLinkLabel;
 
 import java.awt.Font;
@@ -51,7 +52,7 @@ public class AboutDialog extends JDialog {
 		setContentPane(pnlMain);
 		pnlMain.setLayout(null);
 		pnlMain.setBorder(new EmptyBorder(5,5,5,5));
-		lblLogo = new JLabel();
+		lblLogo = new JLabel(IGoImageManager.getInstance().getIcon("logo-180-250.png"));
 		lblLogo.setBorder(new TitledBorder(""));
 		lblLogo.setBounds(10, 10, 180, 250);
 		pnlMain.add(lblLogo);
@@ -65,20 +66,20 @@ public class AboutDialog extends JDialog {
 		lblBlodMessage.setBounds(200, 10, 208, 23);
 		pnlMain.add(lblBlodMessage);
 		
-		lblMessage1 = new JLabel("<html>iGoSyncDocs is a desktop application(Swing based) that offers an easy way to access and synchronize files to Google Docs across multiple computers.</html>");
+		lblMessage1 = new JLabel("<html><b>iGoSyncDocs</b> is a desktop application(Swing based) that offers an easy way to access and synchronize files to Google Docs across multiple computers.</html>");
 		lblMessage1.setFont(new Font("SimSun", Font.PLAIN, 14));
 		lblMessage1.setVerticalAlignment(SwingConstants.TOP);
 		lblMessage1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMessage1.setBounds(210, 43, 245, 99);
 		pnlMain.add(lblMessage1);
 		
-		String text = "<html>Right now it's open source software.Please visit Google Code site to check the newest version.</html>";
+		String text = "<html>Right now it's <b>open source software</b>.Please visit Google Code site to know more about this version.</html>";
 		String url = "http://code.google.com/p/igosyncdocs";
 		labelMessage2 = new JLinkLabel(text, url);
 		//labelMessage2 = new JLabel("<html>Right now it's open source software.please visit Google Code site to check the newest version.</html>");
 		labelMessage2.setVerticalAlignment(SwingConstants.TOP);
 		labelMessage2.setFont(new Font("SimSun", Font.PLAIN, 14));
-		labelMessage2.setBounds(210, 138, 245, 63);
+		labelMessage2.setBounds(210, 138, 245, 88);
 		pnlMain.add(labelMessage2);
 		setResizable(false);
 		setModal(true);
