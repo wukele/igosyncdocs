@@ -106,7 +106,7 @@ public class LoginSplashFrame extends JFrame {
 				UserConfig.Username = this.username;
 				IGoSyncDocsMain testMain = new IGoSyncDocsMain();
 				testMain.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-				FaceRunner.run(testMain, new Dimension(950,650), IConstant.App_Name+" "+IConstant.App_Version,true);
+				FaceRunner.run(testMain, new Dimension(950,655), IConstant.App_Name+" "+IConstant.App_Version,true);
 				
 			} catch (Exception e) {
 				progressBar.setIndeterminate(false);

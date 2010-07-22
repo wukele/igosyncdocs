@@ -40,6 +40,7 @@ import barrywei.igosyncdocs.action.HideAction;
 import barrywei.igosyncdocs.action.RefreshAction;
 import barrywei.igosyncdocs.action.RenameAction;
 import barrywei.igosyncdocs.action.ShowAboutDialogAction;
+import barrywei.igosyncdocs.action.ShowPreferenceDialogAction;
 import barrywei.igosyncdocs.action.ShowShareDocsDialogAction;
 import barrywei.igosyncdocs.action.StarAction;
 import barrywei.igosyncdocs.action.SystemTrayAction;
@@ -47,6 +48,7 @@ import barrywei.igosyncdocs.action.TrashAction;
 import barrywei.igosyncdocs.action.UploadFileAction;
 import barrywei.igosyncdocs.action.ViewOnLineAction;
 import barrywei.igosyncdocs.bean.ICategory;
+import barrywei.igosyncdocs.bean.IGoImageManager;
 import barrywei.igosyncdocs.bean.UserConfig;
 import barrywei.igosyncdocs.biz.IGoSyncDocsBiz;
 import barrywei.igosyncdocs.factory.AbstractFactory;
@@ -110,26 +112,30 @@ public class IGoSyncDocsMain extends JFrame {
 	private JMenuItem miShareGroups = new JMenuItem("Google Group");
 	private JMenuItem miShareDomain = new JMenuItem("Google Apps domain");
 	
-	private final JPanel pnlLeftTop = new JPanel();
-	private final JTextField txtSearch = new JTextField(25);
-	private final JButton btnSearch = new JButton(" Search ");
-	private final JLabel lblStatusMessage = new JLabel("Connected to "+UserConfig.Username);
-	private final JLabel lblTotalDocuments = new JLabel("Total : 0");
-	private final JProgressBar progressBar = new JProgressBar();
+	private JPanel pnlLeftTop = new JPanel();
+	private JTextField txtSearch = new JTextField(25);
+	private JButton btnSearch = new JButton(" Search ",IGoImageManager.getInstance().getIcon("btn_search.gif"));
+	private JLabel lblStatusMessage = new JLabel("Connected to "+UserConfig.Username);
+	private JLabel lblTotalDocuments = new JLabel("Total : 0");
+	private JProgressBar progressBar = new JProgressBar();
 	
 	private IGoSyncDocsBiz biz = null;
 	
-	private final JMenuBar menuBar = new JMenuBar();
-	private final JMenu mnFile = new JMenu("File");
-	private final JMenu mnSettings = new JMenu("Settings");
-	private final JMenu mnHelp = new JMenu("Help");
-	private final JMenuItem miAboutiGo = new JMenuItem("About iGoSyncDocs");
-	private final JMenuItem miCreateDocument = new JMenuItem("New Document");
-	private final JMenuItem miCreatePresentation = new JMenuItem("New Presentation");
-	private final JMenuItem miExit = new JMenuItem("Exit");
-	private final JMenuItem miUploadFiles = new JMenuItem("Upload File(s)");
-	private final JMenuItem miCreateSpreadsheet = new JMenuItem("New Spreadsheet");
-	private final JMenuItem miRefreshAll = new JMenuItem("Refresh All");
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu mnFile = new JMenu("File");
+	private JMenu mnSettings = new JMenu("Settings");
+	private JMenu mnHelp = new JMenu("Help");
+	private JMenuItem miAboutiGo = new JMenuItem("About iGoSyncDocs");
+	private JMenuItem miCreateDocument = new JMenuItem("New Document");
+	private JMenuItem miCreatePresentation = new JMenuItem("New Presentation");
+	private JMenuItem miExit = new JMenuItem("Exit");
+	private JMenuItem miUploadFiles = new JMenuItem("Upload File(s)");
+	private JMenuItem miCreateSpreadsheet = new JMenuItem("New Spreadsheet");
+	private JMenuItem miRefreshAll = new JMenuItem("Refresh All");
+	private JMenuItem miPreferences = new JMenuItem("<html><b>System Preferences</b></html>");
+	private JMenuItem miDocument = new JMenuItem("Document Settings");
+	private JMenuItem miPresentation = new JMenuItem("Presentation Settings");
+	private JMenuItem miSpreadsheets = new JMenuItem("Spreadsheet Settings");
 
 	public IGoSyncDocsMain() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(IGoSyncDocsMain.class.getResource("/ch/randelshofer/quaqua/images/FileView.computerIcon.png")));
@@ -177,7 +183,15 @@ public class IGoSyncDocsMain extends JFrame {
 		mnFile.add(miExit);
 		
 		mnSettings.setMnemonic('S');
-		//menuBar.add(mnSettings);
+		miDocument.setAccelerator(KeyStroke.getKeyStroke("F5"));
+		mnSettings.add(miDocument);
+		miPresentation.setAccelerator(KeyStroke.getKeyStroke("F6"));
+		mnSettings.add(miPresentation);
+		miSpreadsheets.setAccelerator(KeyStroke.getKeyStroke("F7"));
+		mnSettings.add(miSpreadsheets);
+		miPreferences.setAccelerator(KeyStroke.getKeyStroke("F8"));
+		mnSettings.add(miPreferences);
+		menuBar.add(mnSettings);
 		
 		mnHelp.setMnemonic('H');
 		mnHelp.add(miAboutiGo);
@@ -224,7 +238,7 @@ public class IGoSyncDocsMain extends JFrame {
 		pnlLeftTop.add(btnSearch);
 
 		pnlStatus = new JPanel();
-		pnlStatus.setPreferredSize(new Dimension(950, 13));
+		pnlStatus.setPreferredSize(new Dimension(950, 15));
 		pnlMain.add(pnlStatus, BorderLayout.SOUTH);
 		pnlStatus.setLayout(new BorderLayout(20,10));
 		
@@ -364,8 +378,9 @@ public class IGoSyncDocsMain extends JFrame {
 		
 		btnSearch.addActionListener(new BaseSearchAction(this));
 		
-		addWindowListener(new SystemTrayAction(this));
+		miPreferences.addActionListener(new ShowPreferenceDialogAction(this));
 		
+		addWindowListener(new SystemTrayAction(this));
 		
 	}//end of constructor
 
