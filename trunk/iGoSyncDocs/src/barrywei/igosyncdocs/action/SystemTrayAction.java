@@ -55,7 +55,8 @@ public class SystemTrayAction extends WindowAdapter {
 				FaceRunner.run(dialog, new Dimension(420, 220),IConstant.App_Name + " " + IConstant.App_Version, true);
 			}
 		} catch (Exception e2) {
-			e2.printStackTrace();
+			JOptionPane.showMessageDialog(null,e2.getMessage(), "iGoSyncDocs",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -67,8 +68,9 @@ public class SystemTrayAction extends WindowAdapter {
 				frame.dispose();
 				System.exit(1);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {			
+			JOptionPane.showMessageDialog(null,e.getMessage(), "iGoSyncDocs",
+				JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

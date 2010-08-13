@@ -191,7 +191,7 @@ public class IGoSyncDocsMain extends JFrame {
 		mnSettings.add(miSpreadsheets);
 		miPreferences.setAccelerator(KeyStroke.getKeyStroke("F8"));
 		mnSettings.add(miPreferences);
-		menuBar.add(mnSettings);
+		//menuBar.add(mnSettings);	//settings menu
 		
 		mnHelp.setMnemonic('H');
 		mnHelp.add(miAboutiGo);
