@@ -11,7 +11,6 @@ import javax.swing.JTable;
 
 import barrywei.igosyncdocsv2.gui.model.AllItemTableModel;
 import barrywei.igosyncdocsv2.gui.renderer.EntityTableCellRenderer;
-import barrywei.igosyncdocsv2.gui.renderer.EntityTableHeaderRenderer;
 
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
@@ -44,17 +43,7 @@ public class AllItemPanel extends JPanel {
 		tblAllItems = new JTable();
 		tblAllItems.setModel(new AllItemTableModel());
 		tblAllItems.setName("tblAllItems");
-		tblAllItems.getTableHeader().setReorderingAllowed(false);
-		tblAllItems.setRowHeight(20);
-		tblAllItems.setAutoCreateRowSorter(true);
-		tblAllItems.getColumnModel().getColumn(0).setPreferredWidth(30);
-		tblAllItems.getColumnModel().getColumn(0).setCellRenderer(new EntityTableCellRenderer());
-		tblAllItems.getColumnModel().getColumn(1).setPreferredWidth(30);
-		tblAllItems.getColumnModel().getColumn(1).setCellRenderer(new EntityTableCellRenderer());
-		tblAllItems.getColumnModel().getColumn(2).setPreferredWidth(500);
-		tblAllItems.getColumnModel().getColumn(2).setCellRenderer(new EntityTableCellRenderer());
-		tblAllItems.getColumnModel().getColumn(3).setPreferredWidth(130);
-		tblAllItems.getColumnModel().getColumn(3).setCellRenderer(new EntityTableCellRenderer());
+		initTableSettings(tblAllItems);
 		pnlCenter.setViewportView(tblAllItems);
 		
 		pnlRight = new JScrollPane();
@@ -66,6 +55,20 @@ public class AllItemPanel extends JPanel {
 		pnlAcl = new JPanel();
 		pnlAcl.setName("pnlAcl");
 		pnlRight.setViewportView(pnlAcl);
+	}
+
+	private void initTableSettings(JTable tbl) {
+		tbl.getTableHeader().setReorderingAllowed(false);
+		tbl.setRowHeight(20);
+		tbl.setAutoCreateRowSorter(true);
+		tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tbl.getColumnModel().getColumn(0).setCellRenderer(new EntityTableCellRenderer());
+		tbl.getColumnModel().getColumn(1).setPreferredWidth(30);
+		tbl.getColumnModel().getColumn(1).setCellRenderer(new EntityTableCellRenderer());
+		tbl.getColumnModel().getColumn(2).setPreferredWidth(500);
+		tbl.getColumnModel().getColumn(2).setCellRenderer(new EntityTableCellRenderer());
+		tbl.getColumnModel().getColumn(3).setPreferredWidth(130);
+		tbl.getColumnModel().getColumn(3).setCellRenderer(new EntityTableCellRenderer());
 	}
 	
 	private static final long serialVersionUID = -858390102352879991L;
