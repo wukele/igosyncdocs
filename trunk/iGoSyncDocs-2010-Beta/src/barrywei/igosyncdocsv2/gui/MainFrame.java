@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
+import barrywei.igosyncdocsv2.bean.SystemRuntime;
 import barrywei.igosyncdocsv2.gui.panel.AllItemPanel;
 import barrywei.igosyncdocsv2.gui.panel.MyFolderPanel;
 import barrywei.igosyncdocsv2.resource.LanguageResource;
@@ -114,7 +115,8 @@ public class MainFrame extends JFrame {
 		pnlMain.add(pnlStatusbar, BorderLayout.SOUTH);
 		pnlStatusbar.setLayout(new BorderLayout(5, 3));
 		
-		lblConnectMessage = new JLabel("Connected to baratjan@gmail.com");
+		String strConnectedTo = LanguageResource.getStringValue("main.connected_to");
+		lblConnectMessage = new JLabel(strConnectedTo.replace("{1}",SystemRuntime.Settings.UserName));
 		lblConnectMessage.setName("lblConnectMessage");
 		pnlStatusbar.add(lblConnectMessage, BorderLayout.WEST);
 		
@@ -254,6 +256,8 @@ public class MainFrame extends JFrame {
 		pnlSharedWithMe = new JPanel();
 		pnlSharedWithMe.setName("pnlSharedWithMe");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_sharedwithme"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/doc.png")), pnlSharedWithMe, null);
+		
+		pnlTabbedPane.setSelectedIndex(1);
 		
 		
 	}

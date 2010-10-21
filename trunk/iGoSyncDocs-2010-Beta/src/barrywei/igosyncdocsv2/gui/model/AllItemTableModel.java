@@ -28,15 +28,12 @@ public class AllItemTableModel extends AbstractTableModel{
 	private Vector<String> columnName;
 
 	public AllItemTableModel() {
-		entries = IGoSyncDocsBiz.getAllDocuments();
+		entries = IGoSyncDocsBiz.getAllItems();
 		columnName = new Vector<String>();
-		columnName.add("type");
-		columnName.add("title");
-		columnName.add("resource id");
-		columnName.add("etag");
-		columnName.add("document link");
-		columnName.add("kind");
-		columnName.add("update time");
+		columnName.add("Star");
+		columnName.add("Type");
+		columnName.add("Name");
+		columnName.add("Last Updated");
 	}
 
 	public int getColumnCount() {
@@ -56,34 +53,8 @@ public class AllItemTableModel extends AbstractTableModel{
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(entries == null)
 			return null;
-		else {
-			DocumentListEntry entry = entries.get(rowIndex);
-			String message = "";
-			switch (columnIndex) {
-			case 0:
-				message = entry.getType();
-				break;
-			case 1:
-				message = entry.getTitle().getPlainText();
-				break;
-			case 2:
-				message = entry.getResourceId();
-				break;
-			case 3:
-				message = entry.getEtag();
-				break;
-			case 4:
-				message = entry.getDocumentLink().getHref();
-				break;
-			case 5:
-				message = entry.getKind();
-				break;
-			case 6:
-				message = entry.getUpdated().toStringRfc822();
-				break;				
-			}
-			return message;
-		}//end of if
+		else
+			return entries.get(rowIndex);
 	}
 	
 	public String getColumnName(int column) {

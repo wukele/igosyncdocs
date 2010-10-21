@@ -23,6 +23,7 @@ public class UserSettings implements Serializable{
 	public String Config_File_Path = App_Data_Home+File.separator+"iGoSyncDocs.Config.conf";
 	public Locale UserLanguage = Locale.US;
 	
+	public String UserName = "";
 	public boolean UseProxy = false;
 	public String Proxy_Server = "";
 	public String Proxy_Port = "";
