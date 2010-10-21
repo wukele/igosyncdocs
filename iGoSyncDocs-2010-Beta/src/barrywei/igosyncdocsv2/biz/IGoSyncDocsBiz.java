@@ -92,6 +92,14 @@ public class IGoSyncDocsBiz {
 		}
 	}//end of method
 	
+	public static List<DocumentListEntry> getAllItems() {
+		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
+		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+			list.add(entry);
+		}
+		return list;
+	}
+	
 	public static List<DocumentListEntry> getAllDocuments() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {

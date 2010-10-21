@@ -10,6 +10,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import barrywei.igosyncdocsv2.gui.model.AllItemTableModel;
+import barrywei.igosyncdocsv2.gui.renderer.EntityTableCellRenderer;
+import barrywei.igosyncdocsv2.gui.renderer.EntityTableHeaderRenderer;
+
+import java.awt.Dimension;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import java.awt.Color;
 
 /**
  * 
@@ -20,26 +27,51 @@ import barrywei.igosyncdocsv2.gui.model.AllItemTableModel;
  * @since JDK1.6
  */
 public class AllItemPanel extends JPanel {
-	
-	private static final long serialVersionUID = -858390102352879991L;
-	private JScrollPane scrollPane;
-	private JTable table;
 
 	public AllItemPanel() {
 
 		initComponents();
 	}
+	
 	private void initComponents() {
-		setLayout(new BorderLayout(0, 0));
+		setLayout(new BorderLayout(5, 0));
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setName("scrollPane");
-		add(scrollPane, BorderLayout.CENTER);
+		pnlCenter = new JScrollPane();
+		pnlCenter.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlCenter.setName("pnlCenter");
+		add(pnlCenter, BorderLayout.CENTER);
 		
-		table = new JTable();
-		table.setModel(new AllItemTableModel());
-		table.setName("table");
-		scrollPane.setViewportView(table);
+		tblAllItems = new JTable();
+		tblAllItems.setModel(new AllItemTableModel());
+		tblAllItems.setName("tblAllItems");
+		tblAllItems.getTableHeader().setReorderingAllowed(false);
+		tblAllItems.setRowHeight(20);
+		tblAllItems.setAutoCreateRowSorter(true);
+		tblAllItems.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tblAllItems.getColumnModel().getColumn(0).setCellRenderer(new EntityTableCellRenderer());
+		tblAllItems.getColumnModel().getColumn(1).setPreferredWidth(30);
+		tblAllItems.getColumnModel().getColumn(1).setCellRenderer(new EntityTableCellRenderer());
+		tblAllItems.getColumnModel().getColumn(2).setPreferredWidth(500);
+		tblAllItems.getColumnModel().getColumn(2).setCellRenderer(new EntityTableCellRenderer());
+		tblAllItems.getColumnModel().getColumn(3).setPreferredWidth(130);
+		tblAllItems.getColumnModel().getColumn(3).setCellRenderer(new EntityTableCellRenderer());
+		pnlCenter.setViewportView(tblAllItems);
+		
+		pnlRight = new JScrollPane();
+		pnlRight.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlRight.setPreferredSize(new Dimension(200, 20));
+		pnlRight.setName("pnlRight");
+		add(pnlRight, BorderLayout.EAST);
+		
+		pnlAcl = new JPanel();
+		pnlAcl.setName("pnlAcl");
+		pnlRight.setViewportView(pnlAcl);
 	}
+	
+	private static final long serialVersionUID = -858390102352879991L;
+	private JScrollPane pnlCenter;
+	private JTable tblAllItems;
+	private JScrollPane pnlRight;
+	private JPanel pnlAcl;	
 
 }

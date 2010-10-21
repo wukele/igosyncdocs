@@ -7,6 +7,7 @@ package barrywei.igosyncdocsv2.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import barrywei.igosyncdocsv2.bean.SystemRuntime;
 import barrywei.igosyncdocsv2.biz.IGoSyncDocsBiz;
 import barrywei.igosyncdocsv2.biz.IGoSyncDocsException;
 import barrywei.igosyncdocsv2.gui.LoginFrame;
@@ -42,9 +43,16 @@ public class LoginAction implements ActionListener ,Runnable{
 		SplashProgressDialog splash = new SplashProgressDialog();
 		splash.setLocationRelativeTo(null);
 		splash.setVisible(true);
-		String message = IGoSyncDocsBiz.login(frLogin.getUsername(), frLogin.getPassword());
+		
+		//auto-complete user name
+		String userName = frLogin.getUsername();
+		if(userName.lastIndexOf("@") == -1)
+			userName+="@gmail.com";
+		
+		String message = IGoSyncDocsBiz.login(userName, frLogin.getPassword());
 		if(message.equals("success")) {
 			try {
+				SystemRuntime.Settings.UserName = userName;
 				splash.setMessage(LanguageResource.getStringValue("main.splash.loading"));				
 				IGoSyncDocsBiz.cacheAllItem();
 				//if success,start to load data from server.
