@@ -1,37 +1,36 @@
 /**
- * @(#)AllItemPanel.java Oct 12, 2010
+ * @(#)SharedWithMePanel.java Oct 22, 2010
  * Copyright 2010 BarryWei. All rights reserved.
  */
 package barrywei.igosyncdocsv2.gui.panel;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 import barrywei.igosyncdocsv2.gui.model.EntityTableModel;
 import barrywei.igosyncdocsv2.gui.renderer.EntityTableCellRenderer;
-
-import java.awt.Dimension;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-import java.awt.Color;
 
 /**
  * 
  *
  *
  * @author BarryWei
- * @version 1.0, Oct 12, 2010
+ * @version 1.0, Oct 22, 2010
  * @since JDK1.6
  */
-public class AllItemPanel extends JPanel {
-
-	public AllItemPanel() {
-
+public class SharedWithMePanel extends JPanel{
+	
+	public SharedWithMePanel() {
 		initComponents();
 	}
-	
+
 	private void initComponents() {
 		setLayout(new BorderLayout(5, 0));
 		
@@ -41,7 +40,7 @@ public class AllItemPanel extends JPanel {
 		add(pnlCenter, BorderLayout.CENTER);
 		
 		tblAllItems = new JTable();
-		tblAllItems.setModel(new EntityTableModel("all"));
+		tblAllItems.setModel(new EntityTableModel("shared"));
 		tblAllItems.setName("tblAllItems");
 		initTableSettings(tblAllItems);
 		pnlCenter.setViewportView(tblAllItems);
@@ -71,10 +70,10 @@ public class AllItemPanel extends JPanel {
 		tbl.getColumnModel().getColumn(3).setCellRenderer(new EntityTableCellRenderer());
 	}
 	
-	private static final long serialVersionUID = -858390102352879991L;
 	private JScrollPane pnlCenter;
 	private JTable tblAllItems;
 	private JScrollPane pnlRight;
-	private JPanel pnlAcl;	
+	private JPanel pnlAcl;			
+	private static final long serialVersionUID = -4297049468691141935L;
 
 }

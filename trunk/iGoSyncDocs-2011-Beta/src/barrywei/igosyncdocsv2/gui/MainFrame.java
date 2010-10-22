@@ -15,7 +15,15 @@ import javax.swing.JMenu;
 import barrywei.igosyncdocsv2.action.SystemTrayAction;
 import barrywei.igosyncdocsv2.bean.SystemRuntime;
 import barrywei.igosyncdocsv2.gui.panel.AllItemPanel;
+import barrywei.igosyncdocsv2.gui.panel.DocumentPanel;
+import barrywei.igosyncdocsv2.gui.panel.HiddenObjectsPanel;
 import barrywei.igosyncdocsv2.gui.panel.MyFolderPanel;
+import barrywei.igosyncdocsv2.gui.panel.OtherFilesPanel;
+import barrywei.igosyncdocsv2.gui.panel.PresentationPanel;
+import barrywei.igosyncdocsv2.gui.panel.SharedWithMePanel;
+import barrywei.igosyncdocsv2.gui.panel.SpreadsheetPanel;
+import barrywei.igosyncdocsv2.gui.panel.StaredObjectsPanel;
+import barrywei.igosyncdocsv2.gui.panel.TrashedObjectsPanel;
 import barrywei.igosyncdocsv2.resource.LanguageResource;
 
 import javax.swing.JPanel;
@@ -226,35 +234,35 @@ public class MainFrame extends JFrame {
 		pnlAllItem.setName("pnlAllItem");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_allitem"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/all.png")), pnlAllItem, null);
 		
-		pnlDocument = new JPanel();
+		pnlDocument = new DocumentPanel();
 		pnlDocument.setName("pnlDocument");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_document"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/doc.png")), pnlDocument, null);
 		
-		pnlPresentation = new JPanel();
+		pnlPresentation = new PresentationPanel();
 		pnlPresentation.setName("pnlPresentation");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_presentation"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/presentation.png")), pnlPresentation, null);
 		
-		pnlSpreadsheet = new JPanel();
+		pnlSpreadsheet = new SpreadsheetPanel();
 		pnlSpreadsheet.setName("pnlSpreadsheet");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_spreadsheet"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/spreadsheet.png")), pnlSpreadsheet, null);
 		
-		pnlOtherfiles = new JPanel();
+		pnlOtherfiles = new OtherFilesPanel();
 		pnlOtherfiles.setName("pnlOtherfiles");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_otherfiles"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/all.png")), pnlOtherfiles, null);
 		
-		pnlHidden = new JPanel();
+		pnlHidden = new HiddenObjectsPanel();
 		pnlHidden.setName("pnlHidden");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_hidden"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/hidden.png")), pnlHidden, null);
 		
-		pnlStared = new JPanel();
+		pnlStared = new StaredObjectsPanel();
 		pnlStared.setName("pnlStared");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_stared"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/stared.png")), pnlStared, null);
 		
-		pnlTrashed = new JPanel();
+		pnlTrashed = new TrashedObjectsPanel();
 		pnlTrashed.setName("pnlTrashed");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_trashed"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/trashed.png")), pnlTrashed, null);
 		
-		pnlSharedWithMe = new JPanel();
+		pnlSharedWithMe = new SharedWithMePanel();
 		pnlSharedWithMe.setName("pnlSharedWithMe");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_sharedwithme"), new ImageIcon(MainFrame.class.getResource("/barrywei/igosyncdocsv2/resource/image/doc.png")), pnlSharedWithMe, null);
 		

@@ -17,6 +17,8 @@ import com.google.gdata.client.GoogleService.NotVerifiedException;
 import com.google.gdata.client.GoogleService.ServiceUnavailableException;
 import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
+import com.google.gdata.data.acl.AclEntry;
+import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
@@ -95,7 +97,8 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllItems() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			list.add(entry);
+			if(!entry.isHidden())
+				list.add(entry);
 		}
 		return list;
 	}
@@ -103,7 +106,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllDocuments() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("document"))
+			if(entry.getType().equals("document") && !entry.isHidden())
 				list.add(entry);
 		}
 		return list;
@@ -112,7 +115,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllPresentations() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("presentation"))
+			if(entry.getType().equals("presentation") && !entry.isHidden())
 				list.add(entry);
 		}
 		return list;
@@ -121,7 +124,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllSpreadsheets() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("spreadsheet"))
+			if(entry.getType().equals("spreadsheet") && !entry.isHidden())
 				list.add(entry);
 		}
 		return list;
@@ -130,9 +133,57 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllOthers() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if( !entry.getType().equals("document") && !entry.getType().equals("presentation") && !entry.getType().equals("spreadsheet"))
+			if( !entry.getType().equals("document") && !entry.getType().equals("presentation") && !entry.getType().equals("spreadsheet") && !entry.isHidden())
 				list.add(entry);
 		}
 		return list;
 	}//end of method
+	
+	public static List<DocumentListEntry> getHiddenObjects() {
+		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
+		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+			if(entry.isHidden())
+				list.add(entry);
+		}
+		return list;
+	}
+	
+	public static List<DocumentListEntry> getStaredObjects() {
+		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
+		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+			if(entry.isStarred() && !entry.isHidden())
+				list.add(entry);
+		}
+		return list;
+	}
+	
+	public static List<DocumentListEntry> getTrashedObjects() {
+		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
+		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+			if(entry.isTrashed() && !entry.isHidden())
+				list.add(entry);
+		}		
+		return list;
+	}
+	
+	public static List<DocumentListEntry> getSharedWithMeObjects() {
+		boolean isShared = false;
+		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
+		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+			AclFeed aclFeeds = entry.getAclFeed();
+			for(AclEntry ae : aclFeeds.getEntries()) {
+				if(ae != null) {
+					if(ae.getScope().toString().equalsIgnoreCase("user") && !ae.getRole().getValue().equalsIgnoreCase("owner")) {
+						isShared = true;
+						break;
+					}					
+				}
+			}
+			if(isShared) {
+				list.add(entry);
+				isShared = false;
+			}
+		}
+		return list;		
+	}
 }
