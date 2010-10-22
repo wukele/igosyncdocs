@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
+import barrywei.igosyncdocsv2.action.SystemTrayAction;
 import barrywei.igosyncdocsv2.bean.SystemRuntime;
 import barrywei.igosyncdocsv2.gui.panel.AllItemPanel;
 import barrywei.igosyncdocsv2.gui.panel.MyFolderPanel;
@@ -259,6 +260,9 @@ public class MainFrame extends JFrame {
 		
 		pnlTabbedPane.setSelectedIndex(1);
 		
+		
+		//event handler
+		addWindowListener(new SystemTrayAction(this));
 		
 	}
 
