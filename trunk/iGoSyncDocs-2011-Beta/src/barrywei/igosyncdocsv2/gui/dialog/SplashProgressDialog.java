@@ -12,6 +12,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
+import barrywei.igosyncdocsv2.action.AppExitAction;
 import barrywei.igosyncdocsv2.resource.LanguageResource;
 
 /**
@@ -29,7 +30,7 @@ public class SplashProgressDialog extends JDialog {
 	}
 
 	private void initComponents() {
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setTitle(LanguageResource.getStringValue("app.title"));
 		
 		panel = new JPanel();
@@ -54,6 +55,8 @@ public class SplashProgressDialog extends JDialog {
 		lblLogo.setBounds(0, 0, 440, 220);
 		lblLogo.setName("lblLogo");
 		panel.add(lblLogo);
+		
+		addWindowListener(new AppExitAction());
 	}
 	
 	public synchronized void setMessage(String message) {
