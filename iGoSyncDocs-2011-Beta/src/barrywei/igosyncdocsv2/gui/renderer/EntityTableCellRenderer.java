@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableCellRenderer;
 
 import barrywei.igosyncdocsv2.bean.SystemRuntime;
+import barrywei.igosyncdocsv2.biz.IGoSyncDocsBiz;
 import barrywei.igosyncdocsv2.resource.ImageResource;
 
 import com.google.gdata.data.docs.DocumentListEntry;
@@ -52,6 +53,8 @@ public class EntityTableCellRenderer extends JLabel implements TableCellRenderer
 			}else if(column == 2) {
 				setText(entry.getTitle().getPlainText());
 			}else if(column == 3) {
+				setText(IGoSyncDocsBiz.getOwner(entry));
+			}else if(column == 4) {
 				setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(entry.getUpdated().getValue())));
 			}
 		}//end of if

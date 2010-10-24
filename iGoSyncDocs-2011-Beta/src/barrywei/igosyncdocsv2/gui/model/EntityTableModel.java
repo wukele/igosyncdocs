@@ -50,6 +50,7 @@ public class EntityTableModel extends AbstractTableModel{
 		columnName.add("Star");
 		columnName.add("Type");
 		columnName.add("Name");
+		columnName.add("Owner");
 		columnName.add("Last Updated");
 	}
 

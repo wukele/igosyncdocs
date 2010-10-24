@@ -25,6 +25,7 @@ import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
 import com.google.gdata.client.docs.DocsService;
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.docs.DocumentEntry;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
@@ -150,6 +151,12 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		folder.setTitle(new PlainTextConstruct(folderName));
 		service.setUserToken(token.getValue());
 		return service.insert(new URL(URLManager.Exact_Title_Search),folder);		
+	}
+	
+	public AclFeed getAclFeed(DocumentListEntry entry)
+			throws MalformedURLException, IOException, ServiceException {
+		return service.getFeed(new URL(entry.getAclFeedLink().getHref()),
+				AclFeed.class);
 	}
 
 }

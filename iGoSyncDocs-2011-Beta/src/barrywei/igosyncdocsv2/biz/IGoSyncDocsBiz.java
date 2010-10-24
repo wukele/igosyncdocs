@@ -76,9 +76,16 @@ public class IGoSyncDocsBiz {
 		return result;
 	}//end of login
 	
+	/**
+	 * Cache all items into memory in order to deal with it
+	 * @throws IGoSyncDocsException
+	 */
 	public static void cacheAllItem() throws IGoSyncDocsException {
 		try {
 			SystemRuntime.CachedDocumentFeed = dao.getAllFeeds();
+			for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+				SystemRuntime.ChachedEntryAclFeed.add(dao.getAclFeed(entry));
+			}
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -167,23 +174,39 @@ public class IGoSyncDocsBiz {
 	}
 	
 	public static List<DocumentListEntry> getSharedWithMeObjects() {
-		boolean isShared = false;
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			AclFeed aclFeeds = entry.getAclFeed();
-			for(AclEntry ae : aclFeeds.getEntries()) {
-				if(ae != null) {
-					if(ae.getScope().toString().equalsIgnoreCase("user") && !ae.getRole().getValue().equalsIgnoreCase("owner")) {
-						isShared = true;
-						break;
-					}					
+		List<AclFeed> aclFeed = SystemRuntime.ChachedEntryAclFeed;
+		List<DocumentListEntry> allEntries = SystemRuntime.CachedDocumentFeed.getEntries();
+		for(int i=0;i<aclFeed.size();i++) {
+			AclFeed feed = aclFeed.get(i);// sequence of document entry
+			for(AclEntry entry : feed.getEntries()) {
+				if(entry.getRole().getValue().equalsIgnoreCase("owner") && !entry.getScope().getValue().equals(SystemRuntime.Settings.UserName)) {
+					list.add(allEntries.get(i));
 				}
-			}
-			if(isShared) {
-				list.add(entry);
-				isShared = false;
-			}
-		}
+			}//end of for
+		}//end of for
 		return list;		
 	}
+	
+	public static List<AclEntry> getAclEntry(DocumentListEntry entry) {
+		List<DocumentListEntry> entires = SystemRuntime.CachedDocumentFeed.getEntries();
+		int index = 0;
+		for(index=0;index<entires.size();index++) {
+			if(entires.get(index).getResourceId().equals(entry.getResourceId()))
+				break;
+		}
+		return SystemRuntime.ChachedEntryAclFeed.get(index).getEntries();
+	}//end of method
+	
+	public static String getOwner(DocumentListEntry entry) {
+		String owner = "";
+		List<AclEntry> enties = getAclEntry(entry);
+		for (int i = 0; i < enties.size(); i++) {
+			AclEntry acl = enties.get(i);
+			if(acl.getRole().getValue().equals("owner")) {
+				owner = acl.getScope().getValue();
+			}
+		}// end of for
+		return owner;
+	}// end of method
 }
