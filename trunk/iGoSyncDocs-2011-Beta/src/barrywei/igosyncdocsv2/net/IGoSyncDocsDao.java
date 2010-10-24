@@ -15,6 +15,7 @@ import com.google.gdata.client.GoogleService.NotVerifiedException;
 import com.google.gdata.client.GoogleService.ServiceUnavailableException;
 import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
+import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
 import com.google.gdata.util.AuthenticationException;
@@ -161,4 +162,14 @@ public interface IGoSyncDocsDao {
 	 * @throws ServiceException
 	 */
 	public DocumentListEntry createFolder(String folderName) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Get entry's acl feed object.
+	 * @param entry
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public AclFeed getAclFeed(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;	
 }

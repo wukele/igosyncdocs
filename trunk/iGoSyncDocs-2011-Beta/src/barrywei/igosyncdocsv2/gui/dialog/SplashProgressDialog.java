@@ -32,6 +32,7 @@ public class SplashProgressDialog extends JDialog {
 	private void initComponents() {
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setTitle(LanguageResource.getStringValue("app.title"));
+		setResizable(false);
 		
 		panel = new JPanel();
 		panel.setName("panel");

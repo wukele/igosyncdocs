@@ -17,7 +17,10 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.docs.DocumentListFeed;
 
 /**
@@ -33,6 +36,7 @@ public class SystemRuntime implements Serializable {
 	private static final long serialVersionUID = 3636286982031235354L;
 	public static UserSettings Settings = new UserSettings();
 	public static DocumentListFeed CachedDocumentFeed = null;
+	public static List<AclFeed> ChachedEntryAclFeed = new ArrayList<AclFeed>();
 	
 	public static void loadUserSettings() throws FileNotFoundException, IOException, ClassNotFoundException {		
 		File file = new File(Settings.Config_File_Path);
