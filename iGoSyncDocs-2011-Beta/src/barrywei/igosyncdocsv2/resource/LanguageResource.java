@@ -16,8 +16,8 @@ import java.util.ResourceBundle;
  * @since JDK1.6
  */
 public class LanguageResource {
-
+	
 	public static String getStringValue(String key) {
-		return ResourceBundle.getBundle("barrywei.igosyncdocsv2.resource.lang.LanguageResource",Locale.getDefault()).getString(key);
+		return ResourceBundle.getBundle("barrywei.igosyncdocsv2.resource.lang.LanguageResource",Locale.US).getString(key);
 	}
 }
