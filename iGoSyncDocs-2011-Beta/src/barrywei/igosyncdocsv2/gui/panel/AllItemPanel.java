@@ -69,6 +69,7 @@ public class AllItemPanel extends JPanel {
 		tbl.getColumnModel().getColumn(2).setCellRenderer(new EntityTableCellRenderer());
 		tbl.getColumnModel().getColumn(3).setPreferredWidth(130);
 		tbl.getColumnModel().getColumn(3).setCellRenderer(new EntityTableCellRenderer());
+		tbl.getColumnModel().getColumn(4).setCellRenderer(new EntityTableCellRenderer());
 	}
 	
 	private static final long serialVersionUID = -858390102352879991L;
