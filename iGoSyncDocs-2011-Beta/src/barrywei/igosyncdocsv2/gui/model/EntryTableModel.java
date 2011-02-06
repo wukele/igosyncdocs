@@ -21,13 +21,17 @@ import com.google.gdata.data.docs.DocumentListEntry;
  * @version 1.0, Oct 19, 2010
  * @since JDK1.6
  */
-public class EntityTableModel extends AbstractTableModel{
+public class EntryTableModel extends AbstractTableModel{
 
 	private static final long serialVersionUID = 3857728294426996858L;
 	private List<DocumentListEntry> entries;
 	private Vector<String> columnName;
+	
+	public List<DocumentListEntry> getEntries() {
+		return this.entries;
+	}
 
-	public EntityTableModel(String type) {
+	public EntryTableModel(String type) {
 		if(type.trim().equalsIgnoreCase("all"))
 			entries = IGoSyncDocsBiz.getAllItems();
 		else if(type.trim().equalsIgnoreCase("document"))

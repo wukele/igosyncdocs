@@ -83,7 +83,7 @@ public class EntityTableCellRenderer extends JLabel implements TableCellRenderer
 			return ImageResource.getIcon("presentation.png");
 		else {
 			String fileExtensiton = entry.getType();
-			String path = SystemRuntime.Settings.App_Data_Home+File.separator+"iGoSyncDocs 2011 beta temp."+fileExtensiton;
+			String path = SystemRuntime.Settings.App_Data_Home+File.separator+"iGoSyncDocs 2011 temp."+fileExtensiton;
 			File file = new File(path);
 			if (!file.exists())
 				try {
