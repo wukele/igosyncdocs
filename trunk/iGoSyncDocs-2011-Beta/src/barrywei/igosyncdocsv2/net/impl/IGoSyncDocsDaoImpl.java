@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import barrywei.igosyncdocsv2.bean.SystemRuntime;
 import barrywei.igosyncdocsv2.net.IGoSyncDocsDao;
 
 
@@ -48,19 +47,10 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 
 	private DocsService service;
 	private GoogleService spreadsheetsService;
-	private static final String appName = "Barry Wei-iGoSyncDocs-2.0 beta";
+	private static final String appName = "Barry Wey-iGoSyncDocs-2011 beta";
 	private UserToken token;
 
 	public IGoSyncDocsDaoImpl() {
-		if(SystemRuntime.Settings.UseProxy) {
-			System.getProperties().put("proxySet", "true");
-			System.getProperties().put("https.proxyHost", SystemRuntime.Settings.Proxy_Server);
-			System.getProperties().put("https.proxyPort", SystemRuntime.Settings.Proxy_Port);
-			System.getProperties().put("http.proxyHost", SystemRuntime.Settings.Proxy_Server);
-			System.getProperties().put("http.proxyPort", SystemRuntime.Settings.Proxy_Port);
-		}else {
-			System.getProperties().put("proxySet", "false");
-		}
 		service = new DocsService(appName);
 		spreadsheetsService = new GoogleService("wise", appName);
 	}

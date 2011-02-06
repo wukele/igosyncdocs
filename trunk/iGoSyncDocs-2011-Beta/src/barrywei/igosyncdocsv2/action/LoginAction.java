@@ -52,7 +52,7 @@ public class LoginAction implements ActionListener ,Runnable{
 		String message = IGoSyncDocsBiz.login(userName, frLogin.getPassword());
 		if(message.equals("success")) {
 			try {
-				SystemRuntime.Settings.UserName = userName;
+				SystemRuntime.Settings.UserName = userName; 
 				splash.setMessage(LanguageResource.getStringValue("main.splash.loading"));				
 				IGoSyncDocsBiz.cacheAllItem();
 				//if success,start to load data from server.

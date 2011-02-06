@@ -58,9 +58,10 @@ public class MainFrame extends JFrame {
 
 	private void initComponents() {
 		setTitle(LanguageResource.getStringValue("app.title"));
-		setMinimumSize(new Dimension(950, 660));
-		setSize(new Dimension(950, 660));
+		setMinimumSize(new Dimension(990, 660));
+		setSize(new Dimension(990, 660));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		pnlMain = new JPanel();
 		pnlMain.setBorder(new EmptyBorder(0, 0, 5, 0));
 		pnlMain.setLayout(new BorderLayout());
@@ -213,7 +214,7 @@ public class MainFrame extends JFrame {
 		txtSearch = new JTextField();
 		txtSearch.setName("txtSearch");
 		panel_1.add(txtSearch);
-		txtSearch.setColumns(30);
+		txtSearch.setColumns(23);
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setName("btnSearch");
