@@ -12,8 +12,10 @@ import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
+import barrywey.igosyncdocs2011.action.RefreshItemAction;
 import barrywey.igosyncdocs2011.action.SystemTrayAction;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
+import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.panel.AllItemPanel;
 import barrywey.igosyncdocs2011.gui.panel.DocumentPanel;
 import barrywey.igosyncdocs2011.gui.panel.HiddenObjectsPanel;
@@ -154,71 +156,66 @@ public class MainFrame extends JFrame {
 		pnlMain.add(pnlToolbar, BorderLayout.NORTH);
 		pnlToolbar.setLayout(new BorderLayout(0, 0));
 		
-		panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel.setName("panel");
-		pnlToolbar.add(panel, BorderLayout.WEST);
+		pnlButtons = new JPanel();
+		FlowLayout fl_pnlButtons = (FlowLayout) pnlButtons.getLayout();
+		fl_pnlButtons.setAlignment(FlowLayout.LEFT);
+		pnlButtons.setName("pnlButtons");
+		pnlToolbar.add(pnlButtons, BorderLayout.WEST);
 		
-		btnnewButton = new JButton("<html>New <br>button</html>");
-		panel.add(btnnewButton);
-		btnnewButton.setPreferredSize(new Dimension(60, 40));
-		btnnewButton.setName("btnnewButton");
+		btnRefresh = new JButton("<html>"+LanguageResource.getStringValue("main.btn.refresh")+"</html>");
+		pnlButtons.add(btnRefresh);
+		btnRefresh.setPreferredSize(new Dimension(70, 40));
+		btnRefresh.setName("btnRefresh");
 		
-		button = new JButton("<html>New <br>button</html>");
-		button.setPreferredSize(new Dimension(60, 40));
-		button.setName("btnnewButton");
-		panel.add(button);
+		btnNewDocument = new JButton("<html>"+LanguageResource.getStringValue("main.btn.create_new")+"</html>");
+		btnNewDocument.setPreferredSize(new Dimension(70, 40));
+		btnNewDocument.setName("btnNewDocument");
+		pnlButtons.add(btnNewDocument);
 		
-		button_1 = new JButton("<html>New <br>button</html>");
-		button_1.setPreferredSize(new Dimension(60, 40));
-		button_1.setName("btnnewButton");
-		panel.add(button_1);
+		btnTrash = new JButton("<html>"+LanguageResource.getStringValue("main.btn.trash")+"</html>");
+		btnTrash.setPreferredSize(new Dimension(70, 40));
+		btnTrash.setName("btnTrash");
+		pnlButtons.add(btnTrash);
 		
-		button_2 = new JButton("<html>New <br>button</html>");
-		button_2.setPreferredSize(new Dimension(60, 40));
-		button_2.setName("btnnewButton");
-		panel.add(button_2);
+		btnStar = new JButton("<html>"+LanguageResource.getStringValue("main.btn.star")+"</html>");
+		btnStar.setPreferredSize(new Dimension(70, 40));
+		btnStar.setName("btnStar");
+		pnlButtons.add(btnStar);
 		
-		button_3 = new JButton("<html>New <br>button</html>");
-		button_3.setPreferredSize(new Dimension(60, 40));
-		button_3.setName("btnnewButton");
-		panel.add(button_3);
+		btnShare = new JButton("<html>"+LanguageResource.getStringValue("main.btn.share")+"</html>");
+		btnShare.setPreferredSize(new Dimension(70, 40));
+		btnShare.setName("btnShare");
+		pnlButtons.add(btnShare);
 		
-		button_7 = new JButton("<html>New <br>button</html>");
-		button_7.setPreferredSize(new Dimension(60, 40));
-		button_7.setName("btnnewButton");
-		panel.add(button_7);
+		btnHide = new JButton("<html>"+LanguageResource.getStringValue("main.btn.hide")+"</html>");
+		btnHide.setPreferredSize(new Dimension(70, 40));
+		btnHide.setName("btnHide");
+		pnlButtons.add(btnHide);
 		
-		button_6 = new JButton("<html>New <br>button</html>");
-		button_6.setPreferredSize(new Dimension(60, 40));
-		button_6.setName("btnnewButton");
-		panel.add(button_6);
+		btnDownload = new JButton("<html>"+LanguageResource.getStringValue("main.btn.download")+"</html>");
+		btnDownload.setPreferredSize(new Dimension(80, 40));
+		btnDownload.setName("btnDownload");
+		pnlButtons.add(btnDownload);
 		
-		button_5 = new JButton("<html>New <br>button</html>");
-		button_5.setPreferredSize(new Dimension(60, 40));
-		button_5.setName("btnnewButton");
-		panel.add(button_5);
+		btnUpload = new JButton("<html>"+LanguageResource.getStringValue("main.btn.upload")+"</html>");
+		btnUpload.setPreferredSize(new Dimension(70, 40));
+		btnUpload.setName("btnUpload");
+		pnlButtons.add(btnUpload);
 		
-		button_4 = new JButton("<html>New <br>button</html>");
-		button_4.setPreferredSize(new Dimension(60, 40));
-		button_4.setName("btnnewButton");
-		panel.add(button_4);
-		
-		panel_1 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		panel_1.setName("panel_1");
-		pnlToolbar.add(panel_1);
+		pnlSearch = new JPanel();
+		FlowLayout fl_pnlSearch = (FlowLayout) pnlSearch.getLayout();
+		fl_pnlSearch.setAlignment(FlowLayout.RIGHT);
+		pnlSearch.setName("pnlSearch");
+		pnlToolbar.add(pnlSearch);
 		
 		txtSearch = new JTextField();
 		txtSearch.setName("txtSearch");
-		panel_1.add(txtSearch);
+		pnlSearch.add(txtSearch);
 		txtSearch.setColumns(23);
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setName("btnSearch");
-		panel_1.add(btnSearch);
+		pnlSearch.add(btnSearch);
 		
 		pnlTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		pnlTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -272,7 +269,45 @@ public class MainFrame extends JFrame {
 		
 		//event handler
 		addWindowListener(new SystemTrayAction(this));
+		btnRefresh.addActionListener(new RefreshItemAction(this));
 		
+	}
+	
+	public JProgressBar getProgressBar() {
+		return this.progressBar;
+	}
+	
+	public JLabel getProcessMessageLabel() {
+		return this.lblProcessMessage;
+	}
+	
+	public void refreshAllTableData() {
+		this.pnlAllItem.getDataTable().setModel(new EntryTableModel("all"));
+		this.pnlAllItem.initTableSettings(this.pnlAllItem.getDataTable());
+		
+		this.pnlDocument.getDataTable().setModel(new EntryTableModel("document"));
+		this.pnlDocument.initTableSettings(this.pnlDocument.getDataTable());
+		
+		this.pnlPresentation.getDataTable().setModel(new EntryTableModel("presentation"));
+		this.pnlPresentation.initTableSettings(this.pnlPresentation.getDataTable());
+		
+		this.pnlSpreadsheet.getDataTable().setModel(new EntryTableModel("spreadsheet"));
+		this.pnlSpreadsheet.initTableSettings(this.pnlSpreadsheet.getDataTable());
+		
+		this.pnlOtherfiles.getDataTable().setModel(new EntryTableModel("other"));
+		this.pnlOtherfiles.initTableSettings(this.pnlOtherfiles.getDataTable());
+		
+		this.pnlHidden.getDataTable().setModel(new EntryTableModel("hidden"));
+		this.pnlHidden.initTableSettings(this.pnlHidden.getDataTable());
+		
+		this.pnlStared.getDataTable().setModel(new EntryTableModel("stared"));
+		this.pnlStared.initTableSettings(this.pnlStared.getDataTable());
+		
+		this.pnlTrashed.getDataTable().setModel(new EntryTableModel("trashed"));
+		this.pnlTrashed.initTableSettings(this.pnlTrashed.getDataTable());	
+		
+		this.pnlSharedWithMe.getDataTable().setModel(new EntryTableModel("shared"));
+		this.pnlSharedWithMe.initTableSettings(this.pnlSharedWithMe.getDataTable());		
 	}
 
 	private static final long serialVersionUID = -9147881941303957656L;
@@ -288,33 +323,32 @@ public class MainFrame extends JFrame {
 	private JMenuItem miExit;
 	private JPanel pnlMain;
 	private JPanel pnlToolbar;
-	private JButton btnnewButton;
+	private JButton btnRefresh;
 	private JTabbedPane pnlTabbedPane;
 	private JSplitPane pnlFolder;
-	private JPanel pnlAllItem;
-	private JPanel pnlDocument;
-	private JPanel pnlPresentation;
-	private JPanel pnlSpreadsheet;
-	private JPanel pnlOtherfiles;
-	private JPanel pnlHidden;
-	private JPanel pnlStared;
-	private JPanel pnlTrashed;
+	private AllItemPanel pnlAllItem;
+	private DocumentPanel pnlDocument;
+	private PresentationPanel pnlPresentation;
+	private SpreadsheetPanel pnlSpreadsheet;
+	private OtherFilesPanel pnlOtherfiles;
+	private HiddenObjectsPanel pnlHidden;
+	private StaredObjectsPanel pnlStared;
+	private TrashedObjectsPanel pnlTrashed;
 	private JLabel lblConnectMessage;
 	private JProgressBar progressBar;
-	private JPanel panel;
-	private JPanel panel_1;
+	private JPanel pnlButtons;
+	private JPanel pnlSearch;
 	private JTextField txtSearch;
 	private JButton btnSearch;
 	private JSeparator separator;
-	private JPanel pnlSharedWithMe;
+	private SharedWithMePanel pnlSharedWithMe;
 	private JPanel pnlStatusbarRight;
 	private JLabel lblProcessMessage;
-	private JButton button;
-	private JButton button_1;
-	private JButton button_2;
-	private JButton button_3;
-	private JButton button_4;
-	private JButton button_5;
-	private JButton button_6;
-	private JButton button_7;
+	private JButton btnNewDocument;
+	private JButton btnUpload;
+	private JButton btnStar;
+	private JButton btnShare;
+	private JButton btnDownload;
+	private JButton btnHide;
+	private JButton btnTrash;
 }

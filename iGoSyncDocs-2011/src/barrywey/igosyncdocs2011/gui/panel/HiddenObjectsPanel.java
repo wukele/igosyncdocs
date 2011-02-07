@@ -55,8 +55,12 @@ public class HiddenObjectsPanel extends JPanel {
 		pnlAcl.setName("pnlAcl");
 		pnlRight.setViewportView(pnlAcl);
 	}
+	
+	public JTable getDataTable() {
+		return this.tblAllItems;
+	}
 
-	private void initTableSettings(JTable tbl) {
+	public void initTableSettings(JTable tbl) {
 		tbl.getTableHeader().setReorderingAllowed(false);
 		tbl.setRowHeight(20);
 		tbl.setAutoCreateRowSorter(true);

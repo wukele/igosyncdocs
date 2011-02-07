@@ -59,7 +59,11 @@ public class DocumentPanel extends JPanel{
 		tblAllItems.addMouseListener(new ClickOnDocumentTableAction(tblAllItems));
 	}
 
-	private void initTableSettings(JTable tbl) {
+	public JTable getDataTable() {
+		return this.tblAllItems;
+	}
+	
+	public void initTableSettings(JTable tbl) {
 		tbl.getTableHeader().setReorderingAllowed(false);
 		tbl.setRowHeight(20);
 		tbl.setAutoCreateRowSorter(true);
