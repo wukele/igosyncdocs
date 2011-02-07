@@ -19,7 +19,6 @@ import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.panel.AllItemPanel;
 import barrywey.igosyncdocs2011.gui.panel.DocumentPanel;
 import barrywey.igosyncdocs2011.gui.panel.HiddenObjectsPanel;
-import barrywey.igosyncdocs2011.gui.panel.MyFolderPanel;
 import barrywey.igosyncdocs2011.gui.panel.OtherFilesPanel;
 import barrywey.igosyncdocs2011.gui.panel.PresentationPanel;
 import barrywey.igosyncdocs2011.gui.panel.SharedWithMePanel;
@@ -36,7 +35,6 @@ import java.awt.event.InputEvent;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -222,12 +220,6 @@ public class MainFrame extends JFrame {
 		pnlTabbedPane.setName("pnlTabbedPane");
 		pnlMain.add(pnlTabbedPane, BorderLayout.CENTER);
 		
-		pnlFolder = new MyFolderPanel();
-		pnlFolder.setResizeWeight(0.2);
-		pnlFolder.setDividerLocation(170);
-		pnlFolder.setName("pnlFolder");
-		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_folder"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/hidden.png")), pnlFolder, null);
-		
 		pnlAllItem = new AllItemPanel();
 		pnlAllItem.setName("pnlAllItem");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_allitem"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/all.png")), pnlAllItem, null);
@@ -262,10 +254,7 @@ public class MainFrame extends JFrame {
 		
 		pnlSharedWithMe = new SharedWithMePanel();
 		pnlSharedWithMe.setName("pnlSharedWithMe");
-		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_sharedwithme"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/doc.png")), pnlSharedWithMe, null);
-		
-		pnlTabbedPane.setSelectedIndex(1);
-		
+		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_sharedwithme"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/doc.png")), pnlSharedWithMe, null);				
 		
 		//event handler
 		addWindowListener(new SystemTrayAction(this));
@@ -325,7 +314,6 @@ public class MainFrame extends JFrame {
 	private JPanel pnlToolbar;
 	private JButton btnRefresh;
 	private JTabbedPane pnlTabbedPane;
-	private JSplitPane pnlFolder;
 	private AllItemPanel pnlAllItem;
 	private DocumentPanel pnlDocument;
 	private PresentationPanel pnlPresentation;
