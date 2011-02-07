@@ -15,6 +15,7 @@ import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
+import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 /**
  *
@@ -37,21 +38,22 @@ public class RefreshItemAction implements ActionListener , Runnable{
 	public void actionPerformed(ActionEvent e) {
 		progressbar = frMain.getProgressBar();
 		lblMessage = frMain.getProcessMessageLabel();
-		new Thread(this).start();
+		if(!progressbar.isIndeterminate())
+			new Thread(this).start();
 	}
 	
 	public void run() {
 		progressbar.setIndeterminate(true);
 		try {
-			lblMessage.setText("reloading data , please wait...");
+			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_start"));
 			IGoSyncDocsBiz.cacheAllItem();
 			frMain.refreshAllTableData();
-			lblMessage.setText("reload data done.");
+			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_end"));
 			progressbar.setIndeterminate(false);			
 		} catch (IGoSyncDocsException e) {
-			FaceUtils.showErrorMessage(null, "error_message"+e.getMessage());
+			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
 		} catch (Exception e) {
-			FaceUtils.showErrorMessage(null, "error_message"+e.getMessage());
+			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
 		}
 	}
 }
