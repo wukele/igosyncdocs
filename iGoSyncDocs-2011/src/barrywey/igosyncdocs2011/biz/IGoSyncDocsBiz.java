@@ -104,7 +104,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllItems() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(!entry.isHidden())
+			if(!entry.isHidden() && !entry.isTrashed())
 				list.add(entry);
 		}
 		return list;
@@ -113,7 +113,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllDocuments() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("document") && !entry.isHidden())
+			if(entry.getType().equals("document") && !entry.isHidden() && !entry.isTrashed())
 				list.add(entry);
 		}
 		return list;
@@ -122,7 +122,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllPresentations() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("presentation") && !entry.isHidden())
+			if(entry.getType().equals("presentation") && !entry.isHidden() && !entry.isTrashed())
 				list.add(entry);
 		}
 		return list;
@@ -131,7 +131,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllSpreadsheets() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("spreadsheet") && !entry.isHidden())
+			if(entry.getType().equals("spreadsheet") && !entry.isHidden() && !entry.isTrashed())
 				list.add(entry);
 		}
 		return list;
@@ -140,7 +140,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getAllOthers() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if( !entry.getType().equals("document") && !entry.getType().equals("presentation") && !entry.getType().equals("spreadsheet") && !entry.isHidden())
+			if( !entry.getType().equals("document") && !entry.getType().equals("presentation") && !entry.getType().equals("spreadsheet") && !entry.isHidden() && entry.isTrashed())
 				list.add(entry);
 		}
 		return list;
@@ -149,7 +149,7 @@ public class IGoSyncDocsBiz {
 	public static List<DocumentListEntry> getHiddenObjects() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
 		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.isHidden())
+			if(entry.isHidden() && !entry.isTrashed())
 				list.add(entry);
 		}
 		return list;
@@ -209,4 +209,22 @@ public class IGoSyncDocsBiz {
 		}// end of for
 		return owner;
 	}// end of method
+	
+	public static void trashItem(DocumentListEntry entry) throws IGoSyncDocsException {
+		try {
+			dao.trash(entry);
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}
+	}
 }

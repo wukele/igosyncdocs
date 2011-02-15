@@ -171,5 +171,12 @@ public interface IGoSyncDocsDao {
 	 * @throws IOException
 	 * @throws ServiceException
 	 */
-	public AclFeed getAclFeed(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;	
+	public AclFeed getAclFeed(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Trash the given item.
+	 * 
+	 * @param entry
+	 */
+	public void trash(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
 }

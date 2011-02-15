@@ -14,7 +14,7 @@ package barrywey.igosyncdocs2011.net.impl;
  */
 public class URLManager {
 
-	public static final String Get_All_Feeds = "https://docs.google.com/feeds/default/private/full";
+	public static final String Get_All_Feeds = "https://docs.google.com/feeds/default/private/full?showdeleted=true";
 	public static final String Get_All_Documents= "https://docs.google.com/feeds/default/private/full/-/document";
 	public static final String Get_All_Spreadsheets = "https://docs.google.com/feeds/default/private/full/-/spreadsheet";
 	public static final String Get_All_Presentations = "https://docs.google.com/feeds/default/private/full/-/presentation/mine";

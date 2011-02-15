@@ -40,20 +40,23 @@ public class RefreshItemAction implements ActionListener , Runnable{
 		lblMessage = frMain.getProcessMessageLabel();
 		if(!progressbar.isIndeterminate())
 			new Thread(this).start();
+		else
+			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.another_process_running"));
 	}
 	
 	public void run() {
-		progressbar.setIndeterminate(true);
 		try {
+			progressbar.setIndeterminate(true);
 			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_start"));
 			IGoSyncDocsBiz.cacheAllItem();
-			frMain.refreshAllTableData();
-			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_end"));
-			progressbar.setIndeterminate(false);			
 		} catch (IGoSyncDocsException e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
 		} catch (Exception e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
+		} finally {
+			lblMessage.setText("");
+			progressbar.setIndeterminate(false);
+			frMain.refreshAllTableData();
 		}
 	}
 }

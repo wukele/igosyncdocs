@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 
 import barrywey.igosyncdocs2011.action.RefreshItemAction;
 import barrywey.igosyncdocs2011.action.SystemTrayAction;
+import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.panel.AllItemPanel;
@@ -34,6 +35,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
@@ -134,7 +137,6 @@ public class MainFrame extends JFrame {
 		FlowLayout flowLayout_2 = (FlowLayout) pnlStatusbarRight.getLayout();
 		flowLayout_2.setVgap(3);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		pnlStatusbarRight.setPreferredSize(new Dimension(350, 15));
 		pnlStatusbarRight.setName("pnlStatusbarRight");
 		pnlStatusbar.add(pnlStatusbarRight, BorderLayout.EAST);
 		
@@ -143,10 +145,11 @@ public class MainFrame extends JFrame {
 		pnlStatusbarRight.add(progressBar);
 		progressBar.setName("progressBar");
 		
-		lblProcessMessage = new JLabel("no schedule right now.");
+		lblProcessMessage = new JLabel("");
+		lblProcessMessage.setBorder(new EmptyBorder(0, 15, 0, 0));
+		pnlStatusbar.add(lblProcessMessage, BorderLayout.CENTER);
 		lblProcessMessage.setPreferredSize(new Dimension(180, 15));
 		lblProcessMessage.setName("lblProcessMessage");
-		pnlStatusbarRight.add(lblProcessMessage);
 		
 		pnlToolbar = new JPanel();
 		pnlToolbar.setPreferredSize(new Dimension(10, 50));
@@ -165,10 +168,10 @@ public class MainFrame extends JFrame {
 		btnRefresh.setPreferredSize(new Dimension(70, 40));
 		btnRefresh.setName("btnRefresh");
 		
-		btnNewDocument = new JButton("<html>"+LanguageResource.getStringValue("main.btn.create_new")+"</html>");
-		btnNewDocument.setPreferredSize(new Dimension(70, 40));
-		btnNewDocument.setName("btnNewDocument");
-		pnlButtons.add(btnNewDocument);
+//		btnNewDocument = new JButton("<html>"+LanguageResource.getStringValue("main.btn.create_new")+"</html>");
+//		btnNewDocument.setPreferredSize(new Dimension(70, 40));
+//		btnNewDocument.setName("btnNewDocument");
+//		pnlButtons.add(btnNewDocument);
 		
 		btnTrash = new JButton("<html>"+LanguageResource.getStringValue("main.btn.trash")+"</html>");
 		btnTrash.setPreferredSize(new Dimension(70, 40));
@@ -258,7 +261,23 @@ public class MainFrame extends JFrame {
 		
 		//event handler
 		addWindowListener(new SystemTrayAction(this));
+		pnlTabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				SystemRuntime.SelectedItem.clear(); //clear document selection when new tab selected
+				//clear table selection
+				pnlAllItem.getDataTable().clearSelection();
+				pnlDocument.getDataTable().clearSelection();
+				pnlPresentation.getDataTable().clearSelection();
+				pnlSpreadsheet.getDataTable().clearSelection();
+				pnlOtherfiles.getDataTable().clearSelection();
+				pnlHidden.getDataTable().clearSelection();
+				pnlStared.getDataTable().clearSelection();
+				pnlTrashed.getDataTable().clearSelection();
+				pnlSharedWithMe.getDataTable().clearSelection();
+			}
+		});
 		btnRefresh.addActionListener(new RefreshItemAction(this));
+		btnTrash.addActionListener(new ShowConfirmDialogAction(this));
 		
 	}
 	
@@ -332,7 +351,7 @@ public class MainFrame extends JFrame {
 	private SharedWithMePanel pnlSharedWithMe;
 	private JPanel pnlStatusbarRight;
 	private JLabel lblProcessMessage;
-	private JButton btnNewDocument;
+	//private JButton btnNewDocument;
 	private JButton btnUpload;
 	private JButton btnStar;
 	private JButton btnShare;

@@ -7,6 +7,8 @@ package barrywey.igosyncdocs2011.gui.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,6 +16,9 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import com.google.gdata.data.docs.DocumentListEntry;
+
+import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
 
@@ -54,7 +59,29 @@ public class SpreadsheetPanel extends JPanel{
 		pnlAcl = new JPanel();
 		pnlAcl.setName("pnlAcl");
 		pnlRight.setViewportView(pnlAcl);
+		
+		tblAllItems.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				userClickedMouse(e);
+			}
+		});			
 	}
+	
+	private void userClickedMouse(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			//left click get selected document
+			int[] selectedRows = tblAllItems.getSelectedRows();
+			if(selectedRows.length > 0) {				
+				SystemRuntime.SelectedItem.clear();		//clear previous selected item
+				for (int i = 0; i < selectedRows.length; i++) {
+					DocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
+					SystemRuntime.SelectedItem.add(entry);
+				}//end of for
+			}//end of if(rows>0)
+		}else if(e.getButton() == MouseEvent.BUTTON3) {
+			//right click show popup menu
+		}
+	}	
 	
 	public JTable getDataTable() {
 		return this.tblAllItems;

@@ -150,4 +150,12 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 				AclFeed.class);
 	}
 
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#trash(com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void trash(DocumentListEntry entry) throws MalformedURLException,
+			IOException, ServiceException {
+		entry.delete();
+	}
 }
