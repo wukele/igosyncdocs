@@ -279,6 +279,7 @@ public class MainFrame extends JFrame {
 		btnRefresh.addActionListener(new RefreshItemAction(this));
 		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash"));
 		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide"));
+		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star"));
 		
 	}
 	

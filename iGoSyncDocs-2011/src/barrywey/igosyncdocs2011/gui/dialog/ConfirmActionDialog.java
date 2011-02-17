@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JButton;
 
 import barrywey.igosyncdocs2011.action.HideItemAction;
+import barrywey.igosyncdocs2011.action.StarItemAction;
 import barrywey.igosyncdocs2011.action.TrashItemAction;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.model.ConfirmListModel;
@@ -100,6 +101,8 @@ public class ConfirmActionDialog extends JDialog {
 			new Thread(new TrashItemAction(this, frMain)).start();
 		} else if(actionType.trim().equals("hide")) {
 			new Thread(new HideItemAction(this,frMain)).start();
+		} else if(actionType.trim().equals("star")) {
+			new Thread(new StarItemAction(this,frMain)).start();
 		}
 	}
 }

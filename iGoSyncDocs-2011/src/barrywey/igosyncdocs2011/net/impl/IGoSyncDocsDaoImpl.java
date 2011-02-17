@@ -168,4 +168,14 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		entry.setHidden(true);
 		service.update(new URL(entry.getEditLink().getHref()), entry);
 	}
+	
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#star(com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void star(DocumentListEntry entry) throws MalformedURLException,
+			IOException, ServiceException {
+		entry.setStarred(true);
+		service.update(new URL(entry.getEditLink().getHref()), entry);
+	}
 }
