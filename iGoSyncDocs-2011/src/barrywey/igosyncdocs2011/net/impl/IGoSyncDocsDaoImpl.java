@@ -25,7 +25,10 @@ import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
 import com.google.gdata.client.docs.DocsService;
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclFeed;
+import com.google.gdata.data.acl.AclRole;
+import com.google.gdata.data.acl.AclScope;
 import com.google.gdata.data.docs.DocumentEntry;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
@@ -177,5 +180,27 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 			IOException, ServiceException {
 		entry.setStarred(true);
 		service.update(new URL(entry.getEditLink().getHref()), entry);
+	}
+	
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#addAclEntry(com.google.gdata.data.acl.AclRole, com.google.gdata.data.acl.AclScope, com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void addAclEntry(AclRole role, AclScope scope,
+			DocumentListEntry entry) throws MalformedURLException, IOException,
+			ServiceException {
+		AclEntry aclEntry = new AclEntry();
+		aclEntry.setRole(role);
+		aclEntry.setScope(scope);
+		service.insert(new URL(entry.getAclFeedLink().getHref()),aclEntry);
+	}
+
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#delAclEntry(com.google.gdata.data.acl.AclEntry, com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void delAclEntry(AclEntry entry)
+			throws MalformedURLException, IOException, ServiceException {
+		entry.delete();
 	}
 }

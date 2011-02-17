@@ -15,7 +15,10 @@ import com.google.gdata.client.GoogleService.NotVerifiedException;
 import com.google.gdata.client.GoogleService.ServiceUnavailableException;
 import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
+import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclFeed;
+import com.google.gdata.data.acl.AclRole;
+import com.google.gdata.data.acl.AclScope;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
 import com.google.gdata.util.AuthenticationException;
@@ -199,4 +202,28 @@ public interface IGoSyncDocsDao {
 	 * @throws ServiceException
 	 */
 	public void star(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Add AclEntry to a DocumentListEntry
+	 * 
+	 * @param role
+	 * @param scope
+	 * @param entry
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public void addAclEntry(AclRole role,AclScope scope,DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Delete AclEntry from a DocumentListEntry
+	 * 
+	 * @param role
+	 * @param scope
+	 * @param entry
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public void delAclEntry(AclEntry aclEntry) throws MalformedURLException, IOException, ServiceException;
 }

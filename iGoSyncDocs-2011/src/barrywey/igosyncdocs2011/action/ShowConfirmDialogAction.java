@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.dialog.ConfirmActionDialog;
+import barrywey.igosyncdocs2011.gui.dialog.ShareItemDialog;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
 
@@ -51,6 +52,10 @@ public class ShowConfirmDialogAction implements ActionListener {
 					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_star_action"), "star",frMain);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);						
+				} else if(action.trim().equals("share")) {
+					ShareItemDialog dialog = new ShareItemDialog(frMain);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
 				}
 			}else
 				FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.another_process_running"));

@@ -280,6 +280,7 @@ public class MainFrame extends JFrame {
 		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash"));
 		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide"));
 		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star"));
+		btnShare.addActionListener(new ShowConfirmDialogAction(this,"share"));
 		
 	}
 	

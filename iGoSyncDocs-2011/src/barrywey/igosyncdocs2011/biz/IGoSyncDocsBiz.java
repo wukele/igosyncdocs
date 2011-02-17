@@ -19,6 +19,8 @@ import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
 import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclFeed;
+import com.google.gdata.data.acl.AclRole;
+import com.google.gdata.data.acl.AclScope;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
@@ -262,5 +264,29 @@ public class IGoSyncDocsBiz {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		}		
+	}
+	
+	public static void shareItem(String email,boolean canWrite,DocumentListEntry entry)  throws IGoSyncDocsException{
+		try {
+			AclRole role ;
+			if(canWrite)
+				role = new AclRole("writer");
+			else
+				role = new AclRole("reader");
+			AclScope scope = new AclScope(AclScope.Type.USER,email.trim());
+			dao.addAclEntry(role, scope, entry);
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}
 	}
 }
