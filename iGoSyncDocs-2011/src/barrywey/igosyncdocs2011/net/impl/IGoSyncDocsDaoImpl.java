@@ -158,4 +158,14 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 			IOException, ServiceException {
 		entry.delete();
 	}
+	
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#hide(com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void hide(DocumentListEntry entry) throws MalformedURLException,
+			IOException, ServiceException {
+		entry.setHidden(true);
+		service.update(new URL(entry.getEditLink().getHref()), entry);
+	}
 }

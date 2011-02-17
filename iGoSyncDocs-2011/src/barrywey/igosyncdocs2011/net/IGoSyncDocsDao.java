@@ -179,4 +179,14 @@ public interface IGoSyncDocsDao {
 	 * @param entry
 	 */
 	public void trash(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Hide the given item
+	 * 
+	 * @param entry
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public void hide(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
 }

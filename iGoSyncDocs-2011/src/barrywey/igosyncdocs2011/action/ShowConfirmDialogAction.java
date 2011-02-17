@@ -25,9 +25,11 @@ import barrywey.igosyncdocs2011.resource.LanguageResource;
 public class ShowConfirmDialogAction implements ActionListener {
 	
 	private MainFrame frMain;
+	private String action;
 
-	public ShowConfirmDialogAction(MainFrame frMain) {
+	public ShowConfirmDialogAction(MainFrame frMain,String action) {
 		this.frMain = frMain;
+		this.action = action;
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -37,9 +39,15 @@ public class ShowConfirmDialogAction implements ActionListener {
 		else {
 			if(!frMain.getProgressBar().isIndeterminate()) {
 				//prompt to confirm action
-				ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_trash_actin"), "trash",frMain);
-				dialog.setLocationRelativeTo(null);
-				dialog.setVisible(true);			
+				if(action.trim().equals("trash")) {
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_trash_actin"), "trash",frMain);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);			
+				}else if(action.trim().equals("hide")) {
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_hide_action"), "hide",frMain);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);					
+				}
 			}else
 				FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.another_process_running"));
 		}
