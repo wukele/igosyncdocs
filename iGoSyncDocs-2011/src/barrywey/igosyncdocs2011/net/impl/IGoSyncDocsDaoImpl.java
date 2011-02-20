@@ -203,4 +203,13 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 			throws MalformedURLException, IOException, ServiceException {
 		entry.delete();
 	}
+	
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#delEntry(com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void delEntry(DocumentListEntry entry) throws MalformedURLException,
+			IOException, ServiceException {
+		service.delete(new URL(entry.getEditLink().getHref()+"?delete=true"),entry.getEtag());
+	}
 }

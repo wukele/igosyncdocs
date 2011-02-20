@@ -169,30 +169,33 @@ public class MainFrame extends JFrame {
 		btnRefresh.setPreferredSize(new Dimension(70, 40));
 		btnRefresh.setName("btnRefresh");
 		
-//		btnNewDocument = new JButton("<html>"+LanguageResource.getStringValue("main.btn.create_new")+"</html>");
-//		btnNewDocument.setPreferredSize(new Dimension(70, 40));
-//		btnNewDocument.setName("btnNewDocument");
-//		pnlButtons.add(btnNewDocument);
+		btnStar = new JButton("<html>"+LanguageResource.getStringValue("main.btn.star")+"</html>");
+		btnStar.setPreferredSize(new Dimension(70, 40));
+		btnStar.setName("btnStar");
+		pnlButtons.add(btnStar);
+		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star"));
+		
+		btnShare = new JButton("<html>"+LanguageResource.getStringValue("main.btn.share")+"</html>");
+		btnShare.setPreferredSize(new Dimension(70, 40));
+		btnShare.setName("btnShare");
+		pnlButtons.add(btnShare);
+		btnShare.addActionListener(new ShowConfirmDialogAction(this,"share"));
+		
+		btnHide = new JButton("<html>"+LanguageResource.getStringValue("main.btn.hide")+"</html>");
+		btnHide.setPreferredSize(new Dimension(70, 40));
+		btnHide.setName("btnHide");
+		pnlButtons.add(btnHide);
+		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide"));
 		
 		btnTrash = new JButton("<html>"+LanguageResource.getStringValue("main.btn.trash")+"</html>");
 		btnTrash.setPreferredSize(new Dimension(70, 40));
 		btnTrash.setName("btnTrash");
 		pnlButtons.add(btnTrash);
 		
-		btnStar = new JButton("<html>"+LanguageResource.getStringValue("main.btn.star")+"</html>");
-		btnStar.setPreferredSize(new Dimension(70, 40));
-		btnStar.setName("btnStar");
-		pnlButtons.add(btnStar);
-		
-		btnShare = new JButton("<html>"+LanguageResource.getStringValue("main.btn.share")+"</html>");
-		btnShare.setPreferredSize(new Dimension(70, 40));
-		btnShare.setName("btnShare");
-		pnlButtons.add(btnShare);
-		
-		btnHide = new JButton("<html>"+LanguageResource.getStringValue("main.btn.hide")+"</html>");
-		btnHide.setPreferredSize(new Dimension(70, 40));
-		btnHide.setName("btnHide");
-		pnlButtons.add(btnHide);
+		btnDelete = new JButton("<html>"+LanguageResource.getStringValue("main.btn.delete")+"</html>");
+		btnDelete.setPreferredSize(new Dimension(70, 40));
+		btnDelete.setName("btnDelete");
+		pnlButtons.add(btnDelete);
 		
 		btnDownload = new JButton("<html>"+LanguageResource.getStringValue("main.btn.download")+"</html>");
 		btnDownload.setPreferredSize(new Dimension(80, 40));
@@ -279,11 +282,8 @@ public class MainFrame extends JFrame {
 		});
 		btnRefresh.addActionListener(new RefreshItemAction(this));
 		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash"));
-		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide"));
-		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star"));
-		btnShare.addActionListener(new ShowConfirmDialogAction(this,"share"));
 		btnUpload.addActionListener(new UploadFilesAction(this));
-		
+		btnDelete.addActionListener(new ShowConfirmDialogAction(this,"delete"));
 	}
 	
 	public JProgressBar getProgressBar() {
@@ -356,7 +356,7 @@ public class MainFrame extends JFrame {
 	private SharedWithMePanel pnlSharedWithMe;
 	private JPanel pnlStatusbarRight;
 	private JLabel lblProcessMessage;
-	//private JButton btnNewDocument;
+	private JButton btnDelete;
 	private JButton btnUpload;
 	private JButton btnStar;
 	private JButton btnShare;

@@ -226,4 +226,14 @@ public interface IGoSyncDocsDao {
 	 * @throws ServiceException
 	 */
 	public void delAclEntry(AclEntry aclEntry) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Delete given Entry
+	 * 
+	 * @param entry
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public void delEntry(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
 }

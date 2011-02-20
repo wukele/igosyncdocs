@@ -17,12 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
 
+import barrywey.igosyncdocs2011.action.DeleteItemAction;
 import barrywey.igosyncdocs2011.action.HideItemAction;
 import barrywey.igosyncdocs2011.action.StarItemAction;
 import barrywey.igosyncdocs2011.action.TrashItemAction;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.model.ConfirmListModel;
 import barrywey.igosyncdocs2011.gui.renderer.ConfirmListRenderer;
+import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 /**
  * 
@@ -40,11 +42,11 @@ public class ConfirmActionDialog extends JDialog {
 	private String actionType;
 	private MainFrame frMain;
 	private final JLabel lblLogo = new JLabel("");
-	private final JLabel lblMessage = new JLabel("Are you sure to XXX  item(s) ?");
+	private final JLabel lblMessage = new JLabel("");
 	private final JScrollPane pnlScroll = new JScrollPane();
 	private JList listItems ;
-	private final JButton btnYes = new JButton("Yes");
-	private final JButton btnNo = new JButton("No");
+	private final JButton btnYes = new JButton(LanguageResource.getStringValue("main.dialog.confirm_dialog.btn_yes"));
+	private final JButton btnNo = new JButton(LanguageResource.getStringValue("main.dialog.confirm_dialog.btn_no"));
 
 	public ConfirmActionDialog(String confimMessage,String actionType, MainFrame frMain) {
 		this.confirmMessage = confimMessage;
@@ -54,7 +56,7 @@ public class ConfirmActionDialog extends JDialog {
 	}
 
 	private void initComponents() {
-		setTitle("Confirm Action");
+		setTitle(LanguageResource.getStringValue("app.title"));
 		setContentPane(pnlMain);
 		setSize(new Dimension(460,220));
 		setModal(true);
@@ -104,6 +106,8 @@ public class ConfirmActionDialog extends JDialog {
 			new Thread(new HideItemAction(this,frMain)).start();
 		} else if(actionType.trim().equals("star")) {
 			new Thread(new StarItemAction(this,frMain)).start();
+		} else if(actionType.trim().equals("delete")) {
+			new Thread(new DeleteItemAction(this, frMain)).start();
 		}
 	}
 }
