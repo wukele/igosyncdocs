@@ -54,6 +54,7 @@ public class ShareItemAction implements ActionListener , Runnable{
 				}
 			}
 			IGoSyncDocsBiz.cacheAllItem();
+			frMain.refreshAllTableData();
 		}catch (IGoSyncDocsException e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
 		} catch (Exception e) {
@@ -61,8 +62,7 @@ public class ShareItemAction implements ActionListener , Runnable{
 		} finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
-			dialog.dispose();			
-			frMain.refreshAllTableData();
+			dialog.dispose();						
 		}		
 	}
 }

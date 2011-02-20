@@ -4,6 +4,7 @@
  */
 package barrywey.igosyncdocs2011.biz;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -288,5 +289,23 @@ public class IGoSyncDocsBiz {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		}
+	}
+	
+	public static void upload(File file)  throws IGoSyncDocsException {
+		try {
+			dao.upload(file.getName().substring(0,file.getName().lastIndexOf('.')), file.getPath());
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}		
 	}
 }

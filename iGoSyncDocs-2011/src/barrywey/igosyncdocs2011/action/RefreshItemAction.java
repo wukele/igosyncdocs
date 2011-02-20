@@ -49,14 +49,14 @@ public class RefreshItemAction implements ActionListener , Runnable{
 			progressbar.setIndeterminate(true);
 			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_start"));
 			IGoSyncDocsBiz.cacheAllItem();
+			frMain.refreshAllTableData();
 		} catch (IGoSyncDocsException e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
 		} catch (Exception e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
 		} finally {
 			lblMessage.setText("");
-			progressbar.setIndeterminate(false);
-			frMain.refreshAllTableData();
+			progressbar.setIndeterminate(false);			
 		}
 	}
 }

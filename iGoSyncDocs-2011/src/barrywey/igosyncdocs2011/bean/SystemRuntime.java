@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import barrywey.igosyncdocs2011.gui.dialog.UploadFileProcessDialog;
+
 import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
@@ -27,5 +29,6 @@ public class SystemRuntime implements Serializable {
 	public static DocumentListFeed CachedDocumentFeed = null;
 	public static List<AclFeed> ChachedEntryAclFeed = new ArrayList<AclFeed>();
 	public static List<DocumentListEntry> SelectedItem = new ArrayList<DocumentListEntry>();
+	public static UploadFileProcessDialog UploadDialog = null;
 	
 }

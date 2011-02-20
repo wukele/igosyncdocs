@@ -15,6 +15,7 @@ import javax.swing.JMenu;
 import barrywey.igosyncdocs2011.action.RefreshItemAction;
 import barrywey.igosyncdocs2011.action.SystemTrayAction;
 import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
+import barrywey.igosyncdocs2011.action.UploadFilesAction;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.panel.AllItemPanel;
@@ -281,6 +282,7 @@ public class MainFrame extends JFrame {
 		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide"));
 		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star"));
 		btnShare.addActionListener(new ShowConfirmDialogAction(this,"share"));
+		btnUpload.addActionListener(new UploadFilesAction(this));
 		
 	}
 	
