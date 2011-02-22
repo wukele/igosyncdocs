@@ -114,7 +114,7 @@ public class ConfirmActionDialog extends JDialog {
 		} else if(actionType.trim().equals("download")) {
 			JFileChooser fileChooser = new JFileChooser(new File(System.getProperty("user.home")));
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int result = fileChooser.showDialog(null, "Download");
+			int result = fileChooser.showDialog(null, LanguageResource.getStringValue("dialog.download.lbl_download_dialog"));
 			if(result == JFileChooser.APPROVE_OPTION) {
 				new Thread(new DownloadFilesAction(this, frMain,fileChooser.getSelectedFile().getPath())).start();
 			}
