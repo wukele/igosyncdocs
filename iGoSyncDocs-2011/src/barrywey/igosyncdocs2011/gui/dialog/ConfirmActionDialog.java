@@ -8,8 +8,10 @@ package barrywey.igosyncdocs2011.gui.dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
@@ -18,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JButton;
 
 import barrywey.igosyncdocs2011.action.DeleteItemAction;
+import barrywey.igosyncdocs2011.action.DownloadFilesAction;
 import barrywey.igosyncdocs2011.action.HideItemAction;
 import barrywey.igosyncdocs2011.action.StarItemAction;
 import barrywey.igosyncdocs2011.action.TrashItemAction;
@@ -108,6 +111,13 @@ public class ConfirmActionDialog extends JDialog {
 			new Thread(new StarItemAction(this,frMain)).start();
 		} else if(actionType.trim().equals("delete")) {
 			new Thread(new DeleteItemAction(this, frMain)).start();
-		}
-	}
+		} else if(actionType.trim().equals("download")) {
+			JFileChooser fileChooser = new JFileChooser(new File(System.getProperty("user.home")));
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int result = fileChooser.showDialog(null, "Download");
+			if(result == JFileChooser.APPROVE_OPTION) {
+				new Thread(new DownloadFilesAction(this, frMain,fileChooser.getSelectedFile().getPath())).start();
+			}
+		}//end of if
+	}//end of method
 }

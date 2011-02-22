@@ -284,6 +284,7 @@ public class MainFrame extends JFrame {
 		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash"));
 		btnUpload.addActionListener(new UploadFilesAction(this));
 		btnDelete.addActionListener(new ShowConfirmDialogAction(this,"delete"));
+		btnDownload.addActionListener(new ShowConfirmDialogAction(this,"download"));
 	}
 	
 	public JProgressBar getProgressBar() {

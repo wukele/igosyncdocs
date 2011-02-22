@@ -236,4 +236,13 @@ public interface IGoSyncDocsDao {
 	 * @throws ServiceException
 	 */
 	public void delEntry(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
+	
+	public void download(String url,String filePath) throws MalformedURLException, IOException, ServiceException;
+	
+	public void downloadDocument(DocumentListEntry entry,String filePath,String format) throws MalformedURLException, IOException, ServiceException;
+	
+	public void downloadPresentation(DocumentListEntry entry,String filePath,String format) throws MalformedURLException, IOException, ServiceException;
+	
+	public void downloadSpreadsheet(DocumentListEntry entry,String filePath,String format) throws MalformedURLException, IOException, ServiceException;
+	
 }

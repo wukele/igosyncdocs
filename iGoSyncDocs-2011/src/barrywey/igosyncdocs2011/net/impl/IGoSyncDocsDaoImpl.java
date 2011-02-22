@@ -5,7 +5,9 @@
 package barrywey.igosyncdocs2011.net.impl;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -24,6 +26,7 @@ import com.google.gdata.client.GoogleService.ServiceUnavailableException;
 import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
 import com.google.gdata.client.docs.DocsService;
+import com.google.gdata.data.MediaContent;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclFeed;
@@ -35,6 +38,7 @@ import com.google.gdata.data.docs.DocumentListFeed;
 import com.google.gdata.data.docs.FolderEntry;
 import com.google.gdata.data.docs.PresentationEntry;
 import com.google.gdata.data.docs.SpreadsheetEntry;
+import com.google.gdata.data.media.MediaSource;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
@@ -211,5 +215,79 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 	public void delEntry(DocumentListEntry entry) throws MalformedURLException,
 			IOException, ServiceException {
 		service.delete(new URL(entry.getEditLink().getHref()+"?delete=true"),entry.getEtag());
+	}
+	
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#download(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void download(String url, String filePath)
+			throws MalformedURLException, IOException, ServiceException {
+		MediaContent mc = new MediaContent();
+		mc.setUri(url);
+		MediaSource source = service.getMedia(mc);
+		InputStream is = null;
+		FileOutputStream fos = null;
+		try {
+			is = source.getInputStream();
+			fos = new FileOutputStream(filePath);
+			int c;
+			while( (c = is.read()) != -1) {
+				fos.write(c);
+			}
+		}finally {
+			if(is != null) 
+				is.close();
+			if(fos != null) {
+				fos.flush();
+				fos.close();
+			}
+		}//end of try-finally
+	}
+
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#downloadDocument(com.google.gdata.data.docs.DocumentListEntry, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void downloadDocument(DocumentListEntry entry, String filePath,
+			String format) throws MalformedURLException, IOException,
+			ServiceException {
+		String fileExtension = filePath.substring(filePath.lastIndexOf('.') + 1);
+		String exportUrl = ((MediaContent)entry.getContent()).getUri() + "&exportFormat="+fileExtension;
+		download(exportUrl, filePath);
+	}
+
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#downloadPresentation(com.google.gdata.data.docs.DocumentListEntry, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void downloadPresentation(DocumentListEntry entry, String filePath,
+			String format) throws MalformedURLException, IOException,
+			ServiceException {
+		String fileExtension = filePath.substring(filePath.lastIndexOf('.') + 1);
+		String exportUrl = ((MediaContent)entry.getContent()).getUri() + "&exportFormat="+fileExtension;
+		download(exportUrl, filePath);		
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#downloadSpreadsheet(com.google.gdata.data.docs.DocumentListEntry, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void downloadSpreadsheet(DocumentListEntry entry, String filePath,
+			String format) throws MalformedURLException, IOException,
+			ServiceException {
+		UserToken docsToken = (UserToken) service.getAuthTokenFactory().getAuthToken();
+		UserToken spreadsheetsToken = (UserToken) spreadsheetsService.getAuthTokenFactory().getAuthToken();
+		service.setUserToken(spreadsheetsToken.getValue());
+		
+		String fileExtension = filePath.substring(filePath.lastIndexOf('.') + 1);
+		String exportUrl = ((MediaContent)entry.getContent()).getUri() + "&exportFormat="+fileExtension;
+		// If exporting to .csv or .tsv, add the gid parameter to specify which sheet to export
+		if (fileExtension.equals("csv") || fileExtension.equals("tsv")) {
+			exportUrl += "&gid=0"; // gid=0 will download only the first sheet
+		}	
+		download(exportUrl, filePath);
+		service.setUserToken(docsToken.getValue()); // Restore docs token for our DocList service
 	}
 }

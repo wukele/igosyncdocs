@@ -18,6 +18,7 @@ import com.google.gdata.client.GoogleService.NotVerifiedException;
 import com.google.gdata.client.GoogleService.ServiceUnavailableException;
 import com.google.gdata.client.GoogleService.SessionExpiredException;
 import com.google.gdata.client.GoogleService.TermsNotAgreedException;
+import com.google.gdata.data.MediaContent;
 import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.acl.AclRole;
@@ -312,6 +313,87 @@ public class IGoSyncDocsBiz {
 	public static void delete(DocumentListEntry entry) throws IGoSyncDocsException {
 		try {
 			dao.delEntry(entry);
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}		
+	}
+	
+	public static void downloadDocument(DocumentListEntry entry,String filePath,
+			String format) throws IGoSyncDocsException {
+		try {
+			if(format == null || format.trim().equals(""))
+				format = "doc";
+			dao.downloadDocument(entry, filePath, format);
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}		
+	}
+	
+	public static void downloadSpreadsheet(DocumentListEntry entry, String filePath,
+			String format) throws IGoSyncDocsException {
+		try {
+			if(format == null || format.trim().equals(""))
+				format = "xls";
+			dao.downloadSpreadsheet(entry, filePath, format);
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}		
+	}
+	
+	public static void downloadPresentation(DocumentListEntry entry, String filePath,
+			String format) throws IGoSyncDocsException {
+		try {
+			if(format == null || format.trim().equals(""))
+				format = "ppt";
+			dao.downloadPresentation(entry, filePath, format);
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}
+	}
+	
+	public static void download(DocumentListEntry entry, String filePath) throws IGoSyncDocsException {
+		try {
+			dao.download( ((MediaContent)entry.getContent()).getUri(), filePath);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);

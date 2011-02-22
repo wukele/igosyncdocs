@@ -60,6 +60,10 @@ public class ShowConfirmDialogAction implements ActionListener {
 					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_del_action"), "delete",frMain);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);					
+				} else if(action.trim().equals("download")) {
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.download.confirm_download"), "download",frMain);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);					
 				}
 			}else
 				FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.another_process_running"));
