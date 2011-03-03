@@ -65,7 +65,6 @@ public class MainFrame extends JFrame {
 		setMinimumSize(new Dimension(990, 660));
 		setSize(new Dimension(990, 660));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
 		pnlMain = new JPanel();
 		pnlMain.setBorder(new EmptyBorder(0, 0, 5, 0));
 		pnlMain.setLayout(new BorderLayout());
@@ -270,14 +269,31 @@ public class MainFrame extends JFrame {
 				SystemRuntime.SelectedItem.clear(); //clear document selection when new tab selected
 				//clear table selection
 				pnlAllItem.getDataTable().clearSelection();
+				pnlAllItem.getDetailPanel().clearDetail();
+				
 				pnlDocument.getDataTable().clearSelection();
+				pnlDocument.getDetailPanel().clearDetail();
+				
 				pnlPresentation.getDataTable().clearSelection();
+				pnlPresentation.getDetailPanel().clearDetail();
+				
 				pnlSpreadsheet.getDataTable().clearSelection();
+				pnlSpreadsheet.getDetailPanel().clearDetail();
+				
 				pnlOtherfiles.getDataTable().clearSelection();
+				pnlOtherfiles.getDetailPanel().clearDetail();
+				
 				pnlHidden.getDataTable().clearSelection();
+				pnlHidden.getDetailPanel().clearDetail();
+				
 				pnlStared.getDataTable().clearSelection();
+				pnlStared.getDetailPanel().clearDetail();
+				
 				pnlTrashed.getDataTable().clearSelection();
+				pnlTrashed.getDetailPanel().clearDetail();
+				
 				pnlSharedWithMe.getDataTable().clearSelection();
+				pnlSharedWithMe.getDetailPanel().clearDetail();
 			}
 		});
 		btnRefresh.addActionListener(new RefreshItemAction(this));

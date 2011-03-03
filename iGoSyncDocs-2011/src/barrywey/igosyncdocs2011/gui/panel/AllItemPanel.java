@@ -6,6 +6,7 @@ package barrywey.igosyncdocs2011.gui.panel;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -48,21 +49,22 @@ public class AllItemPanel extends JPanel {
 		tblAllItems = new JTable();
 		tblAllItems.setModel(new EntryTableModel("all"));
 		tblAllItems.setName("tblAllItems");
-		initTableSettings(tblAllItems);
 		pnlCenter.setViewportView(tblAllItems);
+		initTableSettings(tblAllItems);
 		
-		pnlRight = new JScrollPane();
-		pnlRight.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlRight = new JPanel();
 		pnlRight.setPreferredSize(new Dimension(200, 20));
 		pnlRight.setName("pnlRight");
 		add(pnlRight, BorderLayout.EAST);
 		
-		pnlAcl = new JPanel();
-		pnlAcl.setName("pnlAcl");
-		pnlRight.setViewportView(pnlAcl);
+		pnlDetail = new ItemDetailPanel(); //item's detail panel
+		pnlDetail.setName("pnlDetail");
+		pnlRight.setLayout(new BorderLayout());
+		pnlRight.add(pnlDetail);
 		
 		tblAllItems.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
 				userClickedMouse(e);
 			}
 		});
@@ -77,6 +79,11 @@ public class AllItemPanel extends JPanel {
 				for (int i = 0; i < selectedRows.length; i++) {
 					DocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
 					SystemRuntime.SelectedItem.add(entry);
+					
+					if(i == selectedRows.length -1) {
+						//show last selected item's detail
+						pnlDetail.shownEntryDetail(entry);
+					}
 				}//end of for
 			}//end of if(rows>0)
 		}else if(e.getButton() == MouseEvent.BUTTON3) {
@@ -87,12 +94,15 @@ public class AllItemPanel extends JPanel {
 	public JTable getDataTable() {
 		return this.tblAllItems;
 	}
+	
+	public ItemDetailPanel getDetailPanel() {
+		return this.pnlDetail;
+	}
 
 	public void initTableSettings(JTable tbl) {
 		tbl.getTableHeader().setReorderingAllowed(false);
 		tbl.setRowHeight(20);
 		tbl.setAutoCreateRowSorter(true);
-		tbl.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//auto resize off
 		tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbl.getColumnModel().getColumn(0).setCellRenderer(new EntityTableCellRenderer());
 		tbl.getColumnModel().getColumn(1).setPreferredWidth(30);
@@ -108,7 +118,7 @@ public class AllItemPanel extends JPanel {
 	private static final long serialVersionUID = -858390102352879991L;
 	private JScrollPane pnlCenter;
 	private JTable tblAllItems;
-	private JScrollPane pnlRight;
-	private JPanel pnlAcl;	
+	private JPanel pnlRight;
+	private ItemDetailPanel pnlDetail;	
 
 }

@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
+import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 import com.google.gdata.data.docs.DocumentListEntry;
 
@@ -32,6 +33,7 @@ public class EntryTableModel extends AbstractTableModel{
 	}
 
 	public EntryTableModel(String type) {
+		super();
 		if(type.trim().equalsIgnoreCase("all"))
 			entries = IGoSyncDocsBiz.getAllItems();
 		else if(type.trim().equalsIgnoreCase("document"))
@@ -51,11 +53,11 @@ public class EntryTableModel extends AbstractTableModel{
 		else if(type.trim().equalsIgnoreCase("shared"))
 			entries = IGoSyncDocsBiz.getSharedWithMeObjects();
 		columnName = new Vector<String>();
-		columnName.add("Star");
-		columnName.add("Type");
-		columnName.add("Name");
-		columnName.add("Owner");
-		columnName.add("Last Updated");
+		columnName.add(LanguageResource.getStringValue("main.frame.th_star"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_type"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_name"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_owner"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_lastupdate"));
 	}
 
 	public int getColumnCount() {
@@ -85,6 +87,5 @@ public class EntryTableModel extends AbstractTableModel{
 		else
 			return columnName.get(column);
 	}
-
 }
  

@@ -24,6 +24,7 @@ import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.acl.AclRole;
 import com.google.gdata.data.acl.AclScope;
 import com.google.gdata.data.docs.DocumentListEntry;
+import com.google.gdata.data.docs.RevisionEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
@@ -87,8 +88,9 @@ public class IGoSyncDocsBiz {
 	public static void cacheAllItem() throws IGoSyncDocsException {
 		try {
 			SystemRuntime.CachedDocumentFeed = dao.getAllFeeds();
-			for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
+			for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {				
 				SystemRuntime.ChachedEntryAclFeed.add(dao.getAclFeed(entry));
+				//SystemRuntime.CachedRevisionFeed.add(dao.getRevisionFeed(entry));
 			}
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
@@ -201,6 +203,17 @@ public class IGoSyncDocsBiz {
 		}
 		return SystemRuntime.ChachedEntryAclFeed.get(index).getEntries();
 	}//end of method
+	
+	public static List<RevisionEntry> getRevisionEntry(DocumentListEntry entry) {
+//		List<DocumentListEntry> entires = SystemRuntime.CachedDocumentFeed.getEntries();
+//		int index = 0;
+//		for(index=0;index<entires.size();index++) {
+//			if(entires.get(index).getResourceId().equals(entry.getResourceId()))
+//				break;
+//		}
+//		return SystemRuntime.CachedRevisionFeed.get(index).getEntries();
+		return null;
+	}
 	
 	public static String getOwner(DocumentListEntry entry) {
 		String owner = "";

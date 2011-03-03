@@ -21,6 +21,7 @@ import com.google.gdata.data.acl.AclRole;
 import com.google.gdata.data.acl.AclScope;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
+import com.google.gdata.data.docs.RevisionFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
@@ -175,6 +176,17 @@ public interface IGoSyncDocsDao {
 	 * @throws ServiceException
 	 */
 	public AclFeed getAclFeed(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
+	
+	/**
+	 * Get entry's revisoin feed;
+	 * 
+	 * @param entry
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public RevisionFeed getRevisionFeed(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
 	
 	/**
 	 * Trash the given item.

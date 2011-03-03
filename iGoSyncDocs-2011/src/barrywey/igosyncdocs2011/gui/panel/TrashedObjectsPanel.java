@@ -7,6 +7,8 @@ package barrywey.igosyncdocs2011.gui.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,6 +16,9 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import com.google.gdata.data.docs.DocumentListEntry;
+
+import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
 
@@ -45,26 +50,57 @@ public class TrashedObjectsPanel extends JPanel{
 		initTableSettings(tblAllItems);
 		pnlCenter.setViewportView(tblAllItems);
 		
-		pnlRight = new JScrollPane();
-		pnlRight.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlRight = new JPanel();
 		pnlRight.setPreferredSize(new Dimension(200, 20));
 		pnlRight.setName("pnlRight");
 		add(pnlRight, BorderLayout.EAST);
 		
-		pnlAcl = new JPanel();
-		pnlAcl.setName("pnlAcl");
-		pnlRight.setViewportView(pnlAcl);
+		pnlDetail = new ItemDetailPanel(); //item's detail panel
+		pnlDetail.setName("pnlDetail");
+		pnlRight.setLayout(new BorderLayout());
+		pnlRight.add(pnlDetail);
+		
+		tblAllItems.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				userClickedMouse(e);
+			}
+		});		
 	}
+	
+	private void userClickedMouse(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			//left click get selected document
+			int[] selectedRows = tblAllItems.getSelectedRows();
+			if(selectedRows.length > 0) {				
+				SystemRuntime.SelectedItem.clear();		//clear previous selected item
+				for (int i = 0; i < selectedRows.length; i++) {
+					DocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
+					SystemRuntime.SelectedItem.add(entry);
+					
+					if(i == selectedRows.length -1) {
+						//show last selected item's detail
+						pnlDetail.shownEntryDetail(entry);
+					}
+				}//end of for
+			}//end of if(rows>0)
+		}else if(e.getButton() == MouseEvent.BUTTON3) {
+			//right click show popup menu
+		}
+	}	
 	
 	public JTable getDataTable() {
 		return this.tblAllItems;
 	}
+	
+	public ItemDetailPanel getDetailPanel() {
+		return this.pnlDetail;
+	}	
 
 	public void initTableSettings(JTable tbl) {
 		tbl.getTableHeader().setReorderingAllowed(false);
 		tbl.setRowHeight(20);
 		tbl.setAutoCreateRowSorter(true);
-		tbl.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//auto resize off
 		tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbl.getColumnModel().getColumn(0).setCellRenderer(new EntityTableCellRenderer());
 		tbl.getColumnModel().getColumn(1).setPreferredWidth(30);
@@ -79,8 +115,8 @@ public class TrashedObjectsPanel extends JPanel{
 	
 	private JScrollPane pnlCenter;
 	private JTable tblAllItems;
-	private JScrollPane pnlRight;
-	private JPanel pnlAcl;			
+	private JPanel pnlRight;
+	private ItemDetailPanel pnlDetail;	
 	private static final long serialVersionUID = 6875892433104474299L;
 
 }

@@ -37,6 +37,7 @@ import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
 import com.google.gdata.data.docs.FolderEntry;
 import com.google.gdata.data.docs.PresentationEntry;
+import com.google.gdata.data.docs.RevisionFeed;
 import com.google.gdata.data.docs.SpreadsheetEntry;
 import com.google.gdata.data.media.MediaSource;
 import com.google.gdata.util.AuthenticationException;
@@ -62,6 +63,10 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		spreadsheetsService = new GoogleService("wise", appName);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#login(java.lang.String, java.lang.String)
+	 */
 	public void login(String email, String password)
 			throws CaptchaRequiredException, InvalidCredentialsException,
 			AccountDisabledException, AccountDeletedException,
@@ -73,36 +78,64 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		token = (UserToken) service.getAuthTokenFactory().getAuthToken();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAllFeeds()
+	 */
 	public DocumentListFeed getAllFeeds() throws MalformedURLException, IOException, ServiceException {
 		service.setUserToken(token.getValue());
 		return service.getFeed(new URL(URLManager.Get_All_Feeds), DocumentListFeed.class);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAllDocuments()
+	 */
 	public DocumentListFeed getAllDocuments() throws MalformedURLException, IOException, ServiceException {
 		service.setUserToken(token.getValue());
 		return service.getFeed(new URL(URLManager.Get_All_Documents), DocumentListFeed.class);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAllSpreadsheets()
+	 */
 	public DocumentListFeed getAllSpreadsheets () throws MalformedURLException, IOException, ServiceException {
 		service.setUserToken(token.getValue());
 		return service.getFeed(new URL(URLManager.Get_All_Spreadsheets), DocumentListFeed.class);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAllPresentations()
+	 */
 	public DocumentListFeed getAllPresentations() throws MalformedURLException, IOException, ServiceException {
 		service.setUserToken(token.getValue());
 		return service.getFeed(new URL(URLManager.Get_All_Presentations), DocumentListFeed.class);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAllTrashedObjects()
+	 */
 	public DocumentListFeed getAllTrashedObjects() throws MalformedURLException, IOException, ServiceException {
 		service.setUserToken(token.getValue());
 		return service.getFeed(new URL(URLManager.Get_All_TrashedObjects), DocumentListFeed.class);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAllFolders()
+	 */
 	public DocumentListFeed getAllFolders() throws MalformedURLException, IOException, ServiceException {
 		service.setUserToken(token.getValue());
 		return service.getFeed(new URL(URLManager.Get_All_Folders), DocumentListFeed.class);		
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#exactTitleQuery(java.lang.String)
+	 */
 	public DocumentListFeed exactTitleQuery(String title) throws MalformedURLException, IOException, ServiceException {
 		DocumentQuery query = new DocumentQuery(new URL(URLManager.Exact_Title_Search));
 		query.setTitleQuery(title);
@@ -111,6 +144,10 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		return service.getFeed(query, DocumentListFeed.class);		
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#fullTextQuery(java.lang.String)
+	 */
 	public DocumentListFeed fullTextQuery(String text) throws MalformedURLException, IOException, ServiceException {
 		DocumentQuery query = new DocumentQuery(new URL(URLManager.Exact_Title_Search));
 		query.setFullTextQuery(text);
@@ -118,6 +155,10 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		return service.getFeed(query, DocumentListFeed.class);			
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#createNew(java.lang.String, java.lang.String)
+	 */
 	public DocumentListEntry createNew(String title, String type) throws MalformedURLException, IOException, ServiceException {
 		DocumentListEntry entry = null;
 		if(type.trim().equalsIgnoreCase("document")) {
@@ -132,6 +173,10 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		return service.insert(new URL(URLManager.Exact_Title_Search),entry);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#upload(java.lang.String, java.lang.String)
+	 */
 	public DocumentListEntry upload(String title, String filePath)
 			throws MalformedURLException, IOException, ServiceException {
 		File file = new File(filePath);
@@ -143,6 +188,10 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		return service.insert(new URL(URLManager.Exact_Title_Search),entry);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#createFolder(java.lang.String)
+	 */
 	public DocumentListEntry createFolder(String folderName)
 			throws MalformedURLException, IOException, ServiceException {
 		DocumentListEntry folder = new FolderEntry();
@@ -151,10 +200,24 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 		return service.insert(new URL(URLManager.Exact_Title_Search),folder);		
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getAclFeed(com.google.gdata.data.docs.DocumentListEntry)
+	 */
 	public AclFeed getAclFeed(DocumentListEntry entry)
 			throws MalformedURLException, IOException, ServiceException {
 		return service.getFeed(new URL(entry.getAclFeedLink().getHref()),
 				AclFeed.class);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#getRevisionFeed(com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	public RevisionFeed getRevisionFeed(DocumentListEntry entry)
+			throws MalformedURLException, IOException, ServiceException {
+		return service.getFeed(new URL(entry.getSelfLink().getHref()+"/revisions"),
+				RevisionFeed.class);
 	}
 
 	/* (non-Javadoc)

@@ -21,4 +21,5 @@ public class URLManager {
 	public static final String Get_All_TrashedObjects = "https://docs.google.com/feeds/default/private/full/-/trashed";
 	public static final String Get_All_Folders = "https://docs.google.com/feeds/default/private/full/-/folder";
 	public static final String Exact_Title_Search = "https://docs.google.com/feeds/default/private/full/";
+	public static final String Get_Revision_Feed = "https://docs.google.com/feeds/default/private/full/{1}/revisions";
 }
