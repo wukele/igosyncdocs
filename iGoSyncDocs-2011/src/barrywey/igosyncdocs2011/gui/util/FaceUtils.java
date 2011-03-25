@@ -58,4 +58,8 @@ public class FaceUtils {
 	public static int showConfirmMessage(Component parent,String message) {
 		return JOptionPane.showConfirmDialog(parent, message,LanguageResource.getStringValue("app.title"),JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 	}
+	
+	public static String showInputDialog(Component parent,String message) {
+		return JOptionPane.showInputDialog(null,message,LanguageResource.getStringValue("app.title"),JOptionPane.QUESTION_MESSAGE);
+	}
 }

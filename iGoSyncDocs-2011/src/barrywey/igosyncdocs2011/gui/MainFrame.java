@@ -226,7 +226,7 @@ public class MainFrame extends JFrame {
 		pnlTabbedPane.setName("pnlTabbedPane");
 		pnlMain.add(pnlTabbedPane, BorderLayout.CENTER);
 		
-		pnlAllItem = new AllItemPanel();
+		pnlAllItem = new AllItemPanel(this);
 		pnlAllItem.setName("pnlAllItem");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_allitem"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/all.png")), pnlAllItem, null);
 		
@@ -266,35 +266,37 @@ public class MainFrame extends JFrame {
 		addWindowListener(new SystemTrayAction(this));
 		pnlTabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				SystemRuntime.SelectedItem.clear(); //clear document selection when new tab selected
-				//clear table selection
-				pnlAllItem.getDataTable().clearSelection();
-				pnlAllItem.getDetailPanel().clearDetail();
-				
-				pnlDocument.getDataTable().clearSelection();
-				pnlDocument.getDetailPanel().clearDetail();
-				
-				pnlPresentation.getDataTable().clearSelection();
-				pnlPresentation.getDetailPanel().clearDetail();
-				
-				pnlSpreadsheet.getDataTable().clearSelection();
-				pnlSpreadsheet.getDetailPanel().clearDetail();
-				
-				pnlOtherfiles.getDataTable().clearSelection();
-				pnlOtherfiles.getDetailPanel().clearDetail();
-				
-				pnlHidden.getDataTable().clearSelection();
-				pnlHidden.getDetailPanel().clearDetail();
-				
-				pnlStared.getDataTable().clearSelection();
-				pnlStared.getDetailPanel().clearDetail();
-				
-				pnlTrashed.getDataTable().clearSelection();
-				pnlTrashed.getDetailPanel().clearDetail();
-				
-				pnlSharedWithMe.getDataTable().clearSelection();
-				pnlSharedWithMe.getDetailPanel().clearDetail();
-			}
+				if (!progressBar.isIndeterminate()) {
+					SystemRuntime.SelectedItem.clear(); //clear document selection when new tab selected
+					//clear table selection
+					pnlAllItem.getDataTable().clearSelection();
+					pnlAllItem.getDetailPanel().clearDetail();
+					
+					pnlDocument.getDataTable().clearSelection();
+					pnlDocument.getDetailPanel().clearDetail();
+					
+					pnlPresentation.getDataTable().clearSelection();
+					pnlPresentation.getDetailPanel().clearDetail();
+					
+					pnlSpreadsheet.getDataTable().clearSelection();
+					pnlSpreadsheet.getDetailPanel().clearDetail();
+					
+					pnlOtherfiles.getDataTable().clearSelection();
+					pnlOtherfiles.getDetailPanel().clearDetail();
+					
+					pnlHidden.getDataTable().clearSelection();
+					pnlHidden.getDetailPanel().clearDetail();
+					
+					pnlStared.getDataTable().clearSelection();
+					pnlStared.getDetailPanel().clearDetail();
+					
+					pnlTrashed.getDataTable().clearSelection();
+					pnlTrashed.getDetailPanel().clearDetail();
+					
+					pnlSharedWithMe.getDataTable().clearSelection();
+					pnlSharedWithMe.getDetailPanel().clearDetail();					
+				}//end of if
+			}//end of stateChanged()
 		});
 		btnRefresh.addActionListener(new RefreshItemAction(this));
 		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash"));
@@ -337,8 +339,8 @@ public class MainFrame extends JFrame {
 		this.pnlTrashed.initTableSettings(this.pnlTrashed.getDataTable());	
 		
 		this.pnlSharedWithMe.getDataTable().setModel(new EntryTableModel("shared"));
-		this.pnlSharedWithMe.initTableSettings(this.pnlSharedWithMe.getDataTable());		
-	}
+		this.pnlSharedWithMe.initTableSettings(this.pnlSharedWithMe.getDataTable());			
+	}//end of method
 
 	private static final long serialVersionUID = -9147881941303957656L;
 	private JMenuBar menuBar;

@@ -27,7 +27,7 @@ public class SystemRuntime implements Serializable {
 	private static final long serialVersionUID = 3636286982031235354L;
 	public static UserSettings Settings = new UserSettings();
 	public static DocumentListFeed CachedDocumentFeed = null;
-	public static List<AclFeed> ChachedEntryAclFeed = new ArrayList<AclFeed>();
+	public static List<AclFeed> CachedEntryAclFeed = new ArrayList<AclFeed>();
 	public static List<DocumentListEntry> SelectedItem = new ArrayList<DocumentListEntry>();
 	public static UploadFileProcessDialog UploadDialog = null;
 	

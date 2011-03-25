@@ -52,9 +52,7 @@ public class RefreshItemAction implements ActionListener , Runnable{
 			frMain.refreshAllTableData();
 		} catch (IGoSyncDocsException e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
-		} catch (Exception e) {
-			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
-		} finally {
+		}finally {
 			lblMessage.setText("");
 			progressbar.setIndeterminate(false);			
 		}

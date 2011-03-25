@@ -88,8 +88,9 @@ public class IGoSyncDocsBiz {
 	public static void cacheAllItem() throws IGoSyncDocsException {
 		try {
 			SystemRuntime.CachedDocumentFeed = dao.getAllFeeds();
+			SystemRuntime.CachedEntryAclFeed.clear();
 			for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {				
-				SystemRuntime.ChachedEntryAclFeed.add(dao.getAclFeed(entry));
+				SystemRuntime.CachedEntryAclFeed.add(dao.getAclFeed(entry));
 				//SystemRuntime.CachedRevisionFeed.add(dao.getRevisionFeed(entry));
 			}
 		} catch (MalformedURLException e) {
@@ -181,7 +182,7 @@ public class IGoSyncDocsBiz {
 	
 	public static List<DocumentListEntry> getSharedWithMeObjects() {
 		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		List<AclFeed> aclFeed = SystemRuntime.ChachedEntryAclFeed;
+		List<AclFeed> aclFeed = SystemRuntime.CachedEntryAclFeed;
 		List<DocumentListEntry> allEntries = SystemRuntime.CachedDocumentFeed.getEntries();
 		for(int i=0;i<aclFeed.size();i++) {
 			AclFeed feed = aclFeed.get(i);// sequence of document entry
@@ -201,7 +202,7 @@ public class IGoSyncDocsBiz {
 			if(entires.get(index).getResourceId().equals(entry.getResourceId()))
 				break;
 		}
-		return SystemRuntime.ChachedEntryAclFeed.get(index).getEntries();
+		return SystemRuntime.CachedEntryAclFeed.get(index).getEntries();
 	}//end of method
 	
 	public static List<RevisionEntry> getRevisionEntry(DocumentListEntry entry) {
@@ -420,5 +421,59 @@ public class IGoSyncDocsBiz {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		}		
+	}
+	
+	public static void createNewDocument(String title) throws IGoSyncDocsException {
+		try {
+			dao.createNew(title, "document");
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}
+	}
+	
+	public static void createNewPresentation(String title) throws IGoSyncDocsException {
+		try {
+			dao.createNew(title, "presentation");
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}
+	}
+	
+	public static void createNewSpreadsheet(String title) throws IGoSyncDocsException {
+		try {
+			dao.createNew(title, "spreadsheet");
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		}
 	}
 }

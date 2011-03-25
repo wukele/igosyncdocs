@@ -45,9 +45,7 @@ public class TrashItemAction implements Runnable {
 			frMain.refreshAllTableData();
 		}catch (IGoSyncDocsException e) {
 			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
-		} catch (Exception e) {
-			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
-		} finally {
+		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
 			dialog.dispose();						
