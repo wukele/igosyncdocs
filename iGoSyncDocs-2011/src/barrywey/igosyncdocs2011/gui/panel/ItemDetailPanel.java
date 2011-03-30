@@ -7,12 +7,11 @@ package barrywey.igosyncdocs2011.gui.panel;
 
 import javax.swing.JPanel;
 
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.gui.JLinkedLabel;
 import barrywey.igosyncdocs2011.gui.model.AclEntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.AclTableCellRenderer;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
-
-import com.google.gdata.data.docs.DocumentListEntry;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -53,7 +52,7 @@ public class ItemDetailPanel extends JSplitPane {
 		lblViewOnLine.setHref("");
 	}
 	
-	public void shownEntryDetail(DocumentListEntry entry) {
+	public void shownEntryDetail(MyDocumentListEntry entry) {
 		if(entry != null) {
 			table.setModel(new AclEntryTableModel(entry));
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -62,8 +61,8 @@ public class ItemDetailPanel extends JSplitPane {
 			table.getColumnModel().getColumn(1).setPreferredWidth(200);
 			table.getColumnModel().getColumn(1).setCellRenderer(new AclTableCellRenderer());			
 
-			lblTitle.setText("<html>"+entry.getTitle().getPlainText()+"</html>");
-			lblViewOnLine.setHref(entry.getHtmlLink().getHref());
+			lblTitle.setText("<html>"+entry.getEntry().getTitle().getPlainText()+"</html>");
+			lblViewOnLine.setHref(entry.getEntry().getHtmlLink().getHref());
 		}//end of if
 	}//end of method shownEntryDetail
 

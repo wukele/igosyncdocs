@@ -16,8 +16,7 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import com.google.gdata.data.docs.DocumentListEntry;
-
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
@@ -74,7 +73,7 @@ public class SharedWithMePanel extends JPanel{
 			if(selectedRows.length > 0) {				
 				SystemRuntime.SelectedItem.clear();		//clear previous selected item
 				for (int i = 0; i < selectedRows.length; i++) {
-					DocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
+					MyDocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
 					SystemRuntime.SelectedItem.add(entry);
 					
 					if(i == selectedRows.length -1) {

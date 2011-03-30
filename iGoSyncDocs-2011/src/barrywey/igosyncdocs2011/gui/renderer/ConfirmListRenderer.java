@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
+
 import com.google.gdata.data.docs.DocumentListEntry;
 
 /**
@@ -33,8 +35,8 @@ public class ConfirmListRenderer extends JLabel implements ListCellRenderer{
 			int index, boolean isSelected, boolean cellHasFocus) {
 		
 		if(value instanceof DocumentListEntry) {
-			DocumentListEntry entry = (DocumentListEntry)value;
-			setText(entry.getTitle().getPlainText());
+			MyDocumentListEntry entry = (MyDocumentListEntry)value;
+			setText(entry.getEntry().getTitle().getPlainText());
 		}
 		
 		if (isSelected) {

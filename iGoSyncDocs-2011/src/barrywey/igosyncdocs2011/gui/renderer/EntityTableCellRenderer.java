@@ -18,11 +18,10 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableCellRenderer;
 
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
 import barrywey.igosyncdocs2011.resource.ImageResource;
-
-import com.google.gdata.data.docs.DocumentListEntry;
 
 /**
  * 
@@ -39,11 +38,11 @@ public class EntityTableCellRenderer extends JLabel implements TableCellRenderer
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		
-		if(value instanceof DocumentListEntry) {
-			DocumentListEntry entry = (DocumentListEntry)value;
+		if(value instanceof MyDocumentListEntry) {
+			MyDocumentListEntry entry = (MyDocumentListEntry)value;
 			if(column == 0) {
 				//star icon
-				if(entry.isStarred())
+				if(entry.getEntry().isStarred())
 					setIcon(ImageResource.getIcon("stared.png"));
 				else
 					setIcon(ImageResource.getIcon("stared-not.png"));
@@ -51,11 +50,11 @@ public class EntityTableCellRenderer extends JLabel implements TableCellRenderer
 				//get type
 				setIcon(getValiedIcon(entry));
 			}else if(column == 2) {
-				setText(entry.getTitle().getPlainText());
+				setText(entry.getEntry().getTitle().getPlainText());
 			}else if(column == 3) {
 				setText(IGoSyncDocsBiz.getOwner(entry));
 			}else if(column == 4) {
-				setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(entry.getUpdated().getValue())));
+				setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(entry.getEntry().getUpdated().getValue())));
 			}
 		}//end of if
 		
@@ -74,15 +73,15 @@ public class EntityTableCellRenderer extends JLabel implements TableCellRenderer
 		return this;
 	}//end of method
 	
-	private Icon getValiedIcon(DocumentListEntry entry) {
-		if (entry.getType().equals("document"))
+	private Icon getValiedIcon(MyDocumentListEntry entry) {
+		if (entry.getEntry().getType().equals("document"))
 			return ImageResource.getIcon("doc.png");
-		else if (entry.getType().equals("spreadsheet"))
+		else if (entry.getEntry().getType().equals("spreadsheet"))
 			return ImageResource.getIcon("spreadsheet.png");
-		else if (entry.getType().equals("presentation"))
+		else if (entry.getEntry().getType().equals("presentation"))
 			return ImageResource.getIcon("presentation.png");
 		else {
-			String fileExtensiton = entry.getType();
+			String fileExtensiton = entry.getEntry().getType();
 			String path = SystemRuntime.Settings.App_Data_Home+File.separator+"iGoSyncDocs 2011 temp."+fileExtensiton;
 			File file = new File(path);
 			if (!file.exists())

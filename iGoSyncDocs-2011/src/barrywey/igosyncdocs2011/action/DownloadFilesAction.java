@@ -7,8 +7,7 @@ package barrywey.igosyncdocs2011.action;
 
 import java.io.File;
 
-import com.google.gdata.data.docs.DocumentListEntry;
-
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
@@ -41,16 +40,16 @@ public class DownloadFilesAction implements Runnable {
 		try {
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
-			for(DocumentListEntry entry : SystemRuntime.SelectedItem) {
-				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("dialog.download.download_process").replace("{1}", entry.getTitle().getPlainText()));
-				if(entry.getType().trim().equals("document")) {
-					IGoSyncDocsBiz.downloadDocument(entry, filePath+ File.separator + entry.getTitle().getPlainText() + ".doc",null);
-				}else if(entry.getType().trim().equals("spreadsheet")) {
-					IGoSyncDocsBiz.downloadSpreadsheet(entry, filePath+ File.separator + entry.getTitle().getPlainText() + ".xls",null);
-				}else if(entry.getType().trim().equals("presentation")) {
-					IGoSyncDocsBiz.downloadPresentation(entry, filePath+ File.separator + entry.getTitle().getPlainText() + ".ppt",null);
+			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
+				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("dialog.download.download_process").replace("{1}", entry.getEntry().getTitle().getPlainText()));
+				if(entry.getEntry().getType().trim().equals("document")) {
+					IGoSyncDocsBiz.downloadDocument(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText() + ".doc",null);
+				}else if(entry.getEntry().getType().trim().equals("spreadsheet")) {
+					IGoSyncDocsBiz.downloadSpreadsheet(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText() + ".xls",null);
+				}else if(entry.getEntry().getType().trim().equals("presentation")) {
+					IGoSyncDocsBiz.downloadPresentation(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText() + ".ppt",null);
 				}else {
-					IGoSyncDocsBiz.download(entry, filePath+ File.separator + entry.getTitle().getPlainText());
+					IGoSyncDocsBiz.download(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText());
 				}//end of if
 			}//end of for
 		}catch (IGoSyncDocsException e) {

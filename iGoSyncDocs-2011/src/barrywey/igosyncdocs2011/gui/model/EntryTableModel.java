@@ -9,10 +9,9 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
-
-import com.google.gdata.data.docs.DocumentListEntry;
 
 /**
  * 
@@ -25,10 +24,10 @@ import com.google.gdata.data.docs.DocumentListEntry;
 public class EntryTableModel extends AbstractTableModel{
 
 	private static final long serialVersionUID = 3857728294426996858L;
-	private List<DocumentListEntry> entries;
+	private List<MyDocumentListEntry> entries;
 	private Vector<String> columnName;
 	
-	public List<DocumentListEntry> getEntries() {
+	public List<MyDocumentListEntry> getEntries() {
 		return this.entries;
 	}
 

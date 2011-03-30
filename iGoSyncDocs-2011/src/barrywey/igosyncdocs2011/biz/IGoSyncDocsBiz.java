@@ -23,11 +23,11 @@ import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclFeed;
 import com.google.gdata.data.acl.AclRole;
 import com.google.gdata.data.acl.AclScope;
-import com.google.gdata.data.docs.DocumentListEntry;
-import com.google.gdata.data.docs.RevisionEntry;
+import com.google.gdata.data.docs.DocumentListFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.net.IGoSyncDocsDao;
 import barrywey.igosyncdocs2011.net.impl.IGoSyncDocsDaoImpl;
@@ -86,12 +86,15 @@ public class IGoSyncDocsBiz {
 	 * @throws IGoSyncDocsException
 	 */
 	public static void cacheAllItem() throws IGoSyncDocsException {
-		try {
-			SystemRuntime.CachedDocumentFeed = dao.getAllFeeds();
-			SystemRuntime.CachedEntryAclFeed.clear();
-			for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {				
-				SystemRuntime.CachedEntryAclFeed.add(dao.getAclFeed(entry));
-				//SystemRuntime.CachedRevisionFeed.add(dao.getRevisionFeed(entry));
+	
+		try {		
+			DocumentListFeed allFeeds = dao.getAllFeeds();
+			SystemRuntime.CachedEntries.clear();
+			for (int i = 0; i < allFeeds.getEntries().size(); i++) {
+				MyDocumentListEntry entry = new MyDocumentListEntry();
+				entry.setEntry(allFeeds.getEntries().get(i));
+				entry.setAclFeeds(dao.getAclFeed(entry.getEntry()));
+				SystemRuntime.CachedEntries.add(entry);
 			}
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
@@ -104,121 +107,110 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}//end of method
 	
-	public static List<DocumentListEntry> getAllItems() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(!entry.isHidden() && !entry.isTrashed())
+	public static List<MyDocumentListEntry> getAllItems() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for(MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if(!entry.getEntry().isHidden() && !entry.getEntry().isTrashed())
 				list.add(entry);
 		}
 		return list;
 	}
 	
-	public static List<DocumentListEntry> getAllDocuments() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("document") && !entry.isHidden() && !entry.isTrashed())
+	public static List<MyDocumentListEntry> getAllDocuments() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (entry.getEntry().getType().equals("document")
+					&& !entry.getEntry().isHidden()
+					&& !entry.getEntry().isTrashed())
 				list.add(entry);
 		}
 		return list;
 	}//end of method
 	
-	public static List<DocumentListEntry> getAllPresentations() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("presentation") && !entry.isHidden() && !entry.isTrashed())
+	public static List<MyDocumentListEntry> getAllPresentations() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (entry.getEntry().getType().equals("presentation")
+					&& !entry.getEntry().isHidden()
+					&& !entry.getEntry().isTrashed())
 				list.add(entry);
 		}
 		return list;
 	}//end of method
 	
-	public static List<DocumentListEntry> getAllSpreadsheets() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.getType().equals("spreadsheet") && !entry.isHidden() && !entry.isTrashed())
+	public static List<MyDocumentListEntry> getAllSpreadsheets() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (entry.getEntry().getType().equals("spreadsheet")
+					&& !entry.isHidden() && !entry.getEntry().isTrashed())
 				list.add(entry);
 		}
 		return list;
 	}//end of method
 	
-	public static List<DocumentListEntry> getAllOthers() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if( !entry.getType().equals("document") && !entry.getType().equals("presentation") && !entry.getType().equals("spreadsheet") && !entry.isHidden() && entry.isTrashed())
+	public static List<MyDocumentListEntry> getAllOthers() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (!entry.getEntry().getType().equals("document")
+					&& !entry.getEntry().getType().equals("presentation")
+					&& !entry.getEntry().getType().equals("spreadsheet")
+					&& !entry.getEntry().isHidden()
+					&& entry.getEntry().isTrashed())
 				list.add(entry);
 		}
 		return list;
 	}//end of method
 	
-	public static List<DocumentListEntry> getHiddenObjects() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.isHidden() && !entry.isTrashed())
+	public static List<MyDocumentListEntry> getHiddenObjects() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (entry.getEntry().isHidden() && !entry.getEntry().isTrashed())
 				list.add(entry);
 		}
 		return list;
 	}
 	
-	public static List<DocumentListEntry> getStaredObjects() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.isStarred() && !entry.isHidden())
+	public static List<MyDocumentListEntry> getStaredObjects() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (entry.getEntry().isStarred() && !entry.getEntry().isHidden())
 				list.add(entry);
 		}
 		return list;
 	}
 	
-	public static List<DocumentListEntry> getTrashedObjects() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		for(DocumentListEntry entry : SystemRuntime.CachedDocumentFeed.getEntries()) {
-			if(entry.isTrashed() && !entry.isHidden())
+	public static List<MyDocumentListEntry> getTrashedObjects() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		for (MyDocumentListEntry entry : SystemRuntime.CachedEntries) {
+			if (entry.getEntry().isTrashed() && !entry.getEntry().isHidden())
 				list.add(entry);
-		}		
+		}	
 		return list;
 	}
 	
-	public static List<DocumentListEntry> getSharedWithMeObjects() {
-		List<DocumentListEntry> list = new ArrayList<DocumentListEntry>();
-		List<AclFeed> aclFeed = SystemRuntime.CachedEntryAclFeed;
-		List<DocumentListEntry> allEntries = SystemRuntime.CachedDocumentFeed.getEntries();
-		for(int i=0;i<aclFeed.size();i++) {
-			AclFeed feed = aclFeed.get(i);// sequence of document entry
-			for(AclEntry entry : feed.getEntries()) {
-				if(entry.getRole().getValue().equalsIgnoreCase("owner") && !entry.getScope().getValue().equals(SystemRuntime.Settings.UserName)) {
+	public static List<MyDocumentListEntry> getSharedWithMeObjects() {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		List<MyDocumentListEntry> allEntries = SystemRuntime.CachedEntries;
+		for(int i=0;i<allEntries.size();i++) {
+			AclFeed feed = allEntries.get(i).getAclFeeds();
+			for (AclEntry entry : feed.getEntries()) {
+				if (entry.getRole().getValue().equalsIgnoreCase("owner")
+						&& !entry.getScope().getValue().equals(
+								SystemRuntime.Settings.UserName)) {
 					list.add(allEntries.get(i));
 				}
-			}//end of for
+			}// end of for
 		}//end of for
 		return list;		
 	}
-	
-	public static List<AclEntry> getAclEntry(DocumentListEntry entry) {
-		List<DocumentListEntry> entires = SystemRuntime.CachedDocumentFeed.getEntries();
-		int index = 0;
-		for(index=0;index<entires.size();index++) {
-			if(entires.get(index).getResourceId().equals(entry.getResourceId()))
-				break;
-		}
-		return SystemRuntime.CachedEntryAclFeed.get(index).getEntries();
-	}//end of method
-	
-	public static List<RevisionEntry> getRevisionEntry(DocumentListEntry entry) {
-//		List<DocumentListEntry> entires = SystemRuntime.CachedDocumentFeed.getEntries();
-//		int index = 0;
-//		for(index=0;index<entires.size();index++) {
-//			if(entires.get(index).getResourceId().equals(entry.getResourceId()))
-//				break;
-//		}
-//		return SystemRuntime.CachedRevisionFeed.get(index).getEntries();
-		return null;
-	}
-	
-	public static String getOwner(DocumentListEntry entry) {
+
+	public static String getOwner(MyDocumentListEntry entry) {
 		String owner = "";
-		List<AclEntry> enties = getAclEntry(entry);
+		List<AclEntry> enties = entry.getAclFeeds().getEntries();
 		for (int i = 0; i < enties.size(); i++) {
 			AclEntry acl = enties.get(i);
 			if(acl.getRole().getValue().equals("owner")) {
@@ -228,9 +220,9 @@ public class IGoSyncDocsBiz {
 		return owner;
 	}// end of method
 	
-	public static void trashItem(DocumentListEntry entry) throws IGoSyncDocsException {
+	public static void trashItem(MyDocumentListEntry entry) throws IGoSyncDocsException {
 		try {
-			dao.trash(entry);
+			dao.trash(entry.getEntry());
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -242,13 +234,13 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 	
-	public static void hideItem(DocumentListEntry entry) throws IGoSyncDocsException{
+	public static void hideItem(MyDocumentListEntry entry) throws IGoSyncDocsException{
 		try {
-			dao.hide(entry);
+			dao.hide(entry.getEntry());
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -260,13 +252,13 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 	
-	public static void starItem(DocumentListEntry entry) throws IGoSyncDocsException {
+	public static void starItem(MyDocumentListEntry entry) throws IGoSyncDocsException {
 		try {
-			dao.star(entry);
+			dao.star(entry.getEntry());
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -278,11 +270,11 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
 	}
 	
-	public static void shareItem(String email,boolean canWrite,DocumentListEntry entry)  throws IGoSyncDocsException{
+	public static void shareItem(String email,boolean canWrite,MyDocumentListEntry entry)  throws IGoSyncDocsException{
 		try {
 			AclRole role ;
 			if(canWrite)
@@ -290,7 +282,7 @@ public class IGoSyncDocsBiz {
 			else
 				role = new AclRole("reader");
 			AclScope scope = new AclScope(AclScope.Type.USER,email.trim());
-			dao.addAclEntry(role, scope, entry);
+			dao.addAclEntry(role, scope, entry.getEntry());
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -302,7 +294,7 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 	
@@ -320,13 +312,13 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
 	}
 	
-	public static void delete(DocumentListEntry entry) throws IGoSyncDocsException {
+	public static void delete(MyDocumentListEntry entry) throws IGoSyncDocsException {
 		try {
-			dao.delEntry(entry);
+			dao.delEntry(entry.getEntry());
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -338,16 +330,16 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
 	}
 	
-	public static void downloadDocument(DocumentListEntry entry,String filePath,
+	public static void downloadDocument(MyDocumentListEntry entry,String filePath,
 			String format) throws IGoSyncDocsException {
 		try {
 			if(format == null || format.trim().equals(""))
 				format = "doc";
-			dao.downloadDocument(entry, filePath, format);
+			dao.downloadDocument(entry.getEntry(), filePath, format);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -359,16 +351,16 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
 	}
 	
-	public static void downloadSpreadsheet(DocumentListEntry entry, String filePath,
+	public static void downloadSpreadsheet(MyDocumentListEntry entry, String filePath,
 			String format) throws IGoSyncDocsException {
 		try {
 			if(format == null || format.trim().equals(""))
 				format = "xls";
-			dao.downloadSpreadsheet(entry, filePath, format);
+			dao.downloadSpreadsheet(entry.getEntry(), filePath, format);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -380,16 +372,16 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
 	}
 	
-	public static void downloadPresentation(DocumentListEntry entry, String filePath,
+	public static void downloadPresentation(MyDocumentListEntry entry, String filePath,
 			String format) throws IGoSyncDocsException {
 		try {
 			if(format == null || format.trim().equals(""))
 				format = "ppt";
-			dao.downloadPresentation(entry, filePath, format);
+			dao.downloadPresentation(entry.getEntry(), filePath, format);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -401,13 +393,13 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 	
-	public static void download(DocumentListEntry entry, String filePath) throws IGoSyncDocsException {
+	public static void download(MyDocumentListEntry entry, String filePath) throws IGoSyncDocsException {
 		try {
-			dao.download( ((MediaContent)entry.getContent()).getUri(), filePath);
+			dao.download( ((MediaContent)entry.getEntry().getContent()).getUri(), filePath);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -419,7 +411,7 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
 	}
 	
@@ -437,7 +429,7 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 	
@@ -455,7 +447,7 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 	
@@ -473,7 +465,7 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
 		} catch (Exception e) {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
-			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
 }

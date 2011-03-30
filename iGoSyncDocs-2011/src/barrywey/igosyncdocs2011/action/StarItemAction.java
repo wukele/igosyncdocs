@@ -5,8 +5,7 @@
  */
 package barrywey.igosyncdocs2011.action;
 
-import com.google.gdata.data.docs.DocumentListEntry;
-
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
@@ -38,8 +37,8 @@ public class StarItemAction implements Runnable {
 		try {
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
-			for(DocumentListEntry entry : SystemRuntime.SelectedItem) {
-				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("main.message.star_running").replace("{1}", entry.getTitle().getPlainText()));
+			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
+				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("main.message.star_running").replace("{1}", entry.getEntry().getTitle().getPlainText()));
 				IGoSyncDocsBiz.starItem(entry);
 			}
 			IGoSyncDocsBiz.cacheAllItem();

@@ -17,6 +17,7 @@ import barrywey.igosyncdocs2011.action.RefreshItemAction;
 import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
 import barrywey.igosyncdocs2011.action.UploadFilesAction;
 import barrywey.igosyncdocs2011.action.ViewOnlineAction;
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
@@ -27,8 +28,6 @@ import barrywey.igosyncdocs2011.resource.LanguageResource;
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-
-import com.google.gdata.data.docs.DocumentListEntry;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -123,7 +122,7 @@ public class AllItemPanel extends JPanel {
 				//left click get selected document			
 				SystemRuntime.SelectedItem.clear();		//clear previous selected item
 				for (int i = 0; i < selectedRows.length; i++) {
-					DocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
+					MyDocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
 					SystemRuntime.SelectedItem.add(entry);
 					
 					if(i == selectedRows.length -1) {
@@ -168,6 +167,7 @@ public class AllItemPanel extends JPanel {
 	private JPanel pnlRight;
 	private ItemDetailPanel pnlDetail;	
 	private MainFrame frMain;
+	
 	private JPopupMenu popup = new JPopupMenu();
 	private JMenuItem miViewOnLine = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_viewonline"));
 	private JMenuItem miCreateNewDocument = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_cnd"),ImageResource.getIcon("doc.png"));

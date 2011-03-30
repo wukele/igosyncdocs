@@ -7,8 +7,7 @@ package barrywey.igosyncdocs2011.gui.model;
 
 import javax.swing.DefaultListModel;
 
-import com.google.gdata.data.docs.DocumentListEntry;
-
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 
 
@@ -25,7 +24,7 @@ public class ConfirmListModel extends DefaultListModel {
 	private static final long serialVersionUID = 5763656183727411756L;
 
 	public ConfirmListModel() {
-		for(DocumentListEntry entry : SystemRuntime.SelectedItem) {
+		for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
 			addElement(entry);
 		}
 	}//end of method

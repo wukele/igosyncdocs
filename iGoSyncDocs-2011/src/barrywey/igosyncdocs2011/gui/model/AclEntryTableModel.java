@@ -10,11 +10,10 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 import com.google.gdata.data.acl.AclEntry;
-import com.google.gdata.data.docs.DocumentListEntry;
 
 /**
  *
@@ -27,11 +26,11 @@ import com.google.gdata.data.docs.DocumentListEntry;
 public class AclEntryTableModel extends AbstractTableModel{
 
 	private static final long serialVersionUID = 6687932160855910444L;
-	private DocumentListEntry entry;
+	private MyDocumentListEntry entry;
 	private Vector<AclEntry> data;
 	private Vector<String> columns;
 	
-	public AclEntryTableModel(DocumentListEntry entry) {
+	public AclEntryTableModel(MyDocumentListEntry entry) {
 		if(entry != null) {
 			this.entry = entry;
 			initData();
@@ -43,7 +42,7 @@ public class AclEntryTableModel extends AbstractTableModel{
 		columns.add(LanguageResource.getStringValue("panel.item_detail_th_role"));
 		columns.add(LanguageResource.getStringValue("panel.item_detail_th_scope"));
 		data = new Vector<AclEntry>();
-		List<AclEntry> entries = IGoSyncDocsBiz.getAclEntry(entry);
+		List<AclEntry> entries = this.entry.getAclFeeds().getEntries();
 		for(AclEntry e : entries) {
 			data.add(e);
 		}

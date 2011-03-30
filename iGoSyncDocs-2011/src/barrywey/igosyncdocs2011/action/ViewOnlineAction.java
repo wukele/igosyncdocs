@@ -13,8 +13,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.google.gdata.data.docs.DocumentListEntry;
-
+import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
@@ -30,12 +29,12 @@ import barrywey.igosyncdocs2011.resource.LanguageResource;
 public class ViewOnlineAction implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
-		List<DocumentListEntry> selectedEntries = SystemRuntime.SelectedItem;
+		List<MyDocumentListEntry> selectedEntries = SystemRuntime.SelectedItem;
 		if (selectedEntries != null && selectedEntries.size() > 0) {
-			DocumentListEntry entry = selectedEntries.get(0);//only open first selected item
+			MyDocumentListEntry entry = selectedEntries.get(0);//only open first selected item
 			if(Desktop.isDesktopSupported()) {
 				try {
-					Desktop.getDesktop().browse(new URI(entry.getHtmlLink().getHref()));
+					Desktop.getDesktop().browse(new URI(entry.getEntry().getHtmlLink().getHref()));
 				} catch (IOException e1) {
 					FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e1.getMessage()));
 				} catch (URISyntaxException e1) {
