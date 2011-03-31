@@ -242,7 +242,7 @@ public class MainFrame extends JFrame {
 		pnlSpreadsheet.setName("pnlSpreadsheet");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_spreadsheet"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/spreadsheet.png")), pnlSpreadsheet, null);
 		
-		pnlOtherfiles = new OtherFilesPanel();
+		pnlOtherfiles = new OtherFilesPanel(this);
 		pnlOtherfiles.setName("pnlOtherfiles");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_otherfiles"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/all.png")), pnlOtherfiles, null);
 		
