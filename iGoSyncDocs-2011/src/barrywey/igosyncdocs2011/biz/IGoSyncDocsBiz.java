@@ -273,11 +273,30 @@ public class IGoSyncDocsBiz {
 			String message = LanguageResource.getStringValue("main.data.exception_Other");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}		
-	}
+	}	
 	
 	public static void starItem(MyDocumentListEntry entry) throws IGoSyncDocsException {
 		try {
 			dao.star(entry.getEntry());
+		} catch (MalformedURLException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (IOException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_IO");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (ServiceException e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Service");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
+		} catch (Exception e) {
+			String message = LanguageResource.getStringValue("main.data.exception_Other");
+			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
+		}		
+	}
+	
+	public static void unStarItem(MyDocumentListEntry entry) throws IGoSyncDocsException {
+		try {
+			entry.getEntry().setStarred(false);
+			entry.getEntry().update();
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
