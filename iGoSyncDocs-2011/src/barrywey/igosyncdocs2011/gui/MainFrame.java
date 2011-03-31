@@ -234,7 +234,7 @@ public class MainFrame extends JFrame {
 		pnlDocument.setName("pnlDocument");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_document"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/doc.png")), pnlDocument, null);
 		
-		pnlPresentation = new PresentationPanel();
+		pnlPresentation = new PresentationPanel(this);
 		pnlPresentation.setName("pnlPresentation");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_presentation"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/presentation.png")), pnlPresentation, null);
 		
