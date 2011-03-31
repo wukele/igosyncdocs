@@ -27,10 +27,12 @@ public class ShowConfirmDialogAction implements ActionListener {
 	
 	private MainFrame frMain;
 	private String action;
+	private String format;
 
-	public ShowConfirmDialogAction(MainFrame frMain,String action) {
+	public ShowConfirmDialogAction(MainFrame frMain,String action,String format) {
 		this.frMain = frMain;
 		this.action = action;
+		this.format = format;
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -41,15 +43,15 @@ public class ShowConfirmDialogAction implements ActionListener {
 			if(!frMain.getProgressBar().isIndeterminate()) {
 				//prompt to confirm action
 				if(action.trim().equals("trash")) {
-					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_trash_actin"), "trash",frMain);
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_trash_actin"), "trash",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);			
 				}else if(action.trim().equals("hide")) {
-					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_hide_action"), "hide",frMain);
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_hide_action"), "hide",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);					
 				} else if(action.trim().equals("star")) {
-					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_star_action"), "star",frMain);
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_star_action"), "star",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);						
 				} else if(action.trim().equals("share")) {
@@ -57,11 +59,11 @@ public class ShowConfirmDialogAction implements ActionListener {
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);
 				} else if(action.trim().equals("delete")) {
-					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_del_action"), "delete",frMain);
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("main.message.confirm_del_action"), "delete",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);					
 				} else if(action.trim().equals("download")) {
-					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.download.confirm_download"), "download",frMain);
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.download.confirm_download"), "download",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);					
 				}

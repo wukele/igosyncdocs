@@ -10,16 +10,26 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import barrywey.igosyncdocs2011.action.RefreshItemAction;
+import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
+import barrywey.igosyncdocs2011.action.UploadFilesAction;
+import barrywey.igosyncdocs2011.action.ViewOnlineAction;
 import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
+import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
+import barrywey.igosyncdocs2011.resource.ImageResource;
+import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 /**
  * 
@@ -31,11 +41,41 @@ import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
  */
 public class DocumentPanel extends JPanel{
 
-	public DocumentPanel() {
+	private MainFrame frMain;
+	
+	public DocumentPanel(MainFrame frMain) {
+		this.frMain = frMain;
 		initComponents();
 	}
 	
 	private void initComponents() {
+		
+		//set up pupup menu
+		popup.add(miViewOnLine);
+		popup.addSeparator();
+		popup.add(miRefresh);
+		popup.add(miUpload);
+		popup.addSeparator();
+		popup.add(miDownloadAsWord);
+		popup.add(miDownloadAsOdt);
+		popup.add(miDownloadAsPdf);
+		popup.add(miDownloadAsPng);
+		mnDownloadAsMore.add(miDownloadAsJpeg);
+		mnDownloadAsMore.add(miDownloadAsHtml);
+		mnDownloadAsMore.add(miDownloadAsRtf);
+		mnDownloadAsMore.add(miDownloadAsTxt);
+		mnDownloadAsMore.add(miDownloadAsSvg);
+		mnDownloadAsMore.add(miDownloadAsZip);
+		popup.add(mnDownloadAsMore);
+		popup.addSeparator();
+		popup.add(miStar);
+		popup.add(miHide);
+		popup.addSeparator();
+		popup.add(miDelete);
+		popup.add(miTrash);
+		popup.addSeparator();
+		popup.add(miShare);		
+		
 		setLayout(new BorderLayout(5, 0));
 		
 		pnlCenter = new JScrollPane();
@@ -48,6 +88,7 @@ public class DocumentPanel extends JPanel{
 		tblAllItems.setName("tblAllItems");
 		initTableSettings(tblAllItems);
 		pnlCenter.setViewportView(tblAllItems);
+		tblAllItems.add(popup);
 		
 		pnlRight = new JPanel();
 		pnlRight.setPreferredSize(new Dimension(200, 20));
@@ -64,13 +105,32 @@ public class DocumentPanel extends JPanel{
 				userClickedMouse(e);
 			}
 		});
+		
+		miViewOnLine.addActionListener(new ViewOnlineAction());
+		miRefresh.addActionListener(new RefreshItemAction(frMain));
+		miUpload.addActionListener(new UploadFilesAction(frMain));	
+		miStar.addActionListener(new ShowConfirmDialogAction(frMain, "star",null));
+		miHide.addActionListener(new ShowConfirmDialogAction(frMain, "hide",null));
+		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete",null));
+		miTrash.addActionListener(new ShowConfirmDialogAction(frMain, "trash",null));
+		miShare.addActionListener(new ShowConfirmDialogAction(frMain, "share",null));
+		miDownloadAsWord.addActionListener(new ShowConfirmDialogAction(frMain, "download",null));
+		miDownloadAsHtml.addActionListener(new ShowConfirmDialogAction(frMain, "download", "html"));
+		miDownloadAsJpeg.addActionListener(new ShowConfirmDialogAction(frMain, "download", "jpeg"));
+		miDownloadAsOdt.addActionListener(new ShowConfirmDialogAction(frMain, "download", "odt"));
+		miDownloadAsPdf.addActionListener(new ShowConfirmDialogAction(frMain, "download", "pdf"));
+		miDownloadAsRtf.addActionListener(new ShowConfirmDialogAction(frMain, "download", "rtf"));
+		miDownloadAsPng.addActionListener(new ShowConfirmDialogAction(frMain, "download","png"));
+		miDownloadAsSvg.addActionListener(new ShowConfirmDialogAction(frMain, "download", "svg"));
+		miDownloadAsTxt.addActionListener(new ShowConfirmDialogAction(frMain, "download", "txt"));
+		miDownloadAsZip.addActionListener(new ShowConfirmDialogAction(frMain, "download", "zip"));
 	}
 	
 	private void userClickedMouse(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			//left click get selected document
-			int[] selectedRows = tblAllItems.getSelectedRows();
-			if(selectedRows.length > 0) {				
+		int[] selectedRows = tblAllItems.getSelectedRows();
+		if(selectedRows.length > 0) {
+			if(e.getButton() == MouseEvent.BUTTON1) {
+				//left click get selected document			
 				SystemRuntime.SelectedItem.clear();		//clear previous selected item
 				for (int i = 0; i < selectedRows.length; i++) {
 					MyDocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
@@ -81,11 +141,12 @@ public class DocumentPanel extends JPanel{
 						pnlDetail.shownEntryDetail(entry);
 					}
 				}//end of for
-			}//end of if(rows>0)
-		}else if(e.getButton() == MouseEvent.BUTTON3) {
-			//right click show popup menu
-		}
-	}	
+			}else if(e.getButton() == MouseEvent.BUTTON3) {
+				// right click show popup menu
+				popup.show(tblAllItems, e.getX(), e.getY());
+			}			
+		}//end of if(selectedRows.length > 0)
+	}//end of method
 
 	public JTable getDataTable() {
 		return this.tblAllItems;
@@ -117,5 +178,28 @@ public class DocumentPanel extends JPanel{
 	private JPanel pnlRight;
 	private ItemDetailPanel pnlDetail;	
 	private static final long serialVersionUID = 7130525556702510711L;
+	
+	private JPopupMenu popup = new JPopupMenu();
+	private JMenuItem miViewOnLine = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_viewonline"));	
+	private JMenuItem miUpload = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_up"));
+	private JMenuItem miRefresh = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_rf"));
+	
+	private JMenu mnDownloadAsMore = new JMenu(LanguageResource.getStringValue("panel.pnl_document.more_format"));
+	private JMenuItem miDownloadAsWord = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_word"));
+	private JMenuItem miDownloadAsPdf = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_pdf"));
+	private JMenuItem miDownloadAsOdt = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_odt"));
+	private JMenuItem miDownloadAsHtml = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_html"));
+	private JMenuItem miDownloadAsRtf = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_rtf"));
+	private JMenuItem miDownloadAsTxt = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_txt"));
+	private JMenuItem miDownloadAsPng = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_png"));
+	private JMenuItem miDownloadAsJpeg = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_jpeg"));
+	private JMenuItem miDownloadAsSvg = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_svg"));
+	private JMenuItem miDownloadAsZip = new JMenuItem(LanguageResource.getStringValue("panel.pnl_document.downad_as_zip"));
+	
+	private JMenuItem miStar = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_star"),ImageResource.getIcon("stared.png"));
+	private JMenuItem miHide = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_hide"),ImageResource.getIcon("hidden.png"));	
+	private JMenuItem miTrash = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_trash"),ImageResource.getIcon("trashed.png"));
+	private JMenuItem miDelete = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_delete"));
+	private JMenuItem miShare = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_share"));	
 
 }

@@ -172,19 +172,19 @@ public class MainFrame extends JFrame {
 		btnStar.setPreferredSize(new Dimension(70, 40));
 		btnStar.setName("btnStar");
 		pnlButtons.add(btnStar);
-		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star"));
+		btnStar.addActionListener(new ShowConfirmDialogAction(this,"star",null));
 		
 		btnShare = new JButton("<html>"+LanguageResource.getStringValue("main.btn.share")+"</html>");
 		btnShare.setPreferredSize(new Dimension(70, 40));
 		btnShare.setName("btnShare");
 		pnlButtons.add(btnShare);
-		btnShare.addActionListener(new ShowConfirmDialogAction(this,"share"));
+		btnShare.addActionListener(new ShowConfirmDialogAction(this,"share",null));
 		
 		btnHide = new JButton("<html>"+LanguageResource.getStringValue("main.btn.hide")+"</html>");
 		btnHide.setPreferredSize(new Dimension(70, 40));
 		btnHide.setName("btnHide");
 		pnlButtons.add(btnHide);
-		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide"));
+		btnHide.addActionListener(new ShowConfirmDialogAction(this,"hide",null));
 		
 		btnTrash = new JButton("<html>"+LanguageResource.getStringValue("main.btn.trash")+"</html>");
 		btnTrash.setPreferredSize(new Dimension(70, 40));
@@ -230,7 +230,7 @@ public class MainFrame extends JFrame {
 		pnlAllItem.setName("pnlAllItem");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_allitem"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/all.png")), pnlAllItem, null);
 		
-		pnlDocument = new DocumentPanel();
+		pnlDocument = new DocumentPanel(this);
 		pnlDocument.setName("pnlDocument");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_document"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/doc.png")), pnlDocument, null);
 		
@@ -297,10 +297,10 @@ public class MainFrame extends JFrame {
 			}//end of stateChanged()
 		});
 		btnRefresh.addActionListener(new RefreshItemAction(this));
-		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash"));
+		btnTrash.addActionListener(new ShowConfirmDialogAction(this,"trash",null));
 		btnUpload.addActionListener(new UploadFilesAction(this));
-		btnDelete.addActionListener(new ShowConfirmDialogAction(this,"delete"));
-		btnDownload.addActionListener(new ShowConfirmDialogAction(this,"download"));
+		btnDelete.addActionListener(new ShowConfirmDialogAction(this,"delete",null));
+		btnDownload.addActionListener(new ShowConfirmDialogAction(this,"download",null));
 	}
 	
 	public JProgressBar getProgressBar() {

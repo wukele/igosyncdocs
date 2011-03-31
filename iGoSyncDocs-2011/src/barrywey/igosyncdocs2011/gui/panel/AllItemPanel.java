@@ -106,12 +106,12 @@ public class AllItemPanel extends JPanel {
 		miCreateNewSpreadsheet.addActionListener(new CreateNewAction(frMain, "spreadsheet"));
 		miRefresh.addActionListener(new RefreshItemAction(frMain));
 		miUpload.addActionListener(new UploadFilesAction(frMain));
-		miDownload.addActionListener(new ShowConfirmDialogAction(frMain, "download"));
-		miStar.addActionListener(new ShowConfirmDialogAction(frMain, "star"));
-		miHide.addActionListener(new ShowConfirmDialogAction(frMain, "hide"));
-		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete"));
-		miTrash.addActionListener(new ShowConfirmDialogAction(frMain, "trash"));
-		miShare.addActionListener(new ShowConfirmDialogAction(frMain, "share"));
+		miDownload.addActionListener(new ShowConfirmDialogAction(frMain, "download",null));
+		miStar.addActionListener(new ShowConfirmDialogAction(frMain, "star",null));
+		miHide.addActionListener(new ShowConfirmDialogAction(frMain, "hide",null));
+		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete",null));
+		miTrash.addActionListener(new ShowConfirmDialogAction(frMain, "trash",null));
+		miShare.addActionListener(new ShowConfirmDialogAction(frMain, "share",null));
 		
 	}
 	
@@ -135,7 +135,7 @@ public class AllItemPanel extends JPanel {
 				popup.show(tblAllItems, e.getX(), e.getY());
 			}			
 		}//end of if(selectedRows.length > 0)
-	}
+	}//end of method
 	
 	public JTable getDataTable() {
 		return this.tblAllItems;

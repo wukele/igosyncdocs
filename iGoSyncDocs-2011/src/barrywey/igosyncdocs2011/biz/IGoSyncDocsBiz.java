@@ -339,7 +339,7 @@ public class IGoSyncDocsBiz {
 		try {
 			if(format == null || format.trim().equals(""))
 				format = "doc";
-			dao.downloadDocument(entry.getEntry(), filePath, format);
+			dao.downloadDocument(entry.getEntry(), filePath+"."+format, format);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -360,7 +360,7 @@ public class IGoSyncDocsBiz {
 		try {
 			if(format == null || format.trim().equals(""))
 				format = "xls";
-			dao.downloadSpreadsheet(entry.getEntry(), filePath, format);
+			dao.downloadSpreadsheet(entry.getEntry(), filePath+"."+format, format);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -381,7 +381,7 @@ public class IGoSyncDocsBiz {
 		try {
 			if(format == null || format.trim().equals(""))
 				format = "ppt";
-			dao.downloadPresentation(entry.getEntry(), filePath, format);
+			dao.downloadPresentation(entry.getEntry(), filePath+"."+format, format);
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);
@@ -399,7 +399,9 @@ public class IGoSyncDocsBiz {
 	
 	public static void download(MyDocumentListEntry entry, String filePath) throws IGoSyncDocsException {
 		try {
-			dao.download( ((MediaContent)entry.getEntry().getContent()).getUri(), filePath);
+			dao.download(((MediaContent) entry.getEntry().getContent())
+					.getUri(), filePath
+					+ entry.getEntry().getTitle().getPlainText());
 		} catch (MalformedURLException e) {
 			String message = LanguageResource.getStringValue("main.data.exception_MalformedURL");
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage()), e);

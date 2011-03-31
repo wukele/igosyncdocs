@@ -28,11 +28,13 @@ public class DownloadFilesAction implements Runnable {
 	private MainFrame frMain;
 	private ConfirmActionDialog dialog;
 	private String filePath;
+	private String format;
 
-	public DownloadFilesAction(ConfirmActionDialog dialog, MainFrame frMain, String filePath) {
+	public DownloadFilesAction(ConfirmActionDialog dialog, MainFrame frMain, String filePath, String format) {
 		this.dialog = dialog;
 		this.frMain = frMain;
 		this.filePath = filePath;
+		this.format = format;
 	}
 
 	public void run() {
@@ -42,11 +44,11 @@ public class DownloadFilesAction implements Runnable {
 			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
 				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("dialog.download.download_process").replace("{1}", entry.getEntry().getTitle().getPlainText()));
 				if(entry.getEntry().getType().trim().equals("document")) {
-					IGoSyncDocsBiz.downloadDocument(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText() + ".doc",null);
+					IGoSyncDocsBiz.downloadDocument(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText(),format);
 				}else if(entry.getEntry().getType().trim().equals("spreadsheet")) {
-					IGoSyncDocsBiz.downloadSpreadsheet(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText() + ".xls",null);
+					IGoSyncDocsBiz.downloadSpreadsheet(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText(),format);
 				}else if(entry.getEntry().getType().trim().equals("presentation")) {
-					IGoSyncDocsBiz.downloadPresentation(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText() + ".ppt",null);
+					IGoSyncDocsBiz.downloadPresentation(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText(),format);
 				}else {
 					IGoSyncDocsBiz.download(entry, filePath+ File.separator + entry.getEntry().getTitle().getPlainText());
 				}//end of if

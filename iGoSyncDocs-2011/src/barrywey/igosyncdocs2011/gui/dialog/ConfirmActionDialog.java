@@ -44,6 +44,7 @@ public class ConfirmActionDialog extends JDialog {
 	private String confirmMessage;
 	private String actionType;
 	private MainFrame frMain;
+	private String format;
 	private final JLabel lblLogo = new JLabel("");
 	private final JLabel lblMessage = new JLabel("");
 	private final JScrollPane pnlScroll = new JScrollPane();
@@ -51,10 +52,11 @@ public class ConfirmActionDialog extends JDialog {
 	private final JButton btnYes = new JButton(LanguageResource.getStringValue("main.dialog.confirm_dialog.btn_yes"));
 	private final JButton btnNo = new JButton(LanguageResource.getStringValue("main.dialog.confirm_dialog.btn_no"));
 
-	public ConfirmActionDialog(String confimMessage,String actionType, MainFrame frMain) {
+	public ConfirmActionDialog(String confimMessage,String actionType, MainFrame frMain, String format) {
 		this.confirmMessage = confimMessage;
 		this.actionType = actionType;
 		this.frMain = frMain;
+		this.format = format;
 		initComponents();
 	}
 
@@ -116,7 +118,7 @@ public class ConfirmActionDialog extends JDialog {
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int result = fileChooser.showDialog(null, LanguageResource.getStringValue("dialog.download.lbl_download_dialog"));
 			if(result == JFileChooser.APPROVE_OPTION) {
-				new Thread(new DownloadFilesAction(this, frMain,fileChooser.getSelectedFile().getPath())).start();
+				new Thread(new DownloadFilesAction(this, frMain,fileChooser.getSelectedFile().getPath(),format)).start();
 			}
 		}//end of if
 	}//end of method
