@@ -81,6 +81,7 @@ public class PresentationPanel extends JPanel{
 		tblAllItems.setName("tblAllItems");
 		initTableSettings(tblAllItems);
 		pnlCenter.setViewportView(tblAllItems);
+		tblAllItems.add(popup);
 		
 		pnlRight = new JPanel();
 		pnlRight.setPreferredSize(new Dimension(200, 20));

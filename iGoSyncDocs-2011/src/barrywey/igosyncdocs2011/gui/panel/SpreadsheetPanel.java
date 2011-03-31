@@ -10,16 +10,25 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import barrywey.igosyncdocs2011.action.RefreshItemAction;
+import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
+import barrywey.igosyncdocs2011.action.UploadFilesAction;
+import barrywey.igosyncdocs2011.action.ViewOnlineAction;
 import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
+import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.model.EntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
+import barrywey.igosyncdocs2011.resource.ImageResource;
+import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 /**
  * 
@@ -31,11 +40,36 @@ import barrywey.igosyncdocs2011.gui.renderer.EntityTableCellRenderer;
  */
 public class SpreadsheetPanel extends JPanel{
 	
-	public SpreadsheetPanel() {
+	private MainFrame frMain;
+	
+	public SpreadsheetPanel(MainFrame frMain) {
+		this.frMain = frMain;
 		initComponents();
 	}
 
 	private void initComponents() {
+		
+		//set up pupup menu
+		popup.add(miViewOnLine);
+		popup.addSeparator();
+		popup.add(miRefresh);
+		popup.add(miUpload);
+		popup.addSeparator();
+		popup.add(miDownloadAsXls);
+		popup.add(miDownloadAsPdf);
+		popup.add(miDownloadAsHtml);
+		popup.add(miDownloadAsOds);
+		popup.add(miDownloadAsCsv);
+		popup.add(miDownloadAsTsv);
+		popup.addSeparator();
+		popup.add(miStar);
+		popup.add(miHide);
+		popup.addSeparator();
+		popup.add(miDelete);
+		popup.add(miTrash);
+		popup.addSeparator();
+		popup.add(miShare);			
+		
 		setLayout(new BorderLayout(5, 0));
 		
 		pnlCenter = new JScrollPane();
@@ -63,14 +97,30 @@ public class SpreadsheetPanel extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				userClickedMouse(e);
 			}
-		});			
+		});		
+		
+		miViewOnLine.addActionListener(new ViewOnlineAction());
+		miRefresh.addActionListener(new RefreshItemAction(frMain));
+		miUpload.addActionListener(new UploadFilesAction(frMain));	
+		miStar.addActionListener(new ShowConfirmDialogAction(frMain, "star",null));
+		miHide.addActionListener(new ShowConfirmDialogAction(frMain, "hide",null));
+		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete",null));
+		miTrash.addActionListener(new ShowConfirmDialogAction(frMain, "trash",null));
+		miShare.addActionListener(new ShowConfirmDialogAction(frMain, "share",null));
+		
+		miDownloadAsCsv.addActionListener(new ShowConfirmDialogAction(frMain, "download", "csv"));
+		miDownloadAsHtml.addActionListener(new ShowConfirmDialogAction(frMain, "download", "html"));
+		miDownloadAsOds.addActionListener(new ShowConfirmDialogAction(frMain, "download", "ods"));
+		miDownloadAsPdf.addActionListener(new ShowConfirmDialogAction(frMain, "download", "pdf"));
+		miDownloadAsTsv.addActionListener(new ShowConfirmDialogAction(frMain, "download", "tsv"));
+		miDownloadAsXls.addActionListener(new ShowConfirmDialogAction(frMain, "download", "xls"));
 	}
 	
 	private void userClickedMouse(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			//left click get selected document
-			int[] selectedRows = tblAllItems.getSelectedRows();
-			if(selectedRows.length > 0) {				
+		int[] selectedRows = tblAllItems.getSelectedRows();
+		if(selectedRows.length > 0) {
+			if(e.getButton() == MouseEvent.BUTTON1) {
+				//left click get selected document			
 				SystemRuntime.SelectedItem.clear();		//clear previous selected item
 				for (int i = 0; i < selectedRows.length; i++) {
 					MyDocumentListEntry entry = ((EntryTableModel)tblAllItems.getModel()).getEntries().get(selectedRows[i]);
@@ -81,10 +131,11 @@ public class SpreadsheetPanel extends JPanel{
 						pnlDetail.shownEntryDetail(entry);
 					}
 				}//end of for
-			}//end of if(rows>0)
-		}else if(e.getButton() == MouseEvent.BUTTON3) {
-			//right click show popup menu
-		}
+			}else if(e.getButton() == MouseEvent.BUTTON3) {
+				// right click show popup menu
+				popup.show(tblAllItems, e.getX(), e.getY());
+			}			
+		}//end of if(selectedRows.length > 0)
 	}	
 	
 	public JTable getDataTable() {
@@ -116,5 +167,23 @@ public class SpreadsheetPanel extends JPanel{
 	private JPanel pnlRight;
 	private ItemDetailPanel pnlDetail;		
 	private static final long serialVersionUID = 6352098068016860908L;
+	
+	private JPopupMenu popup = new JPopupMenu();
+	private JMenuItem miViewOnLine = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_viewonline"));	
+	private JMenuItem miUpload = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_up"));
+	private JMenuItem miRefresh = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_rf"));
+	
+	private JMenuItem miDownloadAsXls = new JMenuItem(LanguageResource.getStringValue("panel.pnl_spreadsheet.download_as_xls"));
+	private JMenuItem miDownloadAsCsv = new JMenuItem(LanguageResource.getStringValue("panel.pnl_spreadsheet.download_as_csv"));
+	private JMenuItem miDownloadAsHtml = new JMenuItem(LanguageResource.getStringValue("panel.pnl_spreadsheet.download_as_html"));
+	private JMenuItem miDownloadAsOds = new JMenuItem(LanguageResource.getStringValue("panel.pnl_spreadsheet.download_as_ods"));
+	private JMenuItem miDownloadAsPdf = new JMenuItem(LanguageResource.getStringValue("panel.pnl_spreadsheet.download_as_pdf"));
+	private JMenuItem miDownloadAsTsv = new JMenuItem(LanguageResource.getStringValue("panel.pnl_spreadsheet.download_as_tsv"));
+	
+	private JMenuItem miStar = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_star"),ImageResource.getIcon("stared.png"));
+	private JMenuItem miHide = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_hide"),ImageResource.getIcon("hidden.png"));	
+	private JMenuItem miTrash = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_trash"),ImageResource.getIcon("trashed.png"));
+	private JMenuItem miDelete = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_delete"));
+	private JMenuItem miShare = new JMenuItem(LanguageResource.getStringValue("panel.all_item.pupup_share"));	
 
 }
