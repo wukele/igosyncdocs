@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
-import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
@@ -56,8 +55,9 @@ public class CreateNewAction implements ActionListener, Runnable {
 			}
 			IGoSyncDocsBiz.cacheAllItem();
 			frMain.refreshAllTableData();
-		} catch (IGoSyncDocsException e2) {
-			FaceUtils.showErrorMessage(null, e2.getMessage());
+		} catch (Exception e2) {
+			FaceUtils.showErrorMessage(null, e2.getMessage() == null ? " " : e2
+					.getMessage());
 		} finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);			

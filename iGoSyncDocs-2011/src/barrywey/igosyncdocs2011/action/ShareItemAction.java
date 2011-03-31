@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
-import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.dialog.ShareItemDialog;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
@@ -54,8 +53,10 @@ public class ShareItemAction implements ActionListener , Runnable{
 			}
 			IGoSyncDocsBiz.cacheAllItem();
 			frMain.refreshAllTableData();
-		}catch (IGoSyncDocsException e) {
-			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
+		}catch (Exception e) {
+			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue(
+					"main.message.error").replace("{1}",
+					e.getMessage() == null ? " " : e.getMessage()));
 		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);

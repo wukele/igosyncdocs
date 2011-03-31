@@ -5,10 +5,11 @@
  */
 package barrywey.igosyncdocs2011.action;
 
+import java.util.List;
+
 import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
-import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.dialog.ConfirmActionDialog;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
@@ -36,14 +37,17 @@ public class TrashItemAction implements Runnable {
 		try {
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
-			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
+			List<MyDocumentListEntry> list = SystemRuntime.SelectedItem; //cached it into list
+			for(MyDocumentListEntry entry : list) {
 				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("main.message.trash_running").replace("{1}", entry.getEntry().getTitle().getPlainText()));
 				IGoSyncDocsBiz.trashItem(entry);
 			}
 			IGoSyncDocsBiz.cacheAllItem();
 			frMain.refreshAllTableData();
-		}catch (IGoSyncDocsException e) {
-			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
+		}catch (Exception e) {
+			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue(
+					"main.message.error").replace("{1}",
+					e.getMessage() == null ? " " : e.getMessage()));
 		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);

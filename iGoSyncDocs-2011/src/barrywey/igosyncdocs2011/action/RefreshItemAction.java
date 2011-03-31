@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import barrywey.igosyncdocs2011.biz.IGoSyncDocsBiz;
-import barrywey.igosyncdocs2011.biz.IGoSyncDocsException;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.util.FaceUtils;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
@@ -50,8 +49,10 @@ public class RefreshItemAction implements ActionListener , Runnable{
 			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_start"));
 			IGoSyncDocsBiz.cacheAllItem();
 			frMain.refreshAllTableData();
-		} catch (IGoSyncDocsException e) {
-			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e.getMessage()));
+		} catch (Exception e) {
+			FaceUtils.showErrorMessage(null, LanguageResource.getStringValue(
+					"main.message.error").replace("{1}",
+					e.getMessage() == null ? " " : e.getMessage()));
 		}finally {
 			lblMessage.setText("");
 			progressbar.setIndeterminate(false);			

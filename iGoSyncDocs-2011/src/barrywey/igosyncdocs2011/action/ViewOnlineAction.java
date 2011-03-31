@@ -34,13 +34,26 @@ public class ViewOnlineAction implements ActionListener{
 			MyDocumentListEntry entry = selectedEntries.get(0);//only open first selected item
 			if(Desktop.isDesktopSupported()) {
 				try {
-					Desktop.getDesktop().browse(new URI(entry.getEntry().getHtmlLink().getHref()));
+					Desktop.getDesktop().browse(
+							new URI(entry.getEntry().getHtmlLink().getHref()));
 				} catch (IOException e1) {
-					FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e1.getMessage()));
+					FaceUtils.showErrorMessage(null, LanguageResource
+							.getStringValue("main.message.error").replace(
+									"{1}",
+									e1.getMessage() == null ? " " : e1
+											.getMessage()));
 				} catch (URISyntaxException e1) {
-					FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e1.getMessage()));
+					FaceUtils.showErrorMessage(null, LanguageResource
+							.getStringValue("main.message.error").replace(
+									"{1}",
+									e1.getMessage() == null ? " " : e1
+											.getMessage()));
 				} catch (Exception e1) {
-					FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.error").replace("{1}",e1.getMessage()));
+					FaceUtils.showErrorMessage(null, LanguageResource
+							.getStringValue("main.message.error").replace(
+									"{1}",
+									e1.getMessage() == null ? " " : e1
+											.getMessage()));
 				}
 			}//end of if(Desktop supported)
 		}//end of if
