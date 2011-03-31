@@ -66,6 +66,10 @@ public class ShowConfirmDialogAction implements ActionListener {
 					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.download.confirm_download"), "download",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);					
+				} else if(action.trim().equals("unhide")) {
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.unhide.confirm_unhide"), "unhide",frMain,format);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);						
 				}
 			}else
 				FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.another_process_running"));

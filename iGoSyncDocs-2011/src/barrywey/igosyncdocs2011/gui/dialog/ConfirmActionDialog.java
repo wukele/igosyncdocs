@@ -24,6 +24,7 @@ import barrywey.igosyncdocs2011.action.DownloadFilesAction;
 import barrywey.igosyncdocs2011.action.HideItemAction;
 import barrywey.igosyncdocs2011.action.StarItemAction;
 import barrywey.igosyncdocs2011.action.TrashItemAction;
+import barrywey.igosyncdocs2011.action.UnhideItemAction;
 import barrywey.igosyncdocs2011.gui.MainFrame;
 import barrywey.igosyncdocs2011.gui.model.ConfirmListModel;
 import barrywey.igosyncdocs2011.gui.renderer.ConfirmListRenderer;
@@ -120,6 +121,8 @@ public class ConfirmActionDialog extends JDialog {
 			if(result == JFileChooser.APPROVE_OPTION) {
 				new Thread(new DownloadFilesAction(this, frMain,fileChooser.getSelectedFile().getPath(),format)).start();
 			}
+		} else if(actionType.trim().equals("unhide")) {
+			new Thread(new UnhideItemAction(this,frMain)).start();
 		}//end of if
 	}//end of method
 }

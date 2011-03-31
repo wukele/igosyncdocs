@@ -246,7 +246,7 @@ public class MainFrame extends JFrame {
 		pnlOtherfiles.setName("pnlOtherfiles");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_otherfiles"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/all.png")), pnlOtherfiles, null);
 		
-		pnlHidden = new HiddenObjectsPanel();
+		pnlHidden = new HiddenObjectsPanel(this);
 		pnlHidden.setName("pnlHidden");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_hidden"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/hidden.png")), pnlHidden, null);
 		
