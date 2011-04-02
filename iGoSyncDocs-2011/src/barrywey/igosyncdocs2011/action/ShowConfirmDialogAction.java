@@ -74,6 +74,10 @@ public class ShowConfirmDialogAction implements ActionListener {
 					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.unstar.confirm_unstar"), "unstar",frMain,format);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);					
+				} else if(action.trim().equals("untrash")) {
+					ConfirmActionDialog dialog = new ConfirmActionDialog(LanguageResource.getStringValue("dialog.untrash.confirm_untrash"), "untrash",frMain,format);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);					
 				}
 			}else
 				FaceUtils.showErrorMessage(null, LanguageResource.getStringValue("main.message.another_process_running"));

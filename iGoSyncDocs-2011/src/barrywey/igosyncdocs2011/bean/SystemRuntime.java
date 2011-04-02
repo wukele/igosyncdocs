@@ -25,6 +25,9 @@ public class SystemRuntime implements Serializable {
 	public static UserSettings Settings = new UserSettings();
 	public static List<MyDocumentListEntry> CachedEntries = Collections.synchronizedList(new ArrayList<MyDocumentListEntry>());
 	public static List<MyDocumentListEntry> SelectedItem = Collections.synchronizedList(new ArrayList<MyDocumentListEntry>());
+	//public static List<MyDocumentListEntry> CachedEntries = new ArrayList<MyDocumentListEntry>();
+	//public static List<MyDocumentListEntry> SelectedItem = new ArrayList<MyDocumentListEntry>();
 	public static UploadFileProcessDialog UploadDialog = null;
 
 }
+

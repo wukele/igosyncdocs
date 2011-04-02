@@ -254,7 +254,7 @@ public class MainFrame extends JFrame {
 		pnlStared.setName("pnlStared");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_stared"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/stared.png")), pnlStared, null);
 		
-		pnlTrashed = new TrashedObjectsPanel();
+		pnlTrashed = new TrashedObjectsPanel(this);
 		pnlTrashed.setName("pnlTrashed");
 		pnlTabbedPane.addTab(LanguageResource.getStringValue("main.tab_trashed"), new ImageIcon(MainFrame.class.getResource("/barrywey/igosyncdocs2011/resource/image/trashed.png")), pnlTrashed, null);
 		

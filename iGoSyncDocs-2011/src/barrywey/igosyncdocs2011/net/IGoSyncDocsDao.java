@@ -196,6 +196,16 @@ public interface IGoSyncDocsDao {
 	public void trash(DocumentListEntry entry) throws MalformedURLException, IOException, ServiceException;
 	
 	/**
+	 * Untrash the given item
+	 * 
+	 * @param entry
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	public void untrash(DocumentListEntry entry)throws MalformedURLException, IOException, ServiceException;
+	
+	/**
 	 * Hide the given item
 	 * 
 	 * @param entry

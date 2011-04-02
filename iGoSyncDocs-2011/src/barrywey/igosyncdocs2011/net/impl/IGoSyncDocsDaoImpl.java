@@ -230,6 +230,16 @@ public class IGoSyncDocsDaoImpl implements IGoSyncDocsDao{
 	}
 	
 	/* (non-Javadoc)
+	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#untrash(com.google.gdata.data.docs.DocumentListEntry)
+	 */
+	@Override
+	public void untrash(DocumentListEntry entry) throws MalformedURLException,
+			IOException, ServiceException {
+		entry.setTrashed(false);
+		service.update(new URL(entry.getEditLink().getHref()), entry);
+	}
+	
+	/* (non-Javadoc)
 	 * @see barrywey.igosyncdocs2011.net.IGoSyncDocsDao#hide(com.google.gdata.data.docs.DocumentListEntry)
 	 */
 	@Override
