@@ -34,6 +34,7 @@ public class DeleteItemAction implements Runnable {
 	public void run() {
 		try {
 			dialog.setVisible(false);
+			frMain.getTabbedPane().setEnabled(false);
 			frMain.getProgressBar().setIndeterminate(true);
 			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
 				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("main.message.del_running").replace("{1}", entry.getEntry().getTitle().getPlainText()));
@@ -48,7 +49,8 @@ public class DeleteItemAction implements Runnable {
 		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
-			dialog.dispose();						
+			dialog.dispose();			
+			frMain.getTabbedPane().setEnabled(true);
 		}
 	}
 }

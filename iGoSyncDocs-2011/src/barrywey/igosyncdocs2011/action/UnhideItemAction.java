@@ -33,6 +33,7 @@ public class UnhideItemAction implements Runnable{
 	
 	public void run() {
 		try {
+			frMain.getTabbedPane().setEnabled(false);
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
 			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
@@ -51,7 +52,8 @@ public class UnhideItemAction implements Runnable{
 		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
-			dialog.dispose();						
+			dialog.dispose();
+			frMain.getTabbedPane().setEnabled(true);
 		}		
 	}//end of run
 }

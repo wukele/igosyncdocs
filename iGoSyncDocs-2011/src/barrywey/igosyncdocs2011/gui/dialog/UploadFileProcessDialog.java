@@ -103,6 +103,7 @@ public class UploadFileProcessDialog extends JDialog {
 
 		public void run() {			
 			try {
+				frMain.getTabbedPane().setEnabled(false);
 				frMain.getProgressBar().setIndeterminate(true);
 				for(File file : files) {
 					frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("main.dialog.upload.upload_process").replace("{1}", file.getName()));
@@ -119,6 +120,7 @@ public class UploadFileProcessDialog extends JDialog {
 				SystemRuntime.UploadDialog = null;
 				frMain.getProgressBar().setIndeterminate(false);
 				frMain.getProcessMessageLabel().setText("");
+				frMain.getTabbedPane().setEnabled(true);
 			}//end of try-catch-finally
 		}//end of method run
 	}//end of inner class;

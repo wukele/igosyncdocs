@@ -40,9 +40,10 @@ public class CreateNewAction implements ActionListener, Runnable {
 		}// end of if
 	}// end of action
 
-	public void run() {
-		frMain.getProgressBar().setIndeterminate(true);
+	public void run() {		
 		try {
+			frMain.getProgressBar().setIndeterminate(true);
+			frMain.getTabbedPane().setEnabled(false);
 			if (type.equals("document")) {
 				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("panel.all_item.creating_document").replace("{1}", this.title));
 				IGoSyncDocsBiz.createNewDocument(this.title);
@@ -56,11 +57,11 @@ public class CreateNewAction implements ActionListener, Runnable {
 			IGoSyncDocsBiz.cacheAllItem();
 			frMain.refreshAllTableData();
 		} catch (Exception e2) {
-			FaceUtils.showErrorMessage(null, e2.getMessage() == null ? " " : e2
-					.getMessage());
+			FaceUtils.showErrorMessage(null, e2.getMessage() == null ? " " : e2.getMessage());
 		} finally {
 			frMain.getProcessMessageLabel().setText("");
-			frMain.getProgressBar().setIndeterminate(false);			
+			frMain.getProgressBar().setIndeterminate(false);
+			frMain.getTabbedPane().setEnabled(true);
 		}
 	}
 }

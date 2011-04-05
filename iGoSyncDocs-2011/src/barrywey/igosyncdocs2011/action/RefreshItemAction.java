@@ -45,6 +45,7 @@ public class RefreshItemAction implements ActionListener , Runnable{
 	
 	public void run() {
 		try {
+			frMain.getTabbedPane().setEnabled(false);
 			progressbar.setIndeterminate(true);
 			lblMessage.setText(LanguageResource.getStringValue("main.message.refresh_start"));
 			IGoSyncDocsBiz.cacheAllItem();
@@ -55,7 +56,8 @@ public class RefreshItemAction implements ActionListener , Runnable{
 					e.getMessage() == null ? " " : e.getMessage()));
 		}finally {
 			lblMessage.setText("");
-			progressbar.setIndeterminate(false);			
+			progressbar.setIndeterminate(false);	
+			frMain.getTabbedPane().setEnabled(true);
 		}
 	}
 }

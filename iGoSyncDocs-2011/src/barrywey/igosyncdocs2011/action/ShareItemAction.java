@@ -41,6 +41,7 @@ public class ShareItemAction implements ActionListener , Runnable{
 	
 	public void run() {
 		try {
+			frMain.getTabbedPane().setEnabled(false);
 			String[] emails = dialog.getEnterdEmails().split(",");			
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
@@ -60,7 +61,8 @@ public class ShareItemAction implements ActionListener , Runnable{
 		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
-			dialog.dispose();						
+			dialog.dispose();		
+			frMain.getTabbedPane().setEnabled(true);
 		}		
 	}
 }

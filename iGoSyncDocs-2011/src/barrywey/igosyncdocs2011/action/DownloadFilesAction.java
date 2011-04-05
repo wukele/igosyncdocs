@@ -41,6 +41,7 @@ public class DownloadFilesAction implements Runnable {
 		try {
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
+			frMain.getTabbedPane().setEnabled(false);
 			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
 				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("dialog.download.download_process").replace("{1}", entry.getEntry().getTitle().getPlainText()));
 				if(entry.getEntry().getType().trim().equals("document")) {
@@ -60,7 +61,8 @@ public class DownloadFilesAction implements Runnable {
 		}finally {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
-			dialog.dispose();						
+			dialog.dispose();		
+			frMain.getTabbedPane().setEnabled(true);
 		}
 	}// end of run()
 }

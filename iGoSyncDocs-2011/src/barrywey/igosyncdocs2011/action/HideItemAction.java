@@ -36,6 +36,7 @@ public class HideItemAction implements Runnable {
 		try {
 			dialog.setVisible(false);
 			frMain.getProgressBar().setIndeterminate(true);
+			frMain.getTabbedPane().setEnabled(false);
 			for(MyDocumentListEntry entry : SystemRuntime.SelectedItem) {
 				frMain.getProcessMessageLabel().setText(LanguageResource.getStringValue("main.message.hide_running").replace("{1}", entry.getEntry().getTitle().getPlainText()));
 				IGoSyncDocsBiz.hideItem(entry);
@@ -50,6 +51,7 @@ public class HideItemAction implements Runnable {
 			frMain.getProcessMessageLabel().setText("");
 			frMain.getProgressBar().setIndeterminate(false);
 			dialog.dispose();			
+			frMain.getTabbedPane().setEnabled(true);
 		}
 	}
 

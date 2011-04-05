@@ -12,6 +12,8 @@ import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
+import barrywey.igosyncdocs2011.action.AppExitAction;
+import barrywey.igosyncdocs2011.action.CreateNewAction;
 import barrywey.igosyncdocs2011.action.RefreshItemAction;
 import barrywey.igosyncdocs2011.action.SystemTrayAction;
 import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
@@ -44,7 +46,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.JSeparator;
 
 /**
  * 
@@ -97,13 +98,23 @@ public class MainFrame extends JFrame {
 		miPresentation.setName("miPresentation");
 		mnFile.add(miPresentation);
 		
-		separator = new JSeparator();
-		separator.setName("separator");
-		mnFile.add(separator);
+		miRefresh = new JMenuItem(LanguageResource.getStringValue("main.menuitem.refresh"));
+		miRefresh.setMnemonic('R');
+		miRefresh.setName("miRefresh");
+		miRefresh.setAccelerator(KeyStroke.getKeyStroke("F5"));
+		mnFile.addSeparator();
+		mnFile.add(miRefresh);
 		
+		miUpload = new JMenuItem(LanguageResource.getStringValue("main.menuitem.upload"));
+		miUpload.setMnemonic('U');
+		miUpload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,InputEvent.CTRL_MASK));
+		miUpload.setName("miUpload");
+		mnFile.add(miUpload);
+
 		miExit = new JMenuItem(LanguageResource.getStringValue("main.menuitem.exit"));
 		miExit.setMnemonic('x');
 		miExit.setName("miExit");
+		mnFile.addSeparator();
 		mnFile.add(miExit);
 		
 		mnSetting = new JMenu(LanguageResource.getStringValue("main.menu.setting"));
@@ -301,6 +312,13 @@ public class MainFrame extends JFrame {
 		btnUpload.addActionListener(new UploadFilesAction(this));
 		btnDelete.addActionListener(new ShowConfirmDialogAction(this,"delete",null));
 		btnDownload.addActionListener(new ShowConfirmDialogAction(this,"download",null));
+		
+		miNewDocument.addActionListener(new CreateNewAction(this, "document"));
+		miPresentation.addActionListener(new CreateNewAction(this,"presentation"));
+		miSpreadsheet.addActionListener(new CreateNewAction(this, "spreadsheet"));
+		miRefresh.addActionListener(new RefreshItemAction(this));
+		miUpload.addActionListener(new UploadFilesAction(this));
+		miExit.addActionListener(new AppExitAction());
 	}
 	
 	public JProgressBar getProgressBar() {
@@ -311,14 +329,10 @@ public class MainFrame extends JFrame {
 		return this.lblProcessMessage;
 	}
 	
-	public void disableTabbedPane() {
-		this.pnlTabbedPane.setEnabled(false);
+	public JTabbedPane getTabbedPane() {
+		return this.pnlTabbedPane;
 	}
-	
-	public void enableTabbedPane() {
-		this.pnlTabbedPane.setEnabled(true);
-	}
-	
+
 	public void refreshAllTableData() {
 		this.pnlAllItem.getDataTable().setModel(new EntryTableModel("all"));
 		this.pnlAllItem.initTableSettings(this.pnlAllItem.getDataTable());
@@ -358,6 +372,8 @@ public class MainFrame extends JFrame {
 	private JMenuItem miNewDocument;
 	private JMenuItem miSpreadsheet;
 	private JMenuItem miPresentation;
+	private JMenuItem miRefresh;
+	private JMenuItem miUpload;
 	private JMenuItem miExit;
 	private JPanel pnlMain;
 	private JPanel pnlToolbar;
@@ -377,7 +393,6 @@ public class MainFrame extends JFrame {
 	private JPanel pnlSearch;
 	private JTextField txtSearch;
 	private JButton btnSearch;
-	private JSeparator separator;
 	private SharedWithMePanel pnlSharedWithMe;
 	private JPanel pnlStatusbarRight;
 	private JLabel lblProcessMessage;
