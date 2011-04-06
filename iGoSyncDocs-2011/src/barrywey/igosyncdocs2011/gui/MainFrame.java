@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
 import barrywey.igosyncdocs2011.action.AppExitAction;
+import barrywey.igosyncdocs2011.action.ChangeLanguageAction;
 import barrywey.igosyncdocs2011.action.CreateNewAction;
 import barrywey.igosyncdocs2011.action.RefreshItemAction;
 import barrywey.igosyncdocs2011.action.SearchItemAction;
@@ -118,15 +119,28 @@ public class MainFrame extends JFrame {
 		mnFile.addSeparator();
 		mnFile.add(miExit);
 		
-		mnSetting = new JMenu(LanguageResource.getStringValue("main.menu.setting"));
-		mnSetting.setMnemonic('S');
-		mnSetting.setName("mnSetting");
-		menuBar.add(mnSetting);
+//		mnSetting = new JMenu(LanguageResource.getStringValue("main.menu.setting"));
+//		mnSetting.setMnemonic('S');
+//		mnSetting.setName("mnSetting");
+//		menuBar.add(mnSetting);
 		
-		mnSearch = new JMenu(LanguageResource.getStringValue("main.menu.search"));
-		mnSearch.setMnemonic('a');
-		mnSearch.setName("mnSearch");
-		menuBar.add(mnSearch);
+		mnLanguage = new JMenu(LanguageResource.getStringValue("main.menu.language"));
+		mnLanguage.setMnemonic('L');
+		mnLanguage.setName("mnLanguage");
+		//mnSetting.add(mnLanguage);
+		menuBar.add(mnLanguage);
+		
+		miEnglish = new JMenuItem(LanguageResource.getStringValue("main.menu.language.en_US"));
+		miSimpleChinese = new JMenuItem(LanguageResource.getStringValue("main.menu.language.zh_CN"));
+		miTraditionalChinese = new JMenuItem(LanguageResource.getStringValue("main.menu.language.zh_TW"));
+		mnLanguage.add(miEnglish);
+		mnLanguage.add(miSimpleChinese);
+		mnLanguage.add(miTraditionalChinese);
+		
+//		mnSearch = new JMenu(LanguageResource.getStringValue("main.menu.search"));
+//		mnSearch.setMnemonic('a');
+//		mnSearch.setName("mnSearch");
+//		menuBar.add(mnSearch);
 		
 		mnHelp = new JMenu(LanguageResource.getStringValue("main.menu.help"));
 		mnHelp.setMnemonic('H');
@@ -322,6 +336,10 @@ public class MainFrame extends JFrame {
 		miRefresh.addActionListener(new RefreshItemAction(this));
 		miUpload.addActionListener(new UploadFilesAction(this));
 		miExit.addActionListener(new AppExitAction());
+		miEnglish.addActionListener(new ChangeLanguageAction("en_US"));
+		miSimpleChinese.addActionListener(new ChangeLanguageAction("zh_CN"));
+		miTraditionalChinese.addActionListener(new ChangeLanguageAction("zh_TW"));
+		
 		
 	}
 	
@@ -381,8 +399,8 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -9147881941303957656L;
 	private JMenuBar menuBar;
 	private JMenu mnFile;
-	private JMenu mnSetting;
-	private JMenu mnSearch;
+	//private JMenu mnSetting;
+	//private JMenu mnSearch;
 	private JMenu mnHelp;
 	private JPanel pnlStatusbar;
 	private JMenuItem miNewDocument;
@@ -391,6 +409,10 @@ public class MainFrame extends JFrame {
 	private JMenuItem miRefresh;
 	private JMenuItem miUpload;
 	private JMenuItem miExit;
+	private JMenu mnLanguage;
+	private JMenuItem miEnglish;
+	private JMenuItem miSimpleChinese;
+	private JMenuItem miTraditionalChinese;
 	private JPanel pnlMain;
 	private JPanel pnlToolbar;
 	private JButton btnRefresh;

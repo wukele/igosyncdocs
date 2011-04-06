@@ -5,10 +5,14 @@
 package barrywey.igosyncdocs2011.biz;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import com.google.gdata.client.GoogleService.AccountDeletedException;
 import com.google.gdata.client.GoogleService.AccountDisabledException;
@@ -27,6 +31,7 @@ import com.google.gdata.data.docs.DocumentListFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
+import barrywey.igosyncdocs2011.IGoSyncDocs;
 import barrywey.igosyncdocs2011.bean.MyDocumentListEntry;
 import barrywey.igosyncdocs2011.bean.SystemRuntime;
 import barrywey.igosyncdocs2011.net.IGoSyncDocsDao;
@@ -536,5 +541,32 @@ public class IGoSyncDocsBiz {
 			}
 		}
 		return list;
+	}
+	
+	public static void changeLanguage(String language) throws IOException {
+		File configFile = new File(SystemRuntime.Settings.Config_File_Path);
+		if(!configFile.exists()) {
+			//copy config file to user.home\iGoSyncDocs-2011 directory
+			File appHome = new File(SystemRuntime.Settings.App_Data_Home);
+			appHome.mkdir();
+			configFile.createNewFile();
+			FileOutputStream fos = new FileOutputStream(configFile);
+			InputStream is = IGoSyncDocs.class.getResourceAsStream("/barrywey/igosyncdocs2011/resource/config/settings.pro");
+			byte[] buffer = new byte[1023*5]; //5k
+			int size = is.read(buffer);
+			while(size != -1) {
+				fos.write(buffer,0,size);
+				size = is.read(buffer);
+			}
+			fos.flush();
+			fos.close();
+			is.close();
+		}//end of if
+		
+		//load default settings
+		Properties pro = new Properties();
+		pro.load(new FileInputStream(configFile));
+		pro.setProperty("default.language", language);
+		pro.store(new FileOutputStream(configFile), "Language changed");
 	}
 }
