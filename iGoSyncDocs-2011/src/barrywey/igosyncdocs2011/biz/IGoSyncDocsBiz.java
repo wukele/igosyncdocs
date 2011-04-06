@@ -526,4 +526,15 @@ public class IGoSyncDocsBiz {
 			throw new IGoSyncDocsException(message.replace("{1}", e.getMessage() == null ? " " : e.getMessage()), e);
 		}
 	}
+	
+	public static List<MyDocumentListEntry> search(String title) {
+		List<MyDocumentListEntry> list = new ArrayList<MyDocumentListEntry>();
+		List<MyDocumentListEntry> allItems = getAllItems(); //only search in cached list
+		for(MyDocumentListEntry entry : allItems) {
+			if(entry.getEntry().getTitle().getPlainText().contains(title)) {				
+				list.add(entry);
+			}
+		}
+		return list;
+	}
 }

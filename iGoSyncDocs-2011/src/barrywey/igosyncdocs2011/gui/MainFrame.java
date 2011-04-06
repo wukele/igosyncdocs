@@ -15,6 +15,7 @@ import javax.swing.JMenu;
 import barrywey.igosyncdocs2011.action.AppExitAction;
 import barrywey.igosyncdocs2011.action.CreateNewAction;
 import barrywey.igosyncdocs2011.action.RefreshItemAction;
+import barrywey.igosyncdocs2011.action.SearchItemAction;
 import barrywey.igosyncdocs2011.action.SystemTrayAction;
 import barrywey.igosyncdocs2011.action.ShowConfirmDialogAction;
 import barrywey.igosyncdocs2011.action.UploadFilesAction;
@@ -228,8 +229,9 @@ public class MainFrame extends JFrame {
 		pnlSearch.add(txtSearch);
 		txtSearch.setColumns(23);
 		
-		btnSearch = new JButton("Search");
+		btnSearch = new JButton(LanguageResource.getStringValue("main.btn.search"));
 		btnSearch.setName("btnSearch");
+		btnSearch.setActionCommand("search");
 		pnlSearch.add(btnSearch);
 		
 		pnlTabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -312,6 +314,7 @@ public class MainFrame extends JFrame {
 		btnUpload.addActionListener(new UploadFilesAction(this));
 		btnDelete.addActionListener(new ShowConfirmDialogAction(this,"delete",null));
 		btnDownload.addActionListener(new ShowConfirmDialogAction(this,"download",null));
+		btnSearch.addActionListener(new SearchItemAction(this));
 		
 		miNewDocument.addActionListener(new CreateNewAction(this, "document"));
 		miPresentation.addActionListener(new CreateNewAction(this,"presentation"));
@@ -319,6 +322,19 @@ public class MainFrame extends JFrame {
 		miRefresh.addActionListener(new RefreshItemAction(this));
 		miUpload.addActionListener(new UploadFilesAction(this));
 		miExit.addActionListener(new AppExitAction());
+		
+	}
+	
+	public JButton getSearchButton() {
+		return this.btnSearch;
+	}
+	
+	public AllItemPanel getAllItemPanel() {
+		return this.pnlAllItem;
+	}
+	
+	public JTextField getSearchField() {
+		return this.txtSearch;
 	}
 	
 	public JProgressBar getProgressBar() {

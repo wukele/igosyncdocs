@@ -30,6 +30,17 @@ public class EntryTableModel extends AbstractTableModel{
 	public List<MyDocumentListEntry> getEntries() {
 		return this.entries;
 	}
+	
+	public EntryTableModel(List<MyDocumentListEntry> list) {
+		super();
+		this.entries = list;
+		columnName = new Vector<String>();
+		columnName.add(LanguageResource.getStringValue("main.frame.th_star"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_type"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_name"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_owner"));
+		columnName.add(LanguageResource.getStringValue("main.frame.th_lastupdate"));		
+	}
 
 	public EntryTableModel(String type) {
 		super();
