@@ -4,15 +4,8 @@
  */
 package barrywey.igosyncdocs2011.resource;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.ResourceBundle;
-
-import barrywey.igosyncdocs2011.bean.SystemRuntime;
 
 /**
  * 
@@ -25,15 +18,7 @@ import barrywey.igosyncdocs2011.bean.SystemRuntime;
 public class LanguageResource {
 
 	public static String getStringValue(String key) {
-//		File configFile = new File(SystemRuntime.Settings.Config_File_Path);
-//		Properties pro = new Properties();
-//		try {
-//			pro.load(new FileInputStream(configFile));
-//		} catch (FileNotFoundException e) {
-//		} catch (IOException e) {
-//		}
-//		String defaultLanguage = pro.getProperty("default.language");
-		return ResourceBundle.getBundle(			
+		return ResourceBundle.getBundle(
 				"barrywey.igosyncdocs2011.resource.lang.LanguageResource",
 				Locale.getDefault(), LanguageResource.class.getClassLoader())
 				.getString(key);
