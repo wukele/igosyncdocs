@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
+import barrywey.igosyncdocs2011.action.AboutDialogAction;
 import barrywey.igosyncdocs2011.action.AppExitAction;
 import barrywey.igosyncdocs2011.action.ChangeLanguageAction;
 import barrywey.igosyncdocs2011.action.CreateNewAction;
@@ -131,8 +132,11 @@ public class MainFrame extends JFrame {
 		menuBar.add(mnLanguage);
 		
 		miEnglish = new JMenuItem(LanguageResource.getStringValue("main.menu.language.en_US"));
+		miEnglish.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		miSimpleChinese = new JMenuItem(LanguageResource.getStringValue("main.menu.language.zh_CN"));
+		miSimpleChinese.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		miTraditionalChinese = new JMenuItem(LanguageResource.getStringValue("main.menu.language.zh_TW"));
+		miTraditionalChinese.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnLanguage.add(miEnglish);
 		mnLanguage.add(miSimpleChinese);
 		mnLanguage.add(miTraditionalChinese);
@@ -146,6 +150,20 @@ public class MainFrame extends JFrame {
 		mnHelp.setMnemonic('H');
 		mnHelp.setName("mnHelp");
 		menuBar.add(mnHelp);
+		
+		miAboutiGoSyncDocs = new JMenuItem(LanguageResource.getStringValue("main.menuitem.about"));
+		miDonate = new JMenuItem(LanguageResource.getStringValue("main.menuitem.donate"));
+		miIgoSyncDocsOnGC = new JMenuItem(LanguageResource.getStringValue("main.menuitem.visit_gc"));
+		miIgoSyncDocsOnSF = new JMenuItem(LanguageResource.getStringValue("main.menuitem.visit_sf"));
+		miOnelineHelp = new JMenuItem(LanguageResource.getStringValue("main.menuitem.ol_help"));
+		miOnelineHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		mnHelp.add(miAboutiGoSyncDocs);
+		mnHelp.addSeparator();
+		mnHelp.add(miIgoSyncDocsOnGC);
+		mnHelp.add(miIgoSyncDocsOnSF);
+		mnHelp.add(miOnelineHelp);
+		mnHelp.addSeparator();
+		mnHelp.add(miDonate);
 		
 		pnlStatusbar = new JPanel();
 		pnlStatusbar.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -340,6 +358,12 @@ public class MainFrame extends JFrame {
 		miSimpleChinese.addActionListener(new ChangeLanguageAction("zh_CN"));
 		miTraditionalChinese.addActionListener(new ChangeLanguageAction("zh_TW"));
 		
+		miAboutiGoSyncDocs.addActionListener(new AboutDialogAction("about"));
+		miDonate.addActionListener(new AboutDialogAction("donate"));
+		miIgoSyncDocsOnGC.addActionListener(new AboutDialogAction("googlecode"));
+		miIgoSyncDocsOnSF.addActionListener(new AboutDialogAction("sourceforge"));
+		miOnelineHelp.addActionListener(new AboutDialogAction("bugs"));
+		
 		
 	}
 	
@@ -402,6 +426,11 @@ public class MainFrame extends JFrame {
 	//private JMenu mnSetting;
 	//private JMenu mnSearch;
 	private JMenu mnHelp;
+	private JMenuItem miAboutiGoSyncDocs;
+	private JMenuItem miIgoSyncDocsOnGC;
+	private JMenuItem miIgoSyncDocsOnSF;
+	private JMenuItem miOnelineHelp;
+	private JMenuItem miDonate;
 	private JPanel pnlStatusbar;
 	private JMenuItem miNewDocument;
 	private JMenuItem miSpreadsheet;
