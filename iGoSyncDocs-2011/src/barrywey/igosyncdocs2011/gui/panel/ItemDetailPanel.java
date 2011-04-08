@@ -13,11 +13,11 @@ import barrywey.igosyncdocs2011.gui.model.AclEntryTableModel;
 import barrywey.igosyncdocs2011.gui.renderer.AclTableCellRenderer;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
 
 /**
@@ -70,11 +70,13 @@ public class ItemDetailPanel extends JSplitPane {
 		setOneTouchExpandable(false);
 		setBorder(null);
 		setResizeWeight(0.5);
-		pnlDown.setBorder(new TitledBorder(null, LanguageResource.getStringValue("panel.title_people_shared_with"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlDown.setBorder(BorderFactory.createTitledBorder(LanguageResource.getStringValue("panel.title_people_shared_with")));
+		//pnlDown.setBorder(new TitledBorder(null, LanguageResource.getStringValue("panel.title_people_shared_with"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		table.setBackground(getBackground());
 		pnlDown.setViewportView(table);
 		setBottomComponent(pnlDown);
-		pnlUp.setBorder(new TitledBorder(null, LanguageResource.getStringValue("panel.title_item_detail"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlUp.setBorder(BorderFactory.createTitledBorder(LanguageResource.getStringValue("panel.title_item_detail")));
+		//pnlUp.setBorder(new TitledBorder(null, LanguageResource.getStringValue("panel.title_item_detail"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setTopComponent(pnlUp);
 		pnlUp.setLayout(null);
 		lblViewOnLine.setBounds(18, 64, 125, 16);
