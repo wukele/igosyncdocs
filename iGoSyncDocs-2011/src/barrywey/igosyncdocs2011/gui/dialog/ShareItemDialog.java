@@ -62,11 +62,7 @@ public class ShareItemDialog extends JDialog {
 	}
 
 	private void initComponents() {
-		setContentPane(pnlMain);
-		setModal(true);
-		setResizable(false);
-		setSize(new Dimension(504, 363));
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
 		txtInput.setBounds(6, 21, 340, 20);
 		txtInput.setColumns(10);		
 		pnlMain.setLayout(null);
@@ -118,6 +114,14 @@ public class ShareItemDialog extends JDialog {
 		btnGroup.add(rboReader);
 		btnGroup.add(rboWriter);
 		rboReader.setSelected(true);
+		
+		setContentPane(pnlMain);
+		setModal(true);
+		setResizable(false);
+		setSize(new Dimension(504, 363));
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setTitle(LanguageResource.getStringValue("main.dialog.share.title"));
+		
 	}
 	
 	public boolean validateUserInput() {

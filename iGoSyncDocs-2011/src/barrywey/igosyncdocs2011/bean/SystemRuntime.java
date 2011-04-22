@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import barrywey.igosyncdocs2011.gui.dialog.UploadFileProcessDialog;
-
 /**
  * 
  * 
@@ -27,7 +25,6 @@ public class SystemRuntime implements Serializable {
 	public static List<MyDocumentListEntry> SelectedItem = Collections.synchronizedList(new ArrayList<MyDocumentListEntry>());
 	//public static List<MyDocumentListEntry> CachedEntries = new ArrayList<MyDocumentListEntry>();
 	//public static List<MyDocumentListEntry> SelectedItem = new ArrayList<MyDocumentListEntry>();
-	public static UploadFileProcessDialog UploadDialog = null;
 
 }
 

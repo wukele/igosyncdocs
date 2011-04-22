@@ -64,11 +64,6 @@ public class ConfirmActionDialog extends JDialog {
 	}
 
 	private void initComponents() {
-		setTitle(LanguageResource.getStringValue("app.title"));
-		setContentPane(pnlMain);
-		setSize(new Dimension(460,220));
-		setModal(true);
-		setResizable(false);
 		pnlMain.setLayout(null);
 		lblLogo.setIcon(new ImageIcon(ConfirmActionDialog.class.getResource("/barrywey/igosyncdocs2011/resource/image/prompt-logo-130-150.png")));
 		lblLogo.setBounds(0, 0, 136, 185);
@@ -101,6 +96,12 @@ public class ConfirmActionDialog extends JDialog {
 				yesButtonPressed();
 			}
 		});
+		
+		setTitle(LanguageResource.getStringValue("app.title"));
+		setContentPane(pnlMain);
+		setSize(new Dimension(460,220));
+		setModal(true);
+		setResizable(false);		
 	}
 	
 	private void cancel() {
