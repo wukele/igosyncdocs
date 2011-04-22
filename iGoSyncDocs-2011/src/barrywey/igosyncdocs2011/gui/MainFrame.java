@@ -32,6 +32,7 @@ import barrywey.igosyncdocs2011.gui.panel.SharedWithMePanel;
 import barrywey.igosyncdocs2011.gui.panel.SpreadsheetPanel;
 import barrywey.igosyncdocs2011.gui.panel.StaredObjectsPanel;
 import barrywey.igosyncdocs2011.gui.panel.TrashedObjectsPanel;
+import barrywey.igosyncdocs2011.resource.ImageResource;
 import barrywey.igosyncdocs2011.resource.LanguageResource;
 
 import javax.swing.JPanel;
@@ -85,24 +86,28 @@ public class MainFrame extends JFrame {
 		
 		miNewDocument = new JMenuItem(LanguageResource.getStringValue("main.menuitem.new_doc"));
 		miNewDocument.setMnemonic('D');
+		miNewDocument.setIcon(ImageResource.getIcon("doc.png"));
 		miNewDocument.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		miNewDocument.setName("miNewDocument");
 		mnFile.add(miNewDocument);
 		
 		miSpreadsheet = new JMenuItem(LanguageResource.getStringValue("main.menuitem.new_spre"));
 		miSpreadsheet.setMnemonic('S');
+		miSpreadsheet.setIcon(ImageResource.getIcon("spreadsheet.png"));
 		miSpreadsheet.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		miSpreadsheet.setName("miSpreadsheet");
 		mnFile.add(miSpreadsheet);
 		
 		miPresentation = new JMenuItem(LanguageResource.getStringValue("main.menuitem.new_pres"));
 		miPresentation.setMnemonic('P');
+		miPresentation.setIcon(ImageResource.getIcon("presentation.png"));
 		miPresentation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		miPresentation.setName("miPresentation");
 		mnFile.add(miPresentation);
 		
 		miRefresh = new JMenuItem(LanguageResource.getStringValue("main.menuitem.refresh"));
 		miRefresh.setMnemonic('R');
+		miRefresh.setIcon(ImageResource.getIcon("refresh.png"));
 		miRefresh.setName("miRefresh");
 		miRefresh.setAccelerator(KeyStroke.getKeyStroke("F5"));
 		mnFile.addSeparator();
@@ -110,6 +115,7 @@ public class MainFrame extends JFrame {
 		
 		miUpload = new JMenuItem(LanguageResource.getStringValue("main.menuitem.upload"));
 		miUpload.setMnemonic('U');
+		miUpload.setIcon(ImageResource.getIcon("upload.png"));
 		miUpload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,InputEvent.CTRL_MASK));
 		miUpload.setName("miUpload");
 		mnFile.add(miUpload);
@@ -117,6 +123,7 @@ public class MainFrame extends JFrame {
 		miExit = new JMenuItem(LanguageResource.getStringValue("main.menuitem.exit"));
 		miExit.setMnemonic('x');
 		miExit.setName("miExit");
+		miExit.setIcon(ImageResource.getIcon("exit.png"));
 		mnFile.addSeparator();
 		mnFile.add(miExit);
 		
@@ -133,10 +140,16 @@ public class MainFrame extends JFrame {
 		
 		miEnglish = new JMenuItem(LanguageResource.getStringValue("main.menu.language.en_US"));
 		miEnglish.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		miEnglish.setIcon(ImageResource.getIcon("language_usa.png"));
+		
 		miSimpleChinese = new JMenuItem(LanguageResource.getStringValue("main.menu.language.zh_CN"));
 		miSimpleChinese.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		miSimpleChinese.setIcon(ImageResource.getIcon("language_china.png"));
+		
 		miTraditionalChinese = new JMenuItem(LanguageResource.getStringValue("main.menu.language.zh_TW"));
 		miTraditionalChinese.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		miTraditionalChinese.setIcon(ImageResource.getIcon("language_taiwan.png"));
+		
 		mnLanguage.add(miEnglish);
 		mnLanguage.add(miSimpleChinese);
 		mnLanguage.add(miTraditionalChinese);
@@ -152,7 +165,11 @@ public class MainFrame extends JFrame {
 		menuBar.add(mnHelp);
 		
 		miAboutiGoSyncDocs = new JMenuItem(LanguageResource.getStringValue("main.menuitem.about"));
+		miAboutiGoSyncDocs.setIcon(ImageResource.getIcon("about.png"));
+		
 		miDonate = new JMenuItem(LanguageResource.getStringValue("main.menuitem.donate"));
+		miDonate.setIcon(ImageResource.getIcon("donate.png"));
+		
 		miIgoSyncDocsOnGC = new JMenuItem(LanguageResource.getStringValue("main.menuitem.visit_gc"));
 		miIgoSyncDocsOnSF = new JMenuItem(LanguageResource.getStringValue("main.menuitem.visit_sf"));
 		miOnelineHelp = new JMenuItem(LanguageResource.getStringValue("main.menuitem.ol_help"));

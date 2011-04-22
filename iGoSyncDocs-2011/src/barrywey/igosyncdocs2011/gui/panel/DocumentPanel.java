@@ -107,8 +107,14 @@ public class DocumentPanel extends JPanel{
 		});
 		
 		miViewOnLine.addActionListener(new ViewOnlineAction());
+		miViewOnLine.setIcon(ImageResource.getIcon("view_online.png"));
+		
 		miRefresh.addActionListener(new RefreshItemAction(frMain));
+		miRefresh.setIcon(ImageResource.getIcon("refresh.png"));
+		
 		miUpload.addActionListener(new UploadFilesAction(frMain));	
+		miUpload.setIcon(ImageResource.getIcon("upload.png"));
+		
 		miStar.addActionListener(new ShowConfirmDialogAction(frMain, "star",null));
 		miHide.addActionListener(new ShowConfirmDialogAction(frMain, "hide",null));
 		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete",null));

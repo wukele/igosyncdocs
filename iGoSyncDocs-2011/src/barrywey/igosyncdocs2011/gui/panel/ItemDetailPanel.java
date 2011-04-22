@@ -71,12 +71,10 @@ public class ItemDetailPanel extends JSplitPane {
 		setBorder(null);
 		setResizeWeight(0.5);
 		pnlDown.setBorder(BorderFactory.createTitledBorder(LanguageResource.getStringValue("panel.title_people_shared_with")));
-		//pnlDown.setBorder(new TitledBorder(null, LanguageResource.getStringValue("panel.title_people_shared_with"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		table.setBackground(getBackground());
 		pnlDown.setViewportView(table);
 		setBottomComponent(pnlDown);
 		pnlUp.setBorder(BorderFactory.createTitledBorder(LanguageResource.getStringValue("panel.title_item_detail")));
-		//pnlUp.setBorder(new TitledBorder(null, LanguageResource.getStringValue("panel.title_item_detail"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setTopComponent(pnlUp);
 		pnlUp.setLayout(null);
 		lblViewOnLine.setBounds(18, 64, 125, 16);

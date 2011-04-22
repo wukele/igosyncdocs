@@ -94,6 +94,10 @@ public class StaredObjectsPanel extends JPanel{
 		miViewOnLine.addActionListener(new ViewOnlineAction());
 		miRefresh.addActionListener(new RefreshItemAction(frMain));
 		miUpload.addActionListener(new UploadFilesAction(frMain));	
+		miViewOnLine.setIcon(ImageResource.getIcon("view_online.png"));
+		miRefresh.setIcon(ImageResource.getIcon("refresh.png"));
+		miUpload.setIcon(ImageResource.getIcon("upload.png"));
+		
 		miHidden.addActionListener(new ShowConfirmDialogAction(frMain, "hide",null));
 		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete",null));
 		miTrash.addActionListener(new ShowConfirmDialogAction(frMain, "trash",null));

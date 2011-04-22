@@ -103,6 +103,10 @@ public class SpreadsheetPanel extends JPanel{
 		miViewOnLine.addActionListener(new ViewOnlineAction());
 		miRefresh.addActionListener(new RefreshItemAction(frMain));
 		miUpload.addActionListener(new UploadFilesAction(frMain));	
+		miViewOnLine.setIcon(ImageResource.getIcon("view_online.png"));
+		miRefresh.setIcon(ImageResource.getIcon("refresh.png"));
+		miUpload.setIcon(ImageResource.getIcon("upload.png"));
+		
 		miStar.addActionListener(new ShowConfirmDialogAction(frMain, "star",null));
 		miHide.addActionListener(new ShowConfirmDialogAction(frMain, "hide",null));
 		miDelete.addActionListener(new ShowConfirmDialogAction(frMain, "delete",null));
